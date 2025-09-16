@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from "react-router";
+import LoginPage from "./pages/login";
+import UnauthorizedPage from "./pages/unauthorized";
+import HomePage from "./pages/home";
+import AdminPage from "./pages/admin";
+import ProtectedRoute from "./components/routes/protected-route";
+import PublicRoute from "./components/routes/public-route";
+import NotFoundPage from "./pages/not-found";
+import CreateUserPage from "./pages/create-user";
+import ViewUsersPage from "./pages/view-users";
+import AppLayout from "./layout/layout";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        {/** Rutas públicas */}
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
+        {/** Rutas protegidas */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<HomePage />} />
+          </Route>
+        </Route>
+        {/** Rutas para administradores */}
+        <Route
+          element={<ProtectedRoute perfilesPermitidos={["administrador"]} />}
+        >
+          <Route element={<AppLayout />}>
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin/create-user" element={<CreateUserPage />} />
+            <Route path="/admin/view-users" element={<ViewUsersPage />} />
+          </Route>
+        </Route>
+        {/** Rutas generales */}
+        <Route path="/unauthorized" element={<UnauthorizedPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
