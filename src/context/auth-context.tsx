@@ -7,12 +7,18 @@ import {
 } from "react";
 import useFetchApi from "../hooks/use-fetch";
 
-interface User {
-  id: string;
+export interface User {
+  id: number;
   correoElectronico: string;
   estadoRegistro: boolean;
   perfiles: string[];
   nombres: string;
+  apellidoPaterno: string;
+  apellidoMaterno?: string | null;
+  dni: string;
+  celular?: string | null;
+  fechaCreacion: string;
+  fechaModificacion: string;
 }
 
 export interface Credentials {

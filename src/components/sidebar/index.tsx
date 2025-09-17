@@ -15,7 +15,7 @@ import { useAuth } from "../../context/auth-context";
 
 const navigation = [
   { name: "Home", icon: HomeIcon, href: "/" },
-  { name: "User", icon: ClipboardDocumentIcon, href: "/admin/view-users" },
+  { name: "User", icon: ClipboardDocumentIcon, href: "/usuarios" },
 ];
 
 export default function Sidebar() {

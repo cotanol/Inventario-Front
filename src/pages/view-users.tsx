@@ -1,38 +1,25 @@
 import { useEffect, useState } from "react";
 import useFetchApi from "../hooks/use-fetch";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import {
   UserPlusIcon,
   MagnifyingGlassIcon,
   EyeIcon,
   PencilSquareIcon,
-  TrashIcon,
 } from "@heroicons/react/24/outline";
-
-// --- Interfaces (sin cambios) ---
-interface IPerfilInfo {
-  nombre: string;
-}
-interface IPerfilLink {
-  perfil: IPerfilInfo;
-}
-interface IUser {
-  id: string;
-  dni: string;
-  nombres: string;
-  apellidoPaterno: string;
-  apellidoMaterno?: string | null;
-  correoElectronico: string;
-  estadoRegistro: boolean;
-  perfilesLink: IPerfilLink[];
-}
+import { StatusToggle } from "@/components/status-toggle";
+import { DialogDeleteUser } from "@/components/dialog-delete-user";
+import type { User } from "@/context/auth-context";
+import { DialogUserDetails } from "@/components/dialog-details-user";
 
 const ViewUsersPage = () => {
-  const [users, setUsers] = useState<IUser[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [apiError, setApiError] = useState<any | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const { get } = useFetchApi();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -40,7 +27,7 @@ const ViewUsersPage = () => {
       setIsLoading(true);
       setApiError(null);
       try {
-        const response = await get<IUser[]>("/auth/usuarios");
+        const response = await get<User[]>("/auth/usuarios");
         setUsers(response);
       } catch (err) {
         setApiError(err);
@@ -51,17 +38,31 @@ const ViewUsersPage = () => {
     fetchUsers();
   }, [get]);
 
+  const handleUserDeleted = (deletedUserId: number) => {
+    // Filtramos el usuario eliminado de la lista para actualizar la UI al instante
+    setUsers((currentUsers) =>
+      currentUsers.filter((user) => user.id !== deletedUserId)
+    );
+  };
+
+  const handleUserStatusChange = (userId: number, newStatus: boolean) => {
+    setUsers((currentUsers) =>
+      currentUsers.map((user) =>
+        user.id === userId ? { ...user, estadoRegistro: newStatus } : user
+      )
+    );
+  };
+
   return (
     <div>
-      <Header titulo="Users" />
+      <Header titulo="Usuarios" />
 
       <div className="p-6">
         {/* Sub-encabezado y Breadcrumbs */}
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-gray-700">All Users</h2>
-          <p className="text-sm text-gray-500">
-            Dashboard &gt; <span className="font-semibold">Users</span>
-          </p>
+          <h2 className="text-xl font-semibold text-gray-700">
+            Todos los Usuarios
+          </h2>
         </div>
 
         {/* Contenedor principal blanco */}
@@ -78,9 +79,8 @@ const ViewUsersPage = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              {/* El botón de Filtro se puede añadir aquí en el futuro */}
               <Link
-                to="/admin/create-user"
+                to="/usuarios/registrar"
                 className="inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
               >
                 <UserPlusIcon className="w-5 h-5" />
@@ -140,35 +140,39 @@ const ViewUsersPage = () => {
                         {user.dni}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
-                        {user.perfilesLink
-                          .map((p) => p.perfil.nombre)
-                          .join(", ")}
+                        {user.perfiles.join(", ")}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {user.correoElectronico}
                       </td>
                       <td className="px-6 py-4">
-                        <span
-                          className={`px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            user.estadoRegistro
-                              ? "bg-green-100 text-green-800"
-                              : "bg-red-100 text-red-800"
-                          }`}
-                        >
-                          {user.estadoRegistro ? "Active" : "Inactive"}
-                        </span>
+                        {/* Aquí se renderiza el componente del toggle */}
+                        <StatusToggle
+                          userId={user.id}
+                          initialStatus={user.estadoRegistro}
+                          onStatusChange={handleUserStatusChange}
+                        />
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <button className="text-blue-500 hover:text-blue-700">
+                          <button
+                            className="text-blue-500 hover:text-blue-700"
+                            onClick={() => setSelectedUser(user)} // Al hacer clic, guardamos el usuario
+                          >
                             <EyeIcon className="w-5 h-5" />
                           </button>
-                          <button className="text-gray-400 hover:text-gray-600">
+                          <button
+                            className="text-gray-400 hover:text-gray-600"
+                            onClick={() =>
+                              navigate(`/usuarios/editar/${user.id}`)
+                            }
+                          >
                             <PencilSquareIcon className="w-5 h-5" />
                           </button>
-                          <button className="text-red-500 hover:text-red-700">
-                            <TrashIcon className="w-5 h-5" />
-                          </button>
+                          <DialogDeleteUser
+                            userId={user.id}
+                            onDeleteSuccess={handleUserDeleted}
+                          />
                         </div>
                       </td>
                     </tr>
@@ -179,6 +183,12 @@ const ViewUsersPage = () => {
           )}
         </div>
       </div>
+      {/* Diálogo para ver detalles del usuario */}
+      <DialogUserDetails
+        isOpen={!!selectedUser}
+        user={selectedUser}
+        onClose={() => setSelectedUser(null)} // La función de cierre limpia el estado
+      />
     </div>
   );
 };

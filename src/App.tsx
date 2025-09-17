@@ -9,6 +9,7 @@ import NotFoundPage from "./pages/not-found";
 import CreateUserPage from "./pages/create-user";
 import ViewUsersPage from "./pages/view-users";
 import AppLayout from "./layout/layout";
+import EditUserPage from "./pages/edit-user";
 
 function App() {
   return (
@@ -30,8 +31,9 @@ function App() {
         >
           <Route element={<AppLayout />}>
             <Route path="/admin" element={<AdminPage />} />
-            <Route path="/admin/create-user" element={<CreateUserPage />} />
-            <Route path="/admin/view-users" element={<ViewUsersPage />} />
+            <Route path="/usuarios/registrar" element={<CreateUserPage />} />
+            <Route path="/usuarios/editar/:id" element={<EditUserPage />} />
+            <Route path="/usuarios" element={<ViewUsersPage />} />
           </Route>
         </Route>
         {/** Rutas generales */}
