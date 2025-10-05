@@ -15,7 +15,7 @@ import { useAuth } from "../../context/auth-context";
 
 const navigation = [
   { name: "Home", icon: HomeIcon, href: "/" },
-  { name: "User", icon: ClipboardDocumentIcon, href: "/usuarios" },
+  { name: "Usuarios", icon: UserIcon, href: "/usuarios" },
 ];
 
 export default function Sidebar() {
@@ -76,17 +76,17 @@ export default function Sidebar() {
       {/* Sección inferior (cuenta) */}
       <div className="px-4 py-6 space-y-2">
         {/* Botón de usuarios */}
-        <button
+        {/* <button
           onClick={() => navigate("/usuarios")}
           className="w-full flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-md text-white hover:bg-indigo-100 hover:text-[#6366f1] transition cursor-pointer"
         >
           <UserIcon className="w-5 h-5" />
           Usuarios
-        </button>
+        </button> */}
 
         {/* Botón de perfil con dropdown */}
         <div className="relative" ref={profileRef}>
-          <button
+          {/* <button
             onClick={() => setShowDropdown((prev) => !prev)}
             className="w-full flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-indigo-100 hover:text-[#6366f1] transition cursor-pointer"
           >
@@ -99,10 +99,10 @@ export default function Sidebar() {
               <p className="text-sm font-semibold">Clarissa Dexter</p>
               <p className="text-xs text-gray-500">Chief Finance Officer</p>
             </div>
-          </button>
+          </button> */}
 
           {/* Mini popup / dropdown */}
-          {showDropdown && (
+          {/* {showDropdown && (
             <div className="absolute left-full bottom-0 mb-2 ml-2 w-52 bg-white border border-gray-200 rounded-md shadow-lg z-50 px-2 py-2">
               <button
                 onClick={() => {
@@ -127,7 +127,7 @@ export default function Sidebar() {
                 Cerrar sesión
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </aside>

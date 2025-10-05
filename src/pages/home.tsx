@@ -10,9 +10,7 @@ const HomePage = () => {
         </h2>
         <div className="bg-white rounded-xl shadow-md p-6">
           <p className="text-gray-700"></p>
-          Esta es la página principal de la aplicación. Aquí puedes encontrar un
-          resumen de las funcionalidades disponibles y acceder a diferentes
-          secciones mediante la barra lateral.
+          Esta es la página principal de la aplicación.
         </div>
       </div>
     </div>
