@@ -69,21 +69,23 @@ export const UserProfileMultiSelect = ({
                     {perfiles.map((perfil) => (
                       <CommandItem
                         value={perfil.nombre}
-                        key={perfil.id}
+                        key={perfil.perfilId}
                         onSelect={() => {
                           const currentValues = field.value || [];
-                          const selected = currentValues.includes(perfil.id)
+                          const selected = currentValues.includes(
+                            perfil.perfilId
+                          )
                             ? currentValues.filter(
-                                (id: number) => id !== perfil.id
+                                (id: number) => id !== perfil.perfilId
                               )
-                            : [...currentValues, perfil.id];
+                            : [...currentValues, perfil.perfilId];
                           field.onChange(selected);
                         }}
                       >
                         <Check
                           className={cn(
                             "mr-2 h-4 w-4",
-                            (field.value || []).includes(perfil.id)
+                            (field.value || []).includes(perfil.perfilId)
                               ? "opacity-100"
                               : "opacity-0"
                           )}

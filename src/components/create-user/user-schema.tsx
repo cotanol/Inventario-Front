@@ -16,6 +16,6 @@ export const userFormSchema = z.object({
 export type UserFormData = z.infer<typeof userFormSchema>;
 
 export interface IPerfil {
-  id: number;
+  perfilId: number;
   nombre: string;
 }

@@ -8,7 +8,7 @@ import {
 import useFetchApi from "../hooks/use-fetch";
 
 export interface User {
-  id: number;
+  usuarioId: number;
   correoElectronico: string;
   estadoRegistro: boolean;
   perfiles: string[];

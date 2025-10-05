@@ -58,7 +58,7 @@ export const DialogUserDetails = ({
 
         {/* Cuerpo del Dialog con layout de 2 columnas */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
-          <DetailItem label="ID de Usuario" value={user.id} />
+          <DetailItem label="ID de Usuario" value={user.usuarioId} />
           <DetailItem label="Nombres" value={user.nombres} />
           <DetailItem label="Apellido Paterno" value={user.apellidoPaterno} />
           <DetailItem

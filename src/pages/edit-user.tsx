@@ -54,7 +54,7 @@ const EditUserPage = () => {
         // Mapeamos el array de nombres de perfil a un array de IDs de perfil
         perfilesIds: perfilesResponse
           .filter((p) => userResponse.perfiles.includes(p.nombre))
-          .map((p) => p.id),
+          .map((p) => p.perfilId),
       });
       setPerfiles(perfilesResponse);
     } catch (err) {

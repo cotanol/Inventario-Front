@@ -4,14 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import {
   UserPlusIcon,
-  MagnifyingGlassIcon,
+  // MagnifyingGlassIcon,
   EyeIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 import { StatusToggle } from "@/components/status-toggle";
-import { DialogDeleteUser } from "@/components/dialog-delete-user";
 import type { User } from "@/context/auth-context";
 import { DialogUserDetails } from "@/components/dialog-details-user";
+// import { Perfil } from "../../../../backend/inventario-api/src/auth/entities/perfil.entity";
 
 const ViewUsersPage = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -38,17 +38,12 @@ const ViewUsersPage = () => {
     fetchUsers();
   }, [get]);
 
-  const handleUserDeleted = (deletedUserId: number) => {
-    // Filtramos el usuario eliminado de la lista para actualizar la UI al instante
-    setUsers((currentUsers) =>
-      currentUsers.filter((user) => user.id !== deletedUserId)
-    );
-  };
-
   const handleUserStatusChange = (userId: number, newStatus: boolean) => {
     setUsers((currentUsers) =>
       currentUsers.map((user) =>
-        user.id === userId ? { ...user, estadoRegistro: newStatus } : user
+        user.usuarioId === userId
+          ? { ...user, estadoRegistro: newStatus }
+          : user
       )
     );
   };
@@ -103,38 +98,43 @@ const ViewUsersPage = () => {
               <table className="min-w-full">
                 <thead className="border-b border-gray-200">
                   <tr>
-                    <th className="px-6 py-4 text-left">
+                    {/* TODO: Comentado temporalmente - Se agregará más adelante para acciones múltiples */}
+                    {/* <th className="px-6 py-4 text-left">
                       <input type="checkbox" className="rounded" />
+                    </th> */}
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Nombres Completos
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                      User Name
+                      DNI
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                      User ID
+                      Perfiles
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                      Position
+                      Correo
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                      Contact
+                      Celular
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                      Status
+                      Estado
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                      Action
+                      Acciones
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {users.map((user) => (
                     <tr
-                      key={user.id}
+                      key={user.usuarioId}
                       className="border-b border-gray-200 hover:bg-gray-50"
                     >
-                      <td className="px-6 py-4">
+                      {/* TODO: Comentado temporalmente - Se agregará más adelante para acciones múltiples */}
+                      {/* <td className="px-6 py-4">
                         <input type="checkbox" className="rounded" />
-                      </td>
+                      </td> */}
                       <td className="px-6 py-4 text-sm font-medium text-gray-900">{`${user.nombres} ${user.apellidoPaterno}`}</td>
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {user.dni}
@@ -145,10 +145,13 @@ const ViewUsersPage = () => {
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {user.correoElectronico}
                       </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {user.celular || "-"}
+                      </td>
                       <td className="px-6 py-4">
                         {/* Aquí se renderiza el componente del toggle */}
                         <StatusToggle
-                          userId={user.id}
+                          userId={user.usuarioId}
                           initialStatus={user.estadoRegistro}
                           onStatusChange={handleUserStatusChange}
                         />
@@ -164,15 +167,11 @@ const ViewUsersPage = () => {
                           <button
                             className="text-gray-400 hover:text-gray-600"
                             onClick={() =>
-                              navigate(`/usuarios/editar/${user.id}`)
+                              navigate(`/usuarios/editar/${user.usuarioId}`)
                             }
                           >
                             <PencilSquareIcon className="w-5 h-5" />
                           </button>
-                          <DialogDeleteUser
-                            userId={user.id}
-                            onDeleteSuccess={handleUserDeleted}
-                          />
                         </div>
                       </td>
                     </tr>
