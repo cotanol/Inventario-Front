@@ -21,6 +21,14 @@ export interface User {
   fechaModificacion: string;
 }
 
+export interface Marca {
+  marcaId: number;
+  nombre: string;
+  estadoRegistro: boolean;
+  fechaCreacion: string;
+  fechaModificacion: string;
+}
+
 export interface Credentials {
   correoElectronico: string;
   clave: string;

@@ -6,6 +6,7 @@ import {
   // ArrowDownTrayIcon,
   // ArrowUpTrayIcon,
   UserIcon,
+  RectangleStackIcon,
 } from "@heroicons/react/24/outline";
 
 import { NavLink } from "react-router-dom";
@@ -14,6 +15,10 @@ import logoImage from "../../assets/logo-image.png";
 const navigation = [
   { name: "Home", icon: HomeIcon, href: "/" },
   { name: "Usuarios", icon: UserIcon, href: "/usuarios" },
+  { name: "Productos", icon: RectangleStackIcon, href: "/productos" },
+  { name: "Marcas", icon: RectangleStackIcon, href: "/marcas" },
+  { name: "Lineas", icon: RectangleStackIcon, href: "/lineas" },
+  { name: "Grupos", icon: RectangleStackIcon, href: "/grupos" },
 ];
 
 export default function Sidebar() {

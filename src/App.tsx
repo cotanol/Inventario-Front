@@ -9,6 +9,9 @@ import ViewUsersPage from "./pages/usuarios/view-users";
 import AppLayout from "./layout/layout";
 import EditUserPage from "./pages/usuarios/edit-user";
 import HomePage from "./pages/home/home";
+import CreateMarcaPage from "./pages/marcas/create-marca";
+import ViewMarcasPage from "./pages/marcas/view-marcas";
+import EditMarcaPage from "./pages/marcas/edit-marca";
 
 function App() {
   return (
@@ -32,6 +35,9 @@ function App() {
             <Route path="/usuarios/registrar" element={<CreateUserPage />} />
             <Route path="/usuarios/editar/:id" element={<EditUserPage />} />
             <Route path="/usuarios" element={<ViewUsersPage />} />
+            <Route path="/marcas/registrar" element={<CreateMarcaPage />} />
+            <Route path="/marcas/editar/:id" element={<EditMarcaPage />} />
+            <Route path="/marcas" element={<ViewMarcasPage />} />
           </Route>
         </Route>
         {/** Rutas generales */}
