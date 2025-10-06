@@ -1,10 +1,10 @@
 // src/components/Sidebar.tsx
 import {
   HomeIcon,
-  ClipboardDocumentIcon,
-  TagIcon,
-  ArrowDownTrayIcon,
-  ArrowUpTrayIcon,
+  // ClipboardDocumentIcon,
+  // TagIcon,
+  // ArrowDownTrayIcon,
+  // ArrowUpTrayIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
 
