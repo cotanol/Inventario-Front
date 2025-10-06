@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../context/auth-context";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "sonner";
 import {
   ArrowRightOnRectangleIcon, // Icono más apropiado para logout
   UserCircleIcon, // Icono para ver perfil
-  BellIcon, // Icono de notificaciones
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import profileImage from "../../assets/profile.webp";
@@ -36,11 +36,22 @@ const Header = ({ titulo }: HeaderProps) => {
   }, []);
 
   const handleLogout = async () => {
+    setShowDropdown(false);
+
+    const logoutPromise = logout();
+
     try {
-      setShowDropdown(false);
-      await logout();
+      await toast.promise(logoutPromise, {
+        loading: "Cerrando sesión...",
+        success: "¡Hasta luego! Sesión cerrada correctamente 👋",
+        error: (err) => {
+          const errorMessage = err?.message || "Error al cerrar sesión";
+          return `Error: ${errorMessage}`;
+        },
+      });
       navigate("/login");
     } catch (error) {
+      // El error ya fue manejado en el toast
       console.error("Logout failed", error);
     }
   };

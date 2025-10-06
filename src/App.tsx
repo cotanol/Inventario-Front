@@ -1,15 +1,14 @@
 import { Route, Routes } from "react-router";
 import LoginPage from "./pages/login";
 import UnauthorizedPage from "./pages/unauthorized";
-import HomePage from "./pages/home";
-import AdminPage from "./pages/admin";
 import ProtectedRoute from "./components/routes/protected-route";
 import PublicRoute from "./components/routes/public-route";
 import NotFoundPage from "./pages/not-found";
-import CreateUserPage from "./pages/create-user";
-import ViewUsersPage from "./pages/view-users";
+import CreateUserPage from "./pages/usuarios/create-user";
+import ViewUsersPage from "./pages/usuarios/view-users";
 import AppLayout from "./layout/layout";
-import EditUserPage from "./pages/edit-user";
+import EditUserPage from "./pages/usuarios/edit-user";
+import HomePage from "./pages/home/home";
 
 function App() {
   return (
@@ -30,7 +29,6 @@ function App() {
           element={<ProtectedRoute perfilesPermitidos={["administrador"]} />}
         >
           <Route element={<AppLayout />}>
-            <Route path="/admin" element={<AdminPage />} />
             <Route path="/usuarios/registrar" element={<CreateUserPage />} />
             <Route path="/usuarios/editar/:id" element={<EditUserPage />} />
             <Route path="/usuarios" element={<ViewUsersPage />} />

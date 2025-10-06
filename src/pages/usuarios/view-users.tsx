@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import useFetchApi from "../hooks/use-fetch";
+import useFetchApi from "../../hooks/use-fetch";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../components/header";
+import Header from "../../components/header";
 import {
   UserPlusIcon,
   // MagnifyingGlassIcon,
   EyeIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
-import { StatusToggle } from "@/components/status-toggle";
+
 import type { User } from "@/context/auth-context";
-import { DialogUserDetails } from "@/components/dialog-details-user";
+import { DialogUserDetails } from "@/components/usuarios/view-users/dialog-details-user";
+import { StatusToggle } from "@/components/usuarios/view-users/status-toggle";
 // import { Perfil } from "../../../../backend/inventario-api/src/auth/entities/perfil.entity";
 
 const ViewUsersPage = () => {
@@ -79,7 +80,7 @@ const ViewUsersPage = () => {
                 className="inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
               >
                 <UserPlusIcon className="w-5 h-5" />
-                Add User
+                Registrar Usuario
               </Link>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Switch } from "@/components/ui/switch";
-import useFetchApi from "../hooks/use-fetch"; // <-- 1. Importar tu hook
+import { Switch } from "../../ui/switch";
+import useFetchApi from "../../../hooks/use-fetch";
+import { toast } from "sonner";
 
 interface StatusToggleProps {
   userId: number;
@@ -21,19 +22,32 @@ export function StatusToggle({
     setIsLoading(true);
     setStatus(newStatus); // UI optimista
 
-    try {
-      await patch(`/auth/change-status/${userId}`, {
+    const updateStatusPromise = () =>
+      patch(`/auth/change-status/${userId}`, {
         estadoRegistro: newStatus,
+      });
+
+    try {
+      await toast.promise(updateStatusPromise(), {
+        loading: "Actualizando estado...",
+        success: `Estado ${
+          newStatus ? "activado" : "desactivado"
+        } correctamente 🎉`,
+        error: (err) => {
+          const errorMessage =
+            err.response?.data?.message || "Error al actualizar el estado";
+          const message = Array.isArray(errorMessage)
+            ? errorMessage.join(", ")
+            : errorMessage;
+          return `Error: ${message}`;
+        },
       });
 
       // La API respondió con éxito, notificamos al padre
       onStatusChange(userId, newStatus);
-      // toast.success('Estado actualizado');
     } catch (error) {
-      console.error(error);
       // Si hay un error, revertimos el estado visual
       setStatus(!newStatus);
-      // toast.error('No se pudo actualizar');
     } finally {
       setIsLoading(false);
     }

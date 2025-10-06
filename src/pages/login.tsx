@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react"; // Un icono de carga popular
-import { useAuth, type Credentials } from "@/context/auth-context";
+import { toast } from "sonner";
+import { useAuth, type Credentials } from "../context/auth-context";
 import imageLogo from "../assets/logo-image.png";
 import imageLogin from "../assets/login-image.png";
 
@@ -26,13 +27,24 @@ export default function LoginPage() {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+
+    const loginPromise = login(formData);
+
     try {
-      await login(formData);
+      await toast.promise(loginPromise, {
+        loading: "Iniciando sesión...",
+        success: "¡Bienvenido! Sesión iniciada correctamente 🎉",
+        error: (err) => {
+          const errorMessage =
+            err?.response?.data?.message ||
+            "Credenciales inválidas o error de red.";
+          setError(errorMessage);
+          return errorMessage;
+        },
+      });
       navigate("/"); // Redirige a la página principal después del login
-    } catch (err: any) {
-      const errorMessage =
-        err.response?.data?.message || "Credenciales inválidas o error de red.";
-      setError(errorMessage);
+    } catch (error) {
+      // El error ya fue manejado en el toast
     } finally {
       setIsSubmitting(false);
     }

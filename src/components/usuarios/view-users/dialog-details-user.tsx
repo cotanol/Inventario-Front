@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 // Se asume que la interfaz User se exportará desde el AuthContext
-import type { User } from "../context/auth-context";
+import type { User } from "../../../context/auth-context";
 
 interface DialogUserDetailsProps {
   user: User | null; // El usuario a mostrar, o null si no hay ninguno seleccionado

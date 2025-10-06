@@ -13,7 +13,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { Loader2, AlertCircle } from "lucide-react";
 import { UserProfileMultiSelect } from "./select-multiple-profiles";
-import type { IPerfil, UserFormData } from "./user-schema";
+import type { IPerfil } from "./user-schema";
 import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
 import type { FieldValues, Path } from "react-hook-form";
 

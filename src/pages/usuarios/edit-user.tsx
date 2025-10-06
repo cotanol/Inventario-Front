@@ -2,19 +2,20 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 
 // --- CORRECCIÓN: Se han ajustado las rutas de importación. ---
 // Por favor, asegúrate de que estas rutas coincidan con la estructura de carpetas de tu proyecto.
 // Es una práctica común omitir las extensiones de archivo (.ts/.tsx).
 
-import useFetchApi from "../hooks/use-fetch";
-import Header from "../components/header"; // Se ha cambiado el alias '@' por una ruta relativa
-import type { IPerfil } from "@/components/create-user/user-schema";
+import useFetchApi from "../../hooks/use-fetch";
+import Header from "../../components/header"; // Se ha cambiado el alias '@' por una ruta relativa
+import type { IPerfil } from "@/components/usuarios/create-user/user-schema";
 import {
   updateUserFormSchema,
   type UpdateUserFormData,
-} from "@/components/update-user/user-update-schema";
-import { UserForm } from "@/components/create-user/form-user";
+} from "@/components/usuarios/update-user/user-update-schema";
+import { UserForm } from "@/components/usuarios/create-user/form-user";
 import type { User } from "@/context/auth-context";
 
 // Interfaz para la respuesta de la API al buscar un usuario
@@ -73,20 +74,30 @@ const EditUserPage = () => {
   async function onSubmit(values: UpdateUserFormData) {
     if (!id) return;
     setApiError(null);
-    try {
-      const payload = { ...values };
-      if (payload.apellidoMaterno === "") payload.apellidoMaterno = null;
-      if (payload.celular === "") payload.celular = null;
 
-      await patch(`/auth/update-user/${id}`, payload);
-      alert("¡Usuario actualizado exitosamente!");
+    const payload = { ...values };
+    if (payload.apellidoMaterno === "") payload.apellidoMaterno = null;
+    if (payload.celular === "") payload.celular = null;
+
+    const updateUserPromise = () => patch(`/auth/update-user/${id}`, payload);
+
+    try {
+      await toast.promise(updateUserPromise(), {
+        loading: "Actualizando usuario...",
+        success: `Usuario ${values.nombres} ${values.apellidoPaterno} actualizado exitosamente 🎉`,
+        error: (err) => {
+          const errorMessage =
+            err.response?.data?.message || "Error al actualizar el usuario";
+          const message = Array.isArray(errorMessage)
+            ? errorMessage.join(", ")
+            : errorMessage;
+          setApiError(message);
+          return `Error: ${message}`;
+        },
+      });
       navigate("/usuarios");
-    } catch (err: any) {
-      console.error("Error al actualizar el usuario:", err);
-      setApiError(
-        err.response?.data?.message ||
-          "Ocurrió un error al actualizar el usuario."
-      );
+    } catch (error) {
+      // El error ya fue manejado en el toast
     }
   }
 

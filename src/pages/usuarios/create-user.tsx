@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 
-import useFetchApi from "../hooks/use-fetch";
-import Header from "../components/header";
+import useFetchApi from "../../hooks/use-fetch";
+import Header from "../../components/header";
 import {
   userFormSchema,
   type IPerfil,
   type UserFormData,
-} from "@/components/create-user/user-schema";
-import { UserForm } from "@/components/create-user/form-user";
+} from "@/components/usuarios/create-user/user-schema";
+import { UserForm } from "@/components/usuarios/create-user/form-user";
 
 const CreateUserPage = () => {
   const { get, post } = useFetchApi();
@@ -50,19 +51,30 @@ const CreateUserPage = () => {
 
   async function onSubmit(values: UserFormData) {
     setApiError(null);
-    try {
-      const payload = { ...values };
-      if (payload.apellidoMaterno === "") payload.apellidoMaterno = null;
-      if (payload.celular === "") payload.celular = null;
 
-      await post("/auth/register", payload);
-      alert("¡Usuario creado exitosamente!");
-      navigate("/usuarios"); // Redirige a la lista de usuarios
-    } catch (err: any) {
-      console.error("Error al crear el usuario:", err);
-      setApiError(
-        err.response?.data?.message || "Ocurrió un error al crear el usuario."
-      );
+    const payload = { ...values };
+    if (payload.apellidoMaterno === "") payload.apellidoMaterno = null;
+    if (payload.celular === "") payload.celular = null;
+
+    const createUserPromise = () => post("/auth/register", payload);
+
+    try {
+      await toast.promise(createUserPromise(), {
+        loading: "Creando usuario...",
+        success: `Usuario ${values.nombres} ${values.apellidoPaterno} creado exitosamente 🎉`,
+        error: (err) => {
+          const errorMessage =
+            err.response?.data?.message || "Error al crear el usuario";
+          const message = Array.isArray(errorMessage)
+            ? errorMessage.join(", ")
+            : errorMessage;
+          setApiError(message);
+          return `Error: ${message}`;
+        },
+      });
+      navigate("/usuarios");
+    } catch (error) {
+      // El error ya fue manejado en el toast
     }
   }
 
