@@ -29,6 +29,14 @@ export interface Marca {
   fechaModificacion: string;
 }
 
+export interface Linea {
+  lineaId: number;
+  nombre: string;
+  estadoRegistro: boolean;
+  fechaCreacion: string;
+  fechaModificacion: string;
+}
+
 export interface Credentials {
   correoElectronico: string;
   clave: string;

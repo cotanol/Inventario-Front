@@ -12,6 +12,9 @@ import HomePage from "./pages/home/home";
 import CreateMarcaPage from "./pages/marcas/create-marca";
 import ViewMarcasPage from "./pages/marcas/view-marcas";
 import EditMarcaPage from "./pages/marcas/edit-marca";
+import CreateLineaPage from "./pages/lineas/create-linea";
+import ViewLineasPage from "./pages/lineas/view-lineas";
+import EditLineaPage from "./pages/lineas/edit-linea";
 
 function App() {
   return (
@@ -38,6 +41,9 @@ function App() {
             <Route path="/marcas/registrar" element={<CreateMarcaPage />} />
             <Route path="/marcas/editar/:id" element={<EditMarcaPage />} />
             <Route path="/marcas" element={<ViewMarcasPage />} />
+            <Route path="/lineas/registrar" element={<CreateLineaPage />} />
+            <Route path="/lineas/editar/:id" element={<EditLineaPage />} />
+            <Route path="/lineas" element={<ViewLineasPage />} />
           </Route>
         </Route>
         {/** Rutas generales */}
