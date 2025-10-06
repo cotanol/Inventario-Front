@@ -37,6 +37,41 @@ export interface Linea {
   fechaModificacion: string;
 }
 
+export interface Grupo {
+  grupoId: number;
+  nombre: string;
+  estadoRegistro: boolean;
+  fechaCreacion: string;
+  fechaModificacion: string;
+  linea: {
+    lineaId: number;
+    nombre: string;
+  };
+}
+
+export interface Producto {
+  productoId: number;
+  codigo: string;
+  nombre: string;
+  descripcion?: string;
+  precio: number;
+  estadoRegistro: boolean;
+  fechaCreacion: string;
+  fechaModificacion: string;
+  grupo: {
+    grupoId: number;
+    nombre: string;
+    linea: {
+      lineaId: number;
+      nombre: string;
+    };
+  };
+  marca: {
+    marcaId: number;
+    nombre: string;
+  };
+}
+
 export interface Credentials {
   correoElectronico: string;
   clave: string;

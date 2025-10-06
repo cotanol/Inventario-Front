@@ -15,6 +15,12 @@ import EditMarcaPage from "./pages/marcas/edit-marca";
 import CreateLineaPage from "./pages/lineas/create-linea";
 import ViewLineasPage from "./pages/lineas/view-lineas";
 import EditLineaPage from "./pages/lineas/edit-linea";
+import CreateGrupoPage from "./pages/grupos/create-grupo";
+import ViewGruposPage from "./pages/grupos/view-grupos";
+import EditGrupoPage from "./pages/grupos/edit-grupo";
+import ProductosIndex from "./pages/productos/view-productos";
+import CreateProducto from "./pages/productos/create-producto";
+import EditProducto from "./pages/productos/edit-producto";
 
 function App() {
   return (
@@ -44,6 +50,12 @@ function App() {
             <Route path="/lineas/registrar" element={<CreateLineaPage />} />
             <Route path="/lineas/editar/:id" element={<EditLineaPage />} />
             <Route path="/lineas" element={<ViewLineasPage />} />
+            <Route path="/grupos/registrar" element={<CreateGrupoPage />} />
+            <Route path="/grupos/editar/:id" element={<EditGrupoPage />} />
+            <Route path="/grupos" element={<ViewGruposPage />} />
+            <Route path="/productos/registrar" element={<CreateProducto />} />
+            <Route path="/productos/editar/:id" element={<EditProducto />} />
+            <Route path="/productos" element={<ProductosIndex />} />
           </Route>
         </Route>
         {/** Rutas generales */}
