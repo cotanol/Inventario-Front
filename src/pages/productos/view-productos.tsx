@@ -3,20 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../../components/header";
 import {
   PlusIcon,
+  // MagnifyingGlassIcon,
   EyeIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 
 import type { Producto } from "@/context/auth-context";
-import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { useRefresh } from "../../hooks/use-refresh";
 import { StatusToggle } from "@/components/productos/status-toggle/status-toggle";
 import { DialogProductoDetails } from "@/components/productos/dialog-details/dialog-producto-details";
@@ -34,7 +26,6 @@ const ViewProductosPage = () => {
     isLoading,
     error: apiError,
     updateItem,
-    refresh,
   } = useRefresh<Producto>("/catalogo/productos");
 
   const handleProductoStatusChange = (
@@ -69,133 +60,137 @@ const ViewProductosPage = () => {
       <Header titulo="Productos" />
 
       <div className="p-6">
-        {/* Sub-encabezado */}
+        {/* Sub-encabezado y Breadcrumbs */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-700">
             Todos los Productos
           </h2>
         </div>
 
-        {/* Acciones principales */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-          <div className="flex items-center gap-4">
-            {/* Botón Agregar Producto */}
-            <Link
-              to="/productos/registrar"
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-            >
-              <PlusIcon className="w-5 h-5 mr-2" />
-              Agregar Producto
-            </Link>
-          </div>
-        </div>
+        {/* Contenedor principal blanco */}
+        <div className="bg-white rounded-lg shadow-sm">
+          {/* Barra de controles: Búsqueda y Botones */}
+          <div className="flex items-center justify-between p-4 border-b border-gray-200">
+            <div className="relative">
+              {/* <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search"
+                className="pl-10 pr-4 py-2 w-64 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+              /> */}
+            </div>
 
-        {/* Lista de productos */}
-        <div className="bg-white shadow-sm rounded-lg overflow-hidden">
-          {isLoading ? (
-            <div className="flex items-center justify-center p-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-              <span className="ml-2 text-gray-600">Cargando productos...</span>
-            </div>
-          ) : apiError ? (
-            <div className="p-8 text-center">
-              <p className="text-red-600 mb-4">{apiError}</p>
-              <button
-                onClick={refresh}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                Reintentar
-              </button>
-            </div>
-          ) : productos.length === 0 ? (
-            <div className="p-8 text-center">
-              <p className="text-gray-500 mb-4">No hay productos registrados</p>
+            <div className="flex items-center gap-2">
               <Link
                 to="/productos/registrar"
-                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
               >
-                <PlusIcon className="w-5 h-5 mr-2" />
-                Crear primer producto
+                <PlusIcon className="w-5 h-5" />
+                Registrar Producto
               </Link>
+            </div>
+          </div>
+
+          {/* Renderizado condicional de la tabla, carga o error */}
+          {isLoading ? (
+            <div className="text-center py-10 text-gray-500">
+              Cargando productos...
+            </div>
+          ) : apiError ? (
+            <div className="p-4 bg-red-50 text-red-700">
+              Error al cargar los productos.
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Código</TableHead>
-                    <TableHead>Nombre</TableHead>
-                    <TableHead>Grupo</TableHead>
-                    <TableHead>Línea</TableHead>
-                    <TableHead>Marca</TableHead>
-                    <TableHead>Precio</TableHead>
-                    <TableHead>Estado</TableHead>
-                    <TableHead className="text-center">Acciones</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {productos.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={8} className="text-center py-4">
-                        No se encontraron productos
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    productos.map((producto) => (
-                      <TableRow key={producto.productoId}>
-                        <TableCell className="font-medium">
-                          {producto.codigo}
-                        </TableCell>
-                        <TableCell>{producto.nombre}</TableCell>
-                        <TableCell>{producto.grupo.nombre}</TableCell>
-                        <TableCell>{producto.grupo.linea.nombre}</TableCell>
-                        <TableCell>{producto.marca.nombre}</TableCell>
-                        <TableCell>S/ {producto.precio.toFixed(2)}</TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={
-                              producto.estadoRegistro ? "default" : "secondary"
+              <table className="min-w-full">
+                <thead className="border-b border-gray-200">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Código
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Nombre
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Grupo
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Línea
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Marca
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Precio
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Estado
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {productos.map((producto) => (
+                    <tr
+                      key={producto.productoId}
+                      className="border-b border-gray-200 hover:bg-gray-50"
+                    >
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                        {producto.codigo}
+                      </td>
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                        {producto.nombre}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {producto.grupo.nombre}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {producto.grupo.linea.nombre}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {producto.marca.nombre}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-900">
+                        S/ {producto.precio.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4">
+                        {/* Aquí se renderiza el componente del toggle */}
+                        <StatusToggle
+                          productoId={producto.productoId}
+                          initialStatus={producto.estadoRegistro}
+                          onStatusChange={handleProductoStatusChange}
+                        />
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <button
+                            className="text-blue-500 hover:text-blue-700"
+                            onClick={() => handleViewDetails(producto)}
+                          >
+                            <EyeIcon className="w-5 h-5" />
+                          </button>
+                          <button
+                            className="text-gray-400 hover:text-gray-600"
+                            onClick={() =>
+                              handleEditProducto(producto.productoId)
                             }
                           >
-                            {producto.estadoRegistro ? "Activo" : "Inactivo"}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center justify-center gap-2">
-                            <button
-                              onClick={() => handleViewDetails(producto)}
-                              className="p-1 text-gray-500 hover:text-blue-600 rounded-md hover:bg-gray-50"
-                              title="Ver detalles"
-                            >
-                              <EyeIcon className="h-4 w-4" />
-                            </button>
-                            <button
-                              onClick={() =>
-                                handleEditProducto(producto.productoId)
-                              }
-                              className="p-1 text-gray-500 hover:text-blue-600 rounded-md hover:bg-gray-50"
-                              title="Editar"
-                            >
-                              <PencilSquareIcon className="h-4 w-4" />
-                            </button>
-                            <StatusToggle
-                              productoId={producto.productoId}
-                              initialStatus={producto.estadoRegistro}
-                              onStatusChange={handleProductoStatusChange}
-                            />
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
+                            <PencilSquareIcon className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           )}
         </div>
       </div>
 
-      {/* Modal de Detalles */}
+      {/* Diálogo para ver detalles del producto */}
       <DialogProductoDetails
         producto={selectedProducto}
         isOpen={isDetailsOpen}

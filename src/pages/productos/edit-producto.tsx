@@ -37,7 +37,7 @@ export type UpdateProductoFormData = z.infer<typeof updateProductoFormSchema>;
 const EditProductoPage = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { get, put } = useFetchApi();
+  const { get, patch } = useFetchApi();
   const navigate = useNavigate();
 
   const [apiError, setApiError] = useState<string | null>(null);
@@ -57,11 +57,12 @@ const EditProductoPage = () => {
     if (!id) return;
     setIsLoadingData(true);
     try {
-      const [productoResponse, gruposResponse, marcasResponse] = await Promise.all([
-        get<Producto>(`/catalogo/productos/${id}`),
-        get<Grupo[]>("/catalogo/grupos"),
-        get<Marca[]>("/catalogo/marcas"),
-      ]);
+      const [productoResponse, gruposResponse, marcasResponse] =
+        await Promise.all([
+          get<Producto>(`/catalogo/productos/${id}`),
+          get<Grupo[]>("/catalogo/grupos"),
+          get<Marca[]>("/catalogo/marcas"),
+        ]);
 
       setGrupos(gruposResponse);
       setMarcas(marcasResponse);
@@ -93,7 +94,7 @@ const EditProductoPage = () => {
     setApiError(null);
 
     const updateProductoPromise = () =>
-      put(`/catalogo/productos/${id}`, {
+      patch(`/catalogo/productos/${id}`, {
         codigo: values.codigo,
         nombre: values.nombre,
         descripcion: values.descripcion || null,
@@ -132,7 +133,9 @@ const EditProductoPage = () => {
             <div className="flex items-center justify-center min-h-[400px]">
               <div className="text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-                <p className="mt-2 text-muted-foreground">Cargando producto...</p>
+                <p className="mt-2 text-muted-foreground">
+                  Cargando producto...
+                </p>
               </div>
             </div>
           </div>
