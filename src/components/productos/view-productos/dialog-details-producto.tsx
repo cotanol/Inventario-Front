@@ -46,7 +46,7 @@ export const DialogProductoDetails = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
             Detalles del Producto
@@ -56,13 +56,11 @@ export const DialogProductoDetails = ({
           </DialogDescription>
         </DialogHeader>
 
-        {/* Cuerpo del Dialog con layout simple */}
-        <div className="grid grid-cols-1 gap-6 py-4">
+        {/* Cuerpo del Dialog con layout de 2 columnas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+          <DetailItem label="ID de Producto" value={producto.productoId} />
           <DetailItem label="Código" value={producto.codigo} />
           <DetailItem label="Nombre" value={producto.nombre} />
-          {producto.descripcion && (
-            <DetailItem label="Descripción" value={producto.descripcion} />
-          )}
           <DetailItem
             label="Precio"
             value={`S/ ${producto.precio.toFixed(2)}`}
@@ -90,6 +88,13 @@ export const DialogProductoDetails = ({
             label="Fecha de Modificación"
             value={new Date(producto.fechaModificacion).toLocaleString()}
           />
+
+          {/* Descripción ocupa las 2 columnas completas */}
+          {producto.descripcion && (
+            <div className="col-span-2">
+              <DetailItem label="Descripción" value={producto.descripcion} />
+            </div>
+          )}
         </div>
 
         <DialogFooter>

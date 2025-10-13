@@ -46,7 +46,7 @@ export const DialogGrupoDetails = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
             Detalles del Grupo
@@ -56,8 +56,8 @@ export const DialogGrupoDetails = ({
           </DialogDescription>
         </DialogHeader>
 
-        {/* Cuerpo del Dialog con layout simple */}
-        <div className="grid grid-cols-1 gap-6 py-4">
+        {/* Cuerpo del Dialog con layout de 2 columnas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
           <DetailItem label="ID de Grupo" value={grupo.grupoId} />
           <DetailItem label="Nombre" value={grupo.nombre} />
           <DetailItem label="Línea" value={grupo.linea.nombre} />

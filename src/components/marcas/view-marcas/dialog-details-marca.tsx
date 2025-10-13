@@ -46,7 +46,7 @@ export const DialogMarcaDetails = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
             Detalles de la Marca
@@ -56,8 +56,8 @@ export const DialogMarcaDetails = ({
           </DialogDescription>
         </DialogHeader>
 
-        {/* Cuerpo del Dialog con layout simple */}
-        <div className="grid grid-cols-1 gap-6 py-4">
+        {/* Cuerpo del Dialog con layout de 2 columnas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
           <DetailItem label="ID de Marca" value={marca.marcaId} />
           <DetailItem label="Nombre" value={marca.nombre} />
           <DetailItem
