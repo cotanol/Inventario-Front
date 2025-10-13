@@ -15,6 +15,7 @@ import logoImage from "../../assets/logo-image.png";
 const navigation = [
   { name: "Home", icon: HomeIcon, href: "/" },
   { name: "Usuarios", icon: UserIcon, href: "/usuarios" },
+  { name: "Perfiles", icon: UserIcon, href: "/perfiles" },
   { name: "Productos", icon: RectangleStackIcon, href: "/productos" },
   { name: "Marcas", icon: RectangleStackIcon, href: "/marcas" },
   { name: "Lineas", icon: RectangleStackIcon, href: "/lineas" },

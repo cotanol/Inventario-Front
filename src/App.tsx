@@ -24,6 +24,9 @@ import EditProducto from "./pages/productos/edit-producto";
 import CreateClientePage from "./pages/clientes/create-cliente";
 import ViewClientesPage from "./pages/clientes/view-clientes";
 import EditClientePage from "./pages/clientes/edit-cliente";
+import EditPerfilPage from "./pages/perfiles/edit-perfil";
+import ViewPerfilesPage from "./pages/perfiles/view-perfiles";
+import CreatePerfilPage from "./pages/perfiles/create-perfil";
 
 function App() {
   return (
@@ -47,6 +50,9 @@ function App() {
             <Route path="/usuarios/registrar" element={<CreateUserPage />} />
             <Route path="/usuarios/editar/:id" element={<EditUserPage />} />
             <Route path="/usuarios" element={<ViewUsersPage />} />
+            <Route path="/perfiles/registrar" element={<CreatePerfilPage />} />
+            <Route path="/perfiles/editar/:id" element={<EditPerfilPage />} />
+            <Route path="/perfiles" element={<ViewPerfilesPage />} />
             <Route path="/marcas/registrar" element={<CreateMarcaPage />} />
             <Route path="/marcas/editar/:id" element={<EditMarcaPage />} />
             <Route path="/marcas" element={<ViewMarcasPage />} />
