@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import useFetchApi from "../../hooks/use-fetch";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../../components/header";
 import {
@@ -12,35 +11,22 @@ import {
 import type { User } from "@/context/auth-context";
 import { DialogUserDetails } from "@/components/usuarios/view-users/dialog-details-user";
 import { StatusToggle } from "@/components/usuarios/view-users/status-toggle";
-// import { Perfil } from "../../../../backend/inventario-api/src/auth/entities/perfil.entity";
+import { useRefresh } from "../../hooks/use-refresh";
 
 const ViewUsersPage = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [apiError, setApiError] = useState<any | null>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const { get } = useFetchApi();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      // ... Lógica de fetch sin cambios
-      setIsLoading(true);
-      setApiError(null);
-      try {
-        const response = await get<User[]>("/auth/usuarios");
-        setUsers(response);
-      } catch (err) {
-        setApiError(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchUsers();
-  }, [get]);
+  // Usar el hook useRefresh para manejar los usuarios
+  const {
+    data: users,
+    isLoading,
+    error: apiError,
+    updateItem,
+  } = useRefresh<User>("/auth/usuarios");
 
   const handleUserStatusChange = (userId: number, newStatus: boolean) => {
-    setUsers((currentUsers) =>
+    updateItem((currentUsers) =>
       currentUsers.map((user) =>
         user.usuarioId === userId
           ? { ...user, estadoRegistro: newStatus }

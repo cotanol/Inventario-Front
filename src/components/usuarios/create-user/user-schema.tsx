@@ -8,9 +8,7 @@ export const userFormSchema = z.object({
   correoElectronico: z.string().email("Correo electrónico no válido."),
   clave: z.string().min(6, "La contraseña debe tener al menos 6 caracteres."),
   celular: z.string().optional().nullable(),
-  perfilesIds: z
-    .array(z.number())
-    .min(1, "Debes seleccionar al menos un perfil."),
+  perfilesIds: z.number().int().positive("Debes seleccionar un perfil válido."),
 });
 
 export type UserFormData = z.infer<typeof userFormSchema>;
@@ -18,4 +16,5 @@ export type UserFormData = z.infer<typeof userFormSchema>;
 export interface IPerfil {
   perfilId: number;
   nombre: string;
+  estadoRegistro: boolean;
 }

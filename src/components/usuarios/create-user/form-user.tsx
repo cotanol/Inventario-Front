@@ -9,10 +9,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { Loader2, AlertCircle } from "lucide-react";
-import { UserProfileMultiSelect } from "./select-multiple-profiles";
 import type { IPerfil } from "./user-schema";
 import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
 import type { FieldValues, Path } from "react-hook-form";
@@ -155,7 +161,38 @@ export const UserForm = <T extends FieldValues>({
             )}
           />
 
-          <UserProfileMultiSelect perfiles={perfiles} />
+          <FormField
+            control={form.control}
+            name={"perfilesIds" as Path<T>}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Perfil*</FormLabel>
+                <Select
+                  onValueChange={(value) => field.onChange(parseInt(value))}
+                  value={field.value?.toString()}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona un perfil" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {perfiles
+                      .filter((perfil) => perfil.estadoRegistro)
+                      .map((perfil) => (
+                        <SelectItem
+                          key={perfil.perfilId}
+                          value={perfil.perfilId.toString()}
+                        >
+                          {perfil.nombre}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         {apiError && (

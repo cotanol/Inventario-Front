@@ -30,7 +30,7 @@ const CreateUserPage = () => {
       correoElectronico: "",
       clave: "",
       celular: null,
-      perfilesIds: [],
+      perfilesIds: undefined,
     },
   });
 
@@ -52,9 +52,12 @@ const CreateUserPage = () => {
   async function onSubmit(values: UserFormData) {
     setApiError(null);
 
-    const payload = { ...values };
+    const payload: any = { ...values };
     if (payload.apellidoMaterno === "") payload.apellidoMaterno = null;
     if (payload.celular === "") payload.celular = null;
+
+    // Convertir perfilesIds (número) a array para el backend
+    payload.perfilesIds = [payload.perfilesIds];
 
     const createUserPromise = () => post("/auth/register", payload);
 

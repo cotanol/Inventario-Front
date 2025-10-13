@@ -50,12 +50,15 @@ const EditUserPage = () => {
       ]);
 
       // Poblamos el formulario con los datos del usuario
+      // Encontrar el ID del perfil basado en el nombre del primer perfil del usuario
+      const perfilNombre = userResponse.perfiles[0]; // Tomamos el primer perfil
+      const perfilEncontrado = perfilesResponse.find(
+        (p) => p.nombre === perfilNombre
+      );
+
       form.reset({
         ...userResponse,
-        // Mapeamos el array de nombres de perfil a un array de IDs de perfil
-        perfilesIds: perfilesResponse
-          .filter((p) => userResponse.perfiles.includes(p.nombre))
-          .map((p) => p.perfilId),
+        perfilesIds: perfilEncontrado?.perfilId,
       });
       setPerfiles(perfilesResponse);
     } catch (err) {
@@ -75,9 +78,14 @@ const EditUserPage = () => {
     if (!id) return;
     setApiError(null);
 
-    const payload = { ...values };
+    const payload: any = { ...values };
     if (payload.apellidoMaterno === "") payload.apellidoMaterno = null;
     if (payload.celular === "") payload.celular = null;
+
+    // Convertir perfilesIds (número) a array para el backend
+    if (payload.perfilesIds !== undefined) {
+      payload.perfilesIds = [payload.perfilesIds];
+    }
 
     const updateUserPromise = () => patch(`/auth/update-user/${id}`, payload);
 
