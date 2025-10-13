@@ -62,10 +62,11 @@ export const LineaForm = <T extends FieldValues>({
           </Alert>
         )}
 
-        <div className="flex justify-end gap-3 pt-4">
+        <div className="flex justify-center gap-6 pt-4">
           <Button
             type="button"
             variant="outline"
+            className="bg-slate-100 hover:bg-slate-200"
             onClick={onCancel}
             disabled={isSubmitting}
           >
