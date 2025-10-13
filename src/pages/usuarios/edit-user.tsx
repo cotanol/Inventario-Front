@@ -112,7 +112,7 @@ const EditUserPage = () => {
   if (isLoadingData) {
     return (
       <div>
-        <Header titulo="Editar Usuario" />
+        <Header titulo="Usuarios" />
         <div className="p-6" aria-busy="true">
           Cargando datos del usuario...
         </div>
@@ -122,12 +122,12 @@ const EditUserPage = () => {
 
   return (
     <div>
-      <Header titulo="Editar Usuario" />
+      <Header titulo="Usuarios" />
       <div className="p-6">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold text-gray-700 mb-6">
-            Editando Usuario
-          </h2>
+        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+          Editando Usuario
+        </h2>
+        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
           <UserForm
             form={form}
             onSubmit={onSubmit}
@@ -136,7 +136,7 @@ const EditUserPage = () => {
             perfiles={perfiles}
             onCancel={() => navigate("/usuarios")}
             submitButtonText="Actualizar Usuario"
-            isEditing={true} // <-- Pasamos la nueva prop
+            isEditing={true}
           />
         </div>
       </div>

@@ -88,10 +88,10 @@ const CreateUserPage = () => {
     <div>
       <Header titulo="Usuarios" />
       <div className="p-6">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold text-gray-700 mb-6">
-            Crear Nuevo Usuario
-          </h2>
+        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+          Crear Nuevo Usuario
+        </h2>
+        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
           <UserForm
             form={form}
             onSubmit={onSubmit}

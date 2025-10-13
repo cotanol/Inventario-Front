@@ -106,42 +106,39 @@ export const UserForm = <T extends FieldValues>({
               </FormItem>
             )}
           />
-        </div>
-
-        <FormField
-          control={form.control}
-          name={"correoElectronico" as Path<T>}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Correo Electrónico*</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="john.doe@example.com"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {!isEditing && (
           <FormField
             control={form.control}
-            name={"clave" as Path<T>} // <-- CORRECCIÓN
+            name={"correoElectronico" as Path<T>}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Contraseña*</FormLabel>
+                <FormLabel>Correo Electrónico*</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="••••••••" {...field} />
+                  <Input
+                    type="email"
+                    placeholder="john.doe@example.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-        )}
+          {!isEditing && (
+            <FormField
+              control={form.control}
+              name={"clave" as Path<T>}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Contraseña*</FormLabel>
+                  <FormControl>
+                    <Input type="password" placeholder="••••••••" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
             name={"celular" as Path<T>}
@@ -172,7 +169,7 @@ export const UserForm = <T extends FieldValues>({
                   value={field.value?.toString()}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Selecciona un perfil" />
                     </SelectTrigger>
                   </FormControl>
@@ -203,10 +200,11 @@ export const UserForm = <T extends FieldValues>({
           </Alert>
         )}
 
-        <div className="flex justify-end gap-3 pt-4">
+        <div className="flex justify-center gap-6 pt-4">
           <Button
             type="button"
             variant="outline"
+            className="bg-slate-100 hover:bg-slate-200"
             onClick={onCancel}
             disabled={isSubmitting}
           >
