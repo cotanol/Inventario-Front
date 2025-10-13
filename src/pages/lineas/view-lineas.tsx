@@ -9,10 +9,8 @@ import {
 } from "@heroicons/react/24/outline";
 
 import type { Linea } from "@/context/auth-context";
-import {
-  DialogLineaDetails,
-  StatusToggle,
-} from "../../components/lineas/view-lineas";
+import { DialogLineaDetails } from "@/components/lineas/view-lineas/dialog-details-linea";
+import { StatusToggle } from "@/components/lineas/view-lineas/status-toggle";
 import { useRefresh } from "../../hooks/use-refresh";
 
 const ViewLineasPage = () => {

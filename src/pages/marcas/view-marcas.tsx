@@ -9,10 +9,8 @@ import {
 } from "@heroicons/react/24/outline";
 
 import type { Marca } from "@/context/auth-context";
-import {
-  DialogMarcaDetails,
-  StatusToggle,
-} from "@/components/marcas/view-marcas";
+import { DialogMarcaDetails } from "@/components/marcas/view-marcas/dialog-details-marca";
+import { StatusToggle } from "@/components/marcas/view-marcas/status-toggle";
 import { useRefresh } from "../../hooks/use-refresh";
 
 const ViewMarcasPage = () => {

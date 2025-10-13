@@ -9,10 +9,8 @@ import {
 } from "@heroicons/react/24/outline";
 
 import type { Grupo } from "@/context/auth-context";
-import {
-  DialogGrupoDetails,
-  StatusToggle,
-} from "../../components/grupos/view-grupos";
+import { DialogGrupoDetails } from "@/components/grupos/view-grupos/dialog-details-grupo";
+import { StatusToggle } from "@/components/grupos/view-grupos/status-toggle";
 import { useRefresh } from "../../hooks/use-refresh";
 
 const ViewGruposPage = () => {

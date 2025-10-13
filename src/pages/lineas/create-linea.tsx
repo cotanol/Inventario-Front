@@ -59,10 +59,11 @@ const CreateLineaPage = () => {
     <div>
       <Header titulo="Registrar Línea" />
       <div className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-gray-700">Nueva Línea</h2>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+          Nueva Línea
+        </h2>
+
+        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
           <LineaForm
             form={form}
             onSubmit={onSubmit}

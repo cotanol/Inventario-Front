@@ -57,10 +57,10 @@ const CreateMarcaPage = () => {
     <div>
       <Header titulo="Marcas" />
       <div className="p-6">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold text-gray-700 mb-6">
-            Crear Nueva Marca
-          </h2>
+        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+          Crear Nueva Marca
+        </h2>
+        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
           <MarcaForm
             form={form}
             onSubmit={onSubmit}

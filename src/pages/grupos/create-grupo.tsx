@@ -84,18 +84,18 @@ const CreateGrupoPage = () => {
     <div>
       <Header titulo="Registrar Grupo" />
       <div className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-gray-700">Nuevo Grupo</h2>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+          Nuevo Grupo
+        </h2>
+        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
           <GrupoForm
             form={form}
             onSubmit={onSubmit}
             isSubmitting={form.formState.isSubmitting}
             apiError={apiError}
-            onCancel={handleCancel}
             lineas={lineas}
             isLoadingLineas={isLoadingLineas}
+            onCancel={handleCancel}
           />
         </div>
       </div>
