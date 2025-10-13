@@ -92,7 +92,7 @@ const Header = ({ titulo }: HeaderProps) => {
           {/* 2. El Dropdown corregido */}
           {showDropdown && (
             <div className="absolute top-full right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-hidden">
-              <div className="p-2">
+              {/* <div className="p-2">
                 <Link
                   to="/perfil"
                   onClick={() => setShowDropdown(false)}
@@ -101,7 +101,7 @@ const Header = ({ titulo }: HeaderProps) => {
                   <UserCircleIcon className="w-5 h-5 text-gray-500" />
                   Ver perfil
                 </Link>
-              </div>
+              </div> */}
 
               <div className="border-t border-gray-100"></div>
 

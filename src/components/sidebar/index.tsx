@@ -19,6 +19,7 @@ const navigation = [
   { name: "Marcas", icon: RectangleStackIcon, href: "/marcas" },
   { name: "Lineas", icon: RectangleStackIcon, href: "/lineas" },
   { name: "Grupos", icon: RectangleStackIcon, href: "/grupos" },
+  { name: "Clientes", icon: RectangleStackIcon, href: "/clientes" },
 ];
 
 export default function Sidebar() {

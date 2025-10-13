@@ -21,6 +21,9 @@ import EditGrupoPage from "./pages/grupos/edit-grupo";
 import ProductosIndex from "./pages/productos/view-productos";
 import CreateProducto from "./pages/productos/create-producto";
 import EditProducto from "./pages/productos/edit-producto";
+import CreateClientePage from "./pages/clientes/create-cliente";
+import ViewClientesPage from "./pages/clientes/view-clientes";
+import EditClientePage from "./pages/clientes/edit-cliente";
 
 function App() {
   return (
@@ -56,6 +59,9 @@ function App() {
             <Route path="/productos/registrar" element={<CreateProducto />} />
             <Route path="/productos/editar/:id" element={<EditProducto />} />
             <Route path="/productos" element={<ProductosIndex />} />
+            <Route path="/clientes/registrar" element={<CreateClientePage />} />
+            <Route path="/clientes/editar/:id" element={<EditClientePage />} />
+            <Route path="/clientes" element={<ViewClientesPage />} />
           </Route>
         </Route>
         {/** Rutas generales */}
