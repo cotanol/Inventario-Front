@@ -1,6 +1,5 @@
 import React from "react";
 
-// --- Shadcn UI Imports ---
 import {
   Dialog,
   DialogContent,
@@ -12,13 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-// Se asume que la interfaz User se exportará desde el AuthContext
 import type { User } from "../../../context/auth-context";
 
 interface DialogUserDetailsProps {
-  user: User | null; // El usuario a mostrar, o null si no hay ninguno seleccionado
-  isOpen: boolean; // Controla si el dialog está visible
-  onClose: () => void; // Función para cerrar el dialog
+  user: User | null;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const DetailItem = ({

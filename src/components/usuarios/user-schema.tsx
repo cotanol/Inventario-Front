@@ -1,5 +1,6 @@
 import * as z from "zod";
 
+// Schema para crear usuario
 export const userFormSchema = z.object({
   nombres: z.string().min(1, "El nombre es requerido."),
   apellidoPaterno: z.string().min(1, "El apellido paterno es requerido."),
@@ -13,6 +14,14 @@ export const userFormSchema = z.object({
 
 export type UserFormData = z.infer<typeof userFormSchema>;
 
+// Schema para actualizar usuario (sin clave, todos los campos opcionales)
+export const updateUserFormSchema = userFormSchema
+  .partial()
+  .omit({ clave: true });
+
+export type UpdateUserFormData = z.infer<typeof updateUserFormSchema>;
+
+// Interface para perfiles
 export interface IPerfil {
   perfilId: number;
   nombre: string;
