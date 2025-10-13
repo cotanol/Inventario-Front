@@ -19,9 +19,9 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { Loader2, AlertCircle } from "lucide-react";
-import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
+import type { UseFormReturn } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
-import type { Linea } from "@/context/auth-context";
+import type { ILinea } from "./grupo-schema";
 
 interface GrupoFormProps<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -31,7 +31,7 @@ interface GrupoFormProps<T extends FieldValues> {
   submitButtonText?: string;
   cancelButtonText?: string;
   onCancel: () => void;
-  lineas: Linea[];
+  lineas: ILinea[];
   isLoadingLineas: boolean;
 }
 

@@ -3,21 +3,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import * as z from "zod";
 
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import { LineaForm } from "../../components/lineas/create-linea";
+import { LineaForm } from "@/components/lineas/linea-form";
+import {
+  updateLineaFormSchema,
+  type UpdateLineaFormData,
+} from "@/components/lineas/linea-schema";
 import type { Linea } from "@/context/auth-context";
-
-const updateLineaFormSchema = z.object({
-  nombre: z
-    .string()
-    .min(1, "El nombre es requerido.")
-    .max(50, "El nombre no puede exceder 50 caracteres."),
-});
-
-export type UpdateLineaFormData = z.infer<typeof updateLineaFormSchema>;
 
 const EditLineaPage = () => {
   const { id } = useParams<{ id: string }>(); // Obtenemos el ID de la línea de la URL

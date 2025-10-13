@@ -10,8 +10,8 @@ import {
 
 import type { Producto } from "@/context/auth-context";
 import { useRefresh } from "../../hooks/use-refresh";
-import { StatusToggle } from "@/components/productos/status-toggle/status-toggle";
-import { DialogProductoDetails } from "@/components/productos/dialog-details/dialog-producto-details";
+import { StatusToggle } from "@/components/productos/view-productos/status-toggle";
+import { DialogProductoDetails } from "@/components/productos/view-productos/dialog-details-producto";
 
 const ViewProductosPage = () => {
   const [selectedProducto, setSelectedProducto] = useState<Producto | null>(

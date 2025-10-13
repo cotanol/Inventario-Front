@@ -3,21 +3,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import * as z from "zod";
 
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import { MarcaForm } from "@/components/marcas/create-marca";
+import { MarcaForm } from "@/components/marcas/marca-form";
+import {
+  updateMarcaFormSchema,
+  type UpdateMarcaFormData,
+} from "@/components/marcas/marca-schema";
 import type { Marca } from "@/context/auth-context";
-
-const updateMarcaFormSchema = z.object({
-  nombre: z
-    .string()
-    .min(1, "El nombre es requerido.")
-    .max(50, "El nombre no puede exceder 50 caracteres."),
-});
-
-export type UpdateMarcaFormData = z.infer<typeof updateMarcaFormSchema>;
 
 const EditMarcaPage = () => {
   const { id } = useParams<{ id: string }>(); // Obtenemos el ID de la marca de la URL

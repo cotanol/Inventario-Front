@@ -4,18 +4,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
-// --- CORRECCIÓN: Se han ajustado las rutas de importación. ---
-// Por favor, asegúrate de que estas rutas coincidan con la estructura de carpetas de tu proyecto.
-// Es una práctica común omitir las extensiones de archivo (.ts/.tsx).
-
 import useFetchApi from "../../hooks/use-fetch";
-import Header from "../../components/header"; // Se ha cambiado el alias '@' por una ruta relativa
-import type { IPerfil } from "@/components/usuarios/create-user/user-schema";
+import Header from "../../components/header";
 import {
+  type IPerfil,
   updateUserFormSchema,
   type UpdateUserFormData,
-} from "@/components/usuarios/update-user/user-update-schema";
-import { UserForm } from "@/components/usuarios/create-user/form-user";
+} from "@/components/usuarios/user-schema";
+import { UserForm } from "@/components/usuarios/user-form";
 import type { User } from "@/context/auth-context";
 
 // Interfaz para la respuesta de la API al buscar un usuario
@@ -49,8 +45,6 @@ const EditUserPage = () => {
         get<IPerfil[]>("/auth/perfiles"),
       ]);
 
-      // Poblamos el formulario con los datos del usuario
-      // Encontrar el ID del perfil basado en el nombre del primer perfil del usuario
       const perfilNombre = userResponse.perfiles[0]; // Tomamos el primer perfil
       const perfilEncontrado = perfilesResponse.find(
         (p) => p.nombre === perfilNombre

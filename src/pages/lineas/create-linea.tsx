@@ -3,20 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import * as z from "zod";
 
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import { LineaForm } from "../../components/lineas/create-linea";
-
-const lineaFormSchema = z.object({
-  nombre: z
-    .string()
-    .min(1, "El nombre es requerido.")
-    .max(50, "El nombre no puede exceder 50 caracteres."),
-});
-
-export type LineaFormData = z.infer<typeof lineaFormSchema>;
+import { LineaForm } from "@/components/lineas/linea-form";
+import {
+  lineaFormSchema,
+  type LineaFormData,
+} from "@/components/lineas/linea-schema";
 
 const CreateLineaPage = () => {
   const { post } = useFetchApi();

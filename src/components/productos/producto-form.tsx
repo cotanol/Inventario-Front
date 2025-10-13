@@ -20,17 +20,17 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { Loader2, AlertCircle } from "lucide-react";
-import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
+import type { UseFormReturn } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
-import type { Grupo, Marca } from "@/context/auth-context";
+import type { IGrupo, IMarca } from "./producto-schema";
 
 interface ProductoFormProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   onSubmit: (values: T) => void;
   isSubmitting: boolean;
   apiError: string | null;
-  grupos: Grupo[];
-  marcas: Marca[];
+  grupos: IGrupo[];
+  marcas: IMarca[];
   submitButtonText?: string;
   cancelButtonText?: string;
   onCancel: () => void;
@@ -73,7 +73,10 @@ export const ProductoForm = <T extends FieldValues>({
               <FormItem>
                 <FormLabel>Nombre del Producto*</FormLabel>
                 <FormControl>
-                  <Input placeholder="Ej: Laptop HP, Monitor Samsung..." {...field} />
+                  <Input
+                    placeholder="Ej: Laptop HP, Monitor Samsung..."
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

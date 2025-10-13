@@ -12,10 +12,10 @@ import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { Loader2, AlertCircle } from "lucide-react";
-import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
+import type { UseFormReturn } from "react-hook-form";
 import type { FieldValues, Path } from "react-hook-form";
 
-interface LineaFormProps<T extends FieldValues> {
+interface MarcaFormProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   onSubmit: (values: T) => void;
   isSubmitting: boolean;
@@ -25,15 +25,15 @@ interface LineaFormProps<T extends FieldValues> {
   onCancel: () => void;
 }
 
-export const LineaForm = <T extends FieldValues>({
+export const MarcaForm = <T extends FieldValues>({
   form,
   onSubmit,
   isSubmitting,
   apiError,
-  submitButtonText = "Crear Línea",
+  submitButtonText = "Crear Marca",
   cancelButtonText = "Cancelar",
   onCancel,
-}: LineaFormProps<T>) => {
+}: MarcaFormProps<T>) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -42,12 +42,9 @@ export const LineaForm = <T extends FieldValues>({
           name={"nombre" as Path<T>}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nombre de la Línea*</FormLabel>
+              <FormLabel>Nombre de la Marca*</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Ej: Deportivos, Electrónicos, Hogar..."
-                  {...field}
-                />
+                <Input placeholder="Ej: Nike, Adidas, Samsung..." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

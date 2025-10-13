@@ -3,43 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import * as z from "zod";
 
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import { ProductoForm } from "@/components/productos/create-producto";
-import type { Grupo, Marca } from "@/context/auth-context";
-
-const productoFormSchema = z.object({
-  codigo: z
-    .string()
-    .min(1, "El código es requerido.")
-    .max(20, "El código no puede exceder 20 caracteres."),
-  nombre: z
-    .string()
-    .min(1, "El nombre es requerido.")
-    .max(100, "El nombre no puede exceder 100 caracteres."),
-  descripcion: z
-    .string()
-    .max(500, "La descripción no puede exceder 500 caracteres.")
-    .optional()
-    .or(z.literal("")),
-  precio: z
-    .number()
-    .min(0.01, "El precio debe ser mayor a 0.")
-    .max(99999999.99, "El precio es demasiado alto."),
-  grupoId: z.number().min(1, "Debe seleccionar un grupo."),
-  marcaId: z.number().min(1, "Debe seleccionar una marca."),
-});
-
-export type ProductoFormData = z.infer<typeof productoFormSchema>;
+import { ProductoForm } from "@/components/productos/producto-form";
+import {
+  productoFormSchema,
+  type ProductoFormData,
+  type IGrupo,
+  type IMarca,
+} from "@/components/productos/producto-schema";
 
 const CreateProductoPage = () => {
   const { post, get } = useFetchApi();
   const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);
-  const [grupos, setGrupos] = useState<Grupo[]>([]);
-  const [marcas, setMarcas] = useState<Marca[]>([]);
+  const [grupos, setGrupos] = useState<IGrupo[]>([]);
+  const [marcas, setMarcas] = useState<IMarca[]>([]);
   const [loading, setLoading] = useState(true);
 
   const form = useForm<ProductoFormData>({
@@ -61,8 +41,8 @@ const CreateProductoPage = () => {
     const fetchData = async () => {
       try {
         const [gruposData, marcasData] = await Promise.all([
-          get<Grupo[]>("/catalogo/grupos"),
-          get<Marca[]>("/catalogo/marcas"),
+          get<IGrupo[]>("/catalogo/grupos"),
+          get<IMarca[]>("/catalogo/marcas"),
         ]);
         setGrupos(gruposData);
         setMarcas(marcasData);

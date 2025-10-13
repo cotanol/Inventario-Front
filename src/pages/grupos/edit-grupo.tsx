@@ -3,22 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import * as z from "zod";
 
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import { GrupoForm } from "../../components/grupos/create-grupo";
-import type { Grupo, Linea } from "@/context/auth-context";
-
-const updateGrupoFormSchema = z.object({
-  nombre: z
-    .string()
-    .min(1, "El nombre es requerido.")
-    .max(50, "El nombre no puede exceder 50 caracteres."),
-  lineaId: z.number().min(1, "Debe seleccionar una línea."),
-});
-
-export type UpdateGrupoFormData = z.infer<typeof updateGrupoFormSchema>;
+import { GrupoForm } from "@/components/grupos/grupo-form";
+import {
+  updateGrupoFormSchema,
+  type UpdateGrupoFormData,
+  type ILinea,
+} from "@/components/grupos/grupo-schema";
+import type { Grupo } from "@/context/auth-context";
 
 const EditGrupoPage = () => {
   const { id } = useParams<{ id: string }>(); // Obtenemos el ID del grupo de la URL
@@ -28,7 +22,7 @@ const EditGrupoPage = () => {
 
   const [apiError, setApiError] = useState<string | null>(null);
   const [isLoadingData, setIsLoadingData] = useState(true);
-  const [lineas, setLineas] = useState<Linea[]>([]);
+  const [lineas, setLineas] = useState<ILinea[]>([]);
   const [isLoadingLineas, setIsLoadingLineas] = useState(true);
 
   const form = useForm<UpdateGrupoFormData>({
@@ -42,7 +36,7 @@ const EditGrupoPage = () => {
   useEffect(() => {
     const loadLineas = async () => {
       try {
-        const lineasResponse = await get<Linea[]>("/catalogo/lineas");
+        const lineasResponse = await get<ILinea[]>("/catalogo/lineas");
         // Filtrar solo líneas activas
         const lineasActivas = lineasResponse.filter(
           (linea) => linea.estadoRegistro

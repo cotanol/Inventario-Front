@@ -3,20 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import * as z from "zod";
 
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import { MarcaForm } from "@/components/marcas/create-marca";
-
-const marcaFormSchema = z.object({
-  nombre: z
-    .string()
-    .min(1, "El nombre es requerido.")
-    .max(50, "El nombre no puede exceder 50 caracteres."),
-});
-
-export type MarcaFormData = z.infer<typeof marcaFormSchema>;
+import { MarcaForm } from "@/components/marcas/marca-form";
+import {
+  marcaFormSchema,
+  type MarcaFormData,
+} from "@/components/marcas/marca-schema";
 
 const CreateMarcaPage = () => {
   const { post } = useFetchApi();

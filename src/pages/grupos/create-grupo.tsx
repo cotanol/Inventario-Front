@@ -3,28 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import * as z from "zod";
 
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import { GrupoForm } from "../../components/grupos/create-grupo";
-import type { Linea } from "@/context/auth-context";
-
-const grupoFormSchema = z.object({
-  nombre: z
-    .string()
-    .min(1, "El nombre es requerido.")
-    .max(50, "El nombre no puede exceder 50 caracteres."),
-  lineaId: z.number().min(1, "Debe seleccionar una línea."),
-});
-
-export type GrupoFormData = z.infer<typeof grupoFormSchema>;
+import { GrupoForm } from "@/components/grupos/grupo-form";
+import {
+  grupoFormSchema,
+  type GrupoFormData,
+  type ILinea,
+} from "@/components/grupos/grupo-schema";
 
 const CreateGrupoPage = () => {
   const { get, post } = useFetchApi();
   const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);
-  const [lineas, setLineas] = useState<Linea[]>([]);
+  const [lineas, setLineas] = useState<ILinea[]>([]);
   const [isLoadingLineas, setIsLoadingLineas] = useState(true);
 
   const form = useForm<GrupoFormData>({
@@ -40,7 +33,7 @@ const CreateGrupoPage = () => {
   useEffect(() => {
     const loadLineas = async () => {
       try {
-        const lineasResponse = await get<Linea[]>("/catalogo/lineas");
+        const lineasResponse = await get<ILinea[]>("/catalogo/lineas");
         // Filtrar solo líneas activas
         const lineasActivas = lineasResponse.filter(
           (linea) => linea.estadoRegistro

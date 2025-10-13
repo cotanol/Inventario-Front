@@ -10,8 +10,8 @@ import {
   userFormSchema,
   type IPerfil,
   type UserFormData,
-} from "@/components/usuarios/create-user/user-schema";
-import { UserForm } from "@/components/usuarios/create-user/form-user";
+} from "@/components/usuarios/user-schema";
+import { UserForm } from "@/components/usuarios/user-form";
 
 const CreateUserPage = () => {
   const { get, post } = useFetchApi();
@@ -82,8 +82,6 @@ const CreateUserPage = () => {
     });
   }
 
-  // --- 4. PRESENTACIÓN: Renderizado de la página ---
-  // La página renderiza el layout y pasa toda la lógica al UserForm.
   return (
     <div>
       <Header titulo="Usuarios" />
