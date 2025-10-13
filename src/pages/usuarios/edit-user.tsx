@@ -81,24 +81,23 @@ const EditUserPage = () => {
 
     const updateUserPromise = () => patch(`/auth/update-user/${id}`, payload);
 
-    try {
-      await toast.promise(updateUserPromise(), {
-        loading: "Actualizando usuario...",
-        success: `Usuario ${values.nombres} ${values.apellidoPaterno} actualizado exitosamente 🎉`,
-        error: (err) => {
-          const errorMessage =
-            err.response?.data?.message || "Error al actualizar el usuario";
-          const message = Array.isArray(errorMessage)
-            ? errorMessage.join(", ")
-            : errorMessage;
-          setApiError(message);
-          return `Error: ${message}`;
-        },
-      });
-      navigate("/usuarios");
-    } catch (error) {
-      // El error ya fue manejado en el toast
-    }
+    toast.promise(updateUserPromise(), {
+      loading: "Actualizando usuario...",
+      success: () => {
+        // Navegamos a la lista después de un pequeño delay para mostrar el toast
+        setTimeout(() => navigate("/usuarios"), 1000);
+        return "¡Usuario actualizado exitosamente! 🎉";
+      },
+      error: (err) => {
+        const errorMessage =
+          err.response?.data?.message || "Error al actualizar el usuario";
+        const message = Array.isArray(errorMessage)
+          ? errorMessage.join(", ")
+          : errorMessage;
+        setApiError(message);
+        return `Error: ${message}`;
+      },
+    });
   }
 
   // --- RENDERIZADO ---

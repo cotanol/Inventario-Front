@@ -38,24 +38,25 @@ const CreateMarcaPage = () => {
 
     const createMarcaPromise = () => post("/catalogo/marcas", values);
 
-    try {
-      await toast.promise(createMarcaPromise(), {
-        loading: "Creando marca...",
-        success: `Marca ${values.nombre} creada exitosamente 🎉`,
-        error: (err) => {
-          const errorMessage =
-            err.response?.data?.message || "Error al crear la marca";
-          const message = Array.isArray(errorMessage)
-            ? errorMessage.join(", ")
-            : errorMessage;
-          setApiError(message);
-          return `Error: ${message}`;
-        },
-      });
-      navigate("/marcas");
-    } catch (error) {
-      // El error ya fue manejado en el toast
-    }
+    toast.promise(createMarcaPromise(), {
+      loading: "Creando marca...",
+      success: () => {
+        // Reseteamos el formulario
+        form.reset();
+        // Navegamos a la lista después de un pequeño delay para mostrar el toast
+        setTimeout(() => navigate("/marcas"), 1000);
+        return "¡Marca creada exitosamente! 🎉";
+      },
+      error: (err) => {
+        const errorMessage =
+          err.response?.data?.message || "Error al crear la marca";
+        const message = Array.isArray(errorMessage)
+          ? errorMessage.join(", ")
+          : errorMessage;
+        setApiError(message);
+        return `Error: ${message}`;
+      },
+    });
   }
 
   return (

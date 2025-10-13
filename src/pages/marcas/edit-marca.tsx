@@ -66,24 +66,23 @@ const EditMarcaPage = () => {
 
     const updateMarcaPromise = () => patch(`/catalogo/marcas/${id}`, values);
 
-    try {
-      await toast.promise(updateMarcaPromise(), {
-        loading: "Actualizando marca...",
-        success: `Marca ${values.nombre} actualizada exitosamente 🎉`,
-        error: (err) => {
-          const errorMessage =
-            err.response?.data?.message || "Error al actualizar la marca";
-          const message = Array.isArray(errorMessage)
-            ? errorMessage.join(", ")
-            : errorMessage;
-          setApiError(message);
-          return `Error: ${message}`;
-        },
-      });
-      navigate("/marcas");
-    } catch (error) {
-      // El error ya fue manejado en el toast
-    }
+    toast.promise(updateMarcaPromise(), {
+      loading: "Actualizando marca...",
+      success: () => {
+        // Navegamos a la lista después de un pequeño delay para mostrar el toast
+        setTimeout(() => navigate("/marcas"), 1000);
+        return "¡Marca actualizada exitosamente! 🎉";
+      },
+      error: (err) => {
+        const errorMessage =
+          err.response?.data?.message || "Error al actualizar la marca";
+        const message = Array.isArray(errorMessage)
+          ? errorMessage.join(", ")
+          : errorMessage;
+        setApiError(message);
+        return `Error: ${message}`;
+      },
+    });
   }
 
   // --- RENDERIZADO ---

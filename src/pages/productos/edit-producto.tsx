@@ -103,24 +103,23 @@ const EditProductoPage = () => {
         marcaId: values.marcaId,
       });
 
-    try {
-      await toast.promise(updateProductoPromise(), {
-        loading: "Actualizando producto...",
-        success: `Producto ${values.nombre} actualizado exitosamente 🎉`,
-        error: (err) => {
-          const errorMessage =
-            err.response?.data?.message || "Error al actualizar el producto";
-          const message = Array.isArray(errorMessage)
-            ? errorMessage.join(", ")
-            : errorMessage;
-          setApiError(message);
-          return `Error: ${message}`;
-        },
-      });
-      navigate("/productos");
-    } catch (error) {
-      // El error ya fue manejado en el toast
-    }
+    toast.promise(updateProductoPromise(), {
+      loading: "Actualizando producto...",
+      success: () => {
+        // Navegamos a la lista después de un pequeño delay para mostrar el toast
+        setTimeout(() => navigate("/productos"), 1000);
+        return "¡Producto actualizado exitosamente! 🎉";
+      },
+      error: (err) => {
+        const errorMessage =
+          err.response?.data?.message || "Error al actualizar el producto";
+        const message = Array.isArray(errorMessage)
+          ? errorMessage.join(", ")
+          : errorMessage;
+        setApiError(message);
+        return `Error: ${message}`;
+      },
+    });
   }
 
   // --- RENDERIZADO ---

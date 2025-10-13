@@ -58,24 +58,25 @@ const CreateUserPage = () => {
 
     const createUserPromise = () => post("/auth/register", payload);
 
-    try {
-      await toast.promise(createUserPromise(), {
-        loading: "Creando usuario...",
-        success: `Usuario ${values.nombres} ${values.apellidoPaterno} creado exitosamente 🎉`,
-        error: (err) => {
-          const errorMessage =
-            err.response?.data?.message || "Error al crear el usuario";
-          const message = Array.isArray(errorMessage)
-            ? errorMessage.join(", ")
-            : errorMessage;
-          setApiError(message);
-          return `Error: ${message}`;
-        },
-      });
-      navigate("/usuarios");
-    } catch (error) {
-      // El error ya fue manejado en el toast
-    }
+    toast.promise(createUserPromise(), {
+      loading: "Creando usuario...",
+      success: () => {
+        // Reseteamos el formulario
+        form.reset();
+        // Navegamos a la lista después de un pequeño delay para mostrar el toast
+        setTimeout(() => navigate("/usuarios"), 1000);
+        return "¡Usuario creado exitosamente! 🎉";
+      },
+      error: (err) => {
+        const errorMessage =
+          err.response?.data?.message || "Error al crear el usuario";
+        const message = Array.isArray(errorMessage)
+          ? errorMessage.join(", ")
+          : errorMessage;
+        setApiError(message);
+        return `Error: ${message}`;
+      },
+    });
   }
 
   // --- 4. PRESENTACIÓN: Renderizado de la página ---

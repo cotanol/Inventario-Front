@@ -90,25 +90,25 @@ const CreateProductoPage = () => {
         marcaId: values.marcaId,
       });
 
-    try {
-      await toast.promise(createProductoPromise(), {
-        loading: "Creando producto...",
-        success: `Producto ${values.nombre} creado exitosamente 🎉`,
-        error: (err) => {
-          const errorMessage =
-            err.response?.data?.message || "Error al crear el producto";
-          const message = Array.isArray(errorMessage)
-            ? errorMessage.join(", ")
-            : errorMessage;
-          setApiError(message);
-          return `Error: ${message}`;
-        },
-      });
-      form.reset();
-      navigate("/productos");
-    } catch (error) {
-      // El error ya fue manejado en el toast
-    }
+    toast.promise(createProductoPromise(), {
+      loading: "Creando producto...",
+      success: () => {
+        // Reseteamos el formulario
+        form.reset();
+        // Navegamos a la lista después de un pequeño delay para mostrar el toast
+        setTimeout(() => navigate("/productos"), 1000);
+        return "¡Producto creado exitosamente! 🎉";
+      },
+      error: (err) => {
+        const errorMessage =
+          err.response?.data?.message || "Error al crear el producto";
+        const message = Array.isArray(errorMessage)
+          ? errorMessage.join(", ")
+          : errorMessage;
+        setApiError(message);
+        return `Error: ${message}`;
+      },
+    });
   }
 
   if (loading) {
