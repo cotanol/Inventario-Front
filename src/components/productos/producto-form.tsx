@@ -82,10 +82,7 @@ export const ProductoForm = <T extends FieldValues>({
               </FormItem>
             )}
           />
-        </div>
 
-        {/* Segunda fila: Precio y Grupo */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
             name={"precio" as Path<T>}
@@ -123,7 +120,7 @@ export const ProductoForm = <T extends FieldValues>({
                   disabled={isSubmitting}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Selecciona un grupo" />
                     </SelectTrigger>
                   </FormControl>
@@ -142,40 +139,38 @@ export const ProductoForm = <T extends FieldValues>({
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name={"marcaId" as Path<T>}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Marca*</FormLabel>
+                <Select
+                  onValueChange={(value) => field.onChange(parseInt(value))}
+                  value={field.value?.toString() || ""}
+                  disabled={isSubmitting}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Selecciona una marca" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {marcas.map((marca) => (
+                      <SelectItem
+                        key={marca.marcaId}
+                        value={marca.marcaId.toString()}
+                      >
+                        {marca.nombre}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-
-        {/* Marca */}
-        <FormField
-          control={form.control}
-          name={"marcaId" as Path<T>}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Marca*</FormLabel>
-              <Select
-                onValueChange={(value) => field.onChange(parseInt(value))}
-                value={field.value?.toString() || ""}
-                disabled={isSubmitting}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona una marca" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {marcas.map((marca) => (
-                    <SelectItem
-                      key={marca.marcaId}
-                      value={marca.marcaId.toString()}
-                    >
-                      {marca.nombre}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         {/* Descripción */}
         <FormField

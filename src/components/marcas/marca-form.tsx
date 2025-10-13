@@ -37,19 +37,24 @@ export const MarcaForm = <T extends FieldValues>({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name={"nombre" as Path<T>}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nombre de la Marca*</FormLabel>
-              <FormControl>
-                <Input placeholder="Ej: Nike, Adidas, Samsung..." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name={"nombre" as Path<T>}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nombre de la Marca*</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Ej: Nike, Adidas, Samsung..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {apiError && (
           <Alert variant="destructive">

@@ -30,8 +30,8 @@ const CreateProductoPage = () => {
       nombre: "",
       descripcion: "",
       precio: 0,
-      grupoId: 0,
-      marcaId: 0,
+      grupoId: undefined,
+      marcaId: undefined,
     },
   });
 

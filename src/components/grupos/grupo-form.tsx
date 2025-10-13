@@ -49,60 +49,62 @@ export const GrupoForm = <T extends FieldValues>({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name={"nombre" as Path<T>}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nombre del Grupo*</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Ej: Zapatos, Camisas, Teléfonos..."
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name={"lineaId" as Path<T>}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Línea*</FormLabel>
-              <Select
-                onValueChange={(value) => field.onChange(parseInt(value))}
-                value={field.value?.toString()}
-                disabled={isLoadingLineas}
-              >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name={"nombre" as Path<T>}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nombre del Grupo*</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue
-                      placeholder={
-                        isLoadingLineas
-                          ? "Cargando líneas..."
-                          : "Selecciona una línea"
-                      }
-                    />
-                  </SelectTrigger>
+                  <Input
+                    placeholder="Ej: Zapatos, Camisas, Teléfonos..."
+                    {...field}
+                  />
                 </FormControl>
-                <SelectContent>
-                  {lineas.map((linea) => (
-                    <SelectItem
-                      key={linea.lineaId}
-                      value={linea.lineaId.toString()}
-                    >
-                      {linea.nombre}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={"lineaId" as Path<T>}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Línea*</FormLabel>
+                <Select
+                  onValueChange={(value) => field.onChange(parseInt(value))}
+                  value={field.value?.toString()}
+                  disabled={isLoadingLineas}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue
+                        placeholder={
+                          isLoadingLineas
+                            ? "Cargando líneas..."
+                            : "Selecciona una línea"
+                        }
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {lineas.map((linea) => (
+                      <SelectItem
+                        key={linea.lineaId}
+                        value={linea.lineaId.toString()}
+                      >
+                        {linea.nombre}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {apiError && (
           <Alert variant="destructive">
