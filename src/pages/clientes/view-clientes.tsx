@@ -5,6 +5,7 @@ import {
   UserPlusIcon,
   EyeIcon,
   PencilSquareIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { type ICliente } from "@/components/clientes/cliente-schema";
 
@@ -23,6 +24,8 @@ const ViewClientesPage = () => {
     updateItem,
   } = useRefresh<ICliente>("/clientes");
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   const handleClienteStatusChange = (clienteId: number, newStatus: boolean) => {
     updateItem((currentClientes) =>
       currentClientes.map((cliente) =>
@@ -32,6 +35,15 @@ const ViewClientesPage = () => {
       )
     );
   };
+
+  const filteredClientes = (clientes || []).filter((cliente) => {
+    const term = searchTerm.toLowerCase();
+    const nombre = cliente.nombre.toLowerCase();
+    const ruc = cliente.ruc.toLowerCase();
+
+    // Devuelve true si el término de búsqueda está incluido en el nombre O en el RUC
+    return nombre.includes(term) || ruc.includes(term);
+  });
 
   return (
     <div>
@@ -44,7 +56,17 @@ const ViewClientesPage = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow-sm">
-          <div className="flex items-center justify-end p-4 border-b border-gray-200">
+          <div className="flex items-center justify-between p-4 border-b border-gray-200">
+            <div className="relative">
+              <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Buscar por Nombre o RUC..."
+                className="pl-10 pr-4 py-2 w-72 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
             <Link
               to="/clientes/registrar"
               className="inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
@@ -91,7 +113,7 @@ const ViewClientesPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {clientes.map((cliente) => (
+                  {filteredClientes.map((cliente) => (
                     <tr
                       key={cliente.clienteId}
                       className="border-b border-gray-200 hover:bg-gray-50"
