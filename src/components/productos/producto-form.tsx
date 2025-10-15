@@ -170,6 +170,56 @@ export const ProductoForm = <T extends FieldValues>({
               </FormItem>
             )}
           />
+          {/* --- NUEVOS CAMPOS DE INVENTARIO --- */}
+          <FormField
+            control={form.control}
+            name={"cantidadActual" as Path<T>}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Cantidad Actual (Stock)*</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="0"
+                    step="1" // Ideal para enteros
+                    {...field}
+                    // --- LÓGICA IMITADA DE PRECIO ---
+                    onChange={(e) =>
+                      field.onChange(parseInt(e.target.value, 10) || 0)
+                    }
+                    value={field.value?.toString() || ""}
+                    disabled={isSubmitting}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={"cantidadMinima" as Path<T>}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Stock Mínimo*</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="0"
+                    step="1" // Ideal para enteros
+                    {...field}
+                    // --- LÓGICA IMITADA DE PRECIO ---
+                    onChange={(e) =>
+                      field.onChange(parseInt(e.target.value, 10) || 0)
+                    }
+                    value={field.value?.toString() || ""}
+                    disabled={isSubmitting}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         {/* Descripción */}

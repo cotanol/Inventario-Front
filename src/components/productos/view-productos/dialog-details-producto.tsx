@@ -69,6 +69,25 @@ export const DialogProductoDetails = ({
           <DetailItem label="Línea" value={producto.grupo.linea.nombre} />
           <DetailItem label="Marca" value={producto.marca.nombre} />
           <DetailItem
+            label="Cantidad Actual (Stock)"
+            value={
+              <span
+                className={
+                  producto.inventario.cantidadActual <=
+                  producto.inventario.cantidadMinima
+                    ? "text-red-600 font-bold"
+                    : "text-gray-800"
+                }
+              >
+                {producto.inventario.cantidadActual} unidades
+              </span>
+            }
+          />
+          <DetailItem
+            label="Stock Mínimo"
+            value={`${producto.inventario.cantidadMinima} unidades`}
+          />
+          <DetailItem
             label="Estado"
             value={
               <span

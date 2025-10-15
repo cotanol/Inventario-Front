@@ -70,6 +70,11 @@ export interface Producto {
     marcaId: number;
     nombre: string;
   };
+  inventario: {
+    inventarioId: number;
+    cantidadActual: number;
+    cantidadMinima: number;
+  };
 }
 
 export interface Credentials {

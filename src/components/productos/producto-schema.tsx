@@ -21,6 +21,10 @@ export const productoFormSchema = z.object({
     .max(99999999.99, "El precio es demasiado alto."),
   grupoId: z.number().min(1, "Debe seleccionar un grupo."),
   marcaId: z.number().min(1, "Debe seleccionar una marca."),
+
+  // --- CAMPOS DE INVENTARIO  ---
+  cantidadActual: z.number().min(0, "La cantidad no puede ser negativa."),
+  cantidadMinima: z.number().min(0, "La cantidad no puede ser negativa."),
 });
 
 export type ProductoFormData = z.infer<typeof productoFormSchema>;

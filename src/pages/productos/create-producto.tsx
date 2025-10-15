@@ -29,9 +29,11 @@ const CreateProductoPage = () => {
       codigo: "",
       nombre: "",
       descripcion: "",
-      precio: 0,
+      precio: 0.1,
       grupoId: undefined,
       marcaId: undefined,
+      cantidadActual: 0,
+      cantidadMinima: 0,
     },
   });
 
@@ -76,6 +78,8 @@ const CreateProductoPage = () => {
         precio: values.precio,
         grupoId: values.grupoId,
         marcaId: values.marcaId,
+        cantidadActual: values.cantidadActual,
+        cantidadMinima: values.cantidadMinima,
       });
 
     toast.promise(createProductoPromise(), {

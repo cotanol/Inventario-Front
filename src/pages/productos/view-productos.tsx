@@ -124,6 +124,9 @@ const ViewProductosPage = () => {
                       Precio
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Stock
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
                       Estado
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
@@ -154,6 +157,18 @@ const ViewProductosPage = () => {
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-900">
                         S/ {producto.precio.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4 text-sm font-medium">
+                        <span
+                          className={
+                            producto.inventario.cantidadActual <=
+                            producto.inventario.cantidadMinima
+                              ? "text-red-600 font-bold"
+                              : "text-gray-900"
+                          }
+                        >
+                          {producto.inventario.cantidadActual}
+                        </span>
                       </td>
                       <td className="px-6 py-4">
                         {/* Aquí se renderiza el componente del toggle */}

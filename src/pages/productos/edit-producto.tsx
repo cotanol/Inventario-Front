@@ -63,6 +63,8 @@ const EditProductoPage = () => {
         precio: productoResponse.precio,
         grupoId: productoResponse.grupo.grupoId,
         marcaId: productoResponse.marca.marcaId,
+        cantidadActual: productoResponse.inventario.cantidadActual,
+        cantidadMinima: productoResponse.inventario.cantidadMinima,
       });
     } catch (err) {
       console.error("Error al cargar datos del producto:", err);
@@ -89,6 +91,8 @@ const EditProductoPage = () => {
         precio: values.precio,
         grupoId: values.grupoId,
         marcaId: values.marcaId,
+        cantidadActual: values.cantidadActual,
+        cantidadMinima: values.cantidadMinima,
       });
 
     toast.promise(updateProductoPromise(), {
