@@ -50,11 +50,13 @@ const EditUserPage = () => {
         (p) => p.nombre === perfilNombre
       );
 
+      const perfilesActivos = perfilesResponse.filter((p) => p.estadoRegistro);
+
       form.reset({
         ...userResponse,
         perfilesIds: perfilEncontrado?.perfilId,
       });
-      setPerfiles(perfilesResponse);
+      setPerfiles(perfilesActivos);
     } catch (err) {
       console.error("Error al cargar datos para editar", err);
       setApiError("No se pudieron cargar los datos del usuario.");

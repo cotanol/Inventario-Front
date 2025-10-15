@@ -40,12 +40,20 @@ const CreateProductoPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [gruposData, marcasData] = await Promise.all([
+        const [gruposResponse, marcasResponse] = await Promise.all([
           get<IGrupo[]>("/catalogo/grupos"),
           get<IMarca[]>("/catalogo/marcas"),
         ]);
-        setGrupos(gruposData);
-        setMarcas(marcasData);
+
+        const marcasActivas = marcasResponse.filter(
+          (marca) => marca.estadoRegistro
+        );
+        const gruposActivos = gruposResponse.filter(
+          (grupo) => grupo.estadoRegistro
+        );
+
+        setGrupos(gruposActivos);
+        setMarcas(marcasActivas);
       } catch (err) {
         console.error("Error al cargar datos:", err);
         setApiError("Error al cargar los datos necesarios");

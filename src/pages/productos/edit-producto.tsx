@@ -45,8 +45,15 @@ const EditProductoPage = () => {
           get<IMarca[]>("/catalogo/marcas"),
         ]);
 
-      setGrupos(gruposResponse);
-      setMarcas(marcasResponse);
+      const marcasActivas = marcasResponse.filter(
+        (marca) => marca.estadoRegistro
+      );
+      const gruposActivos = gruposResponse.filter(
+        (grupo) => grupo.estadoRegistro
+      );
+
+      setGrupos(gruposActivos);
+      setMarcas(marcasActivas);
 
       // Poblamos el formulario con los datos del producto
       form.reset({

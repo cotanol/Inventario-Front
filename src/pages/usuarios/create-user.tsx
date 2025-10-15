@@ -40,7 +40,11 @@ const CreateUserPage = () => {
     const fetchPerfiles = async () => {
       try {
         const response = await get<IPerfil[]>("/auth/perfiles");
-        setPerfiles(response);
+
+        const perfilesActivos = response.filter(
+          (perfil) => perfil.estadoRegistro
+        );
+        setPerfiles(perfilesActivos);
       } catch (err) {
         console.error("Error al cargar los perfiles", err);
         setApiError("No se pudieron cargar los perfiles para seleccionar.");
