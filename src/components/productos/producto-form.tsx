@@ -52,7 +52,7 @@ export const ProductoForm = <T extends FieldValues>({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {/* Primera fila: Código y Nombre */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
+          {/* <FormField
             control={form.control}
             name={"codigo" as Path<T>}
             render={({ field }) => (
@@ -64,7 +64,7 @@ export const ProductoForm = <T extends FieldValues>({
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
           <FormField
             control={form.control}
@@ -208,7 +208,7 @@ export const ProductoForm = <T extends FieldValues>({
                     placeholder="0"
                     step="1" // Ideal para enteros
                     {...field}
-                    // --- LÓGICA IMITADA DE PRECIO ---
+                    // --- LÓGICA LIMITADA DE PRECIO ---
                     onChange={(e) =>
                       field.onChange(parseInt(e.target.value, 10) || 0)
                     }

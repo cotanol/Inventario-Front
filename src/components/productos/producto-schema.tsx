@@ -2,10 +2,10 @@ import * as z from "zod";
 
 // Schema para crear producto
 export const productoFormSchema = z.object({
-  codigo: z
-    .string()
-    .min(1, "El código es requerido.")
-    .max(20, "El código no puede exceder 20 caracteres."),
+  // codigo: z
+  //   .string()
+  //   .min(1, "El código es requerido.")
+  //   .max(20, "El código no puede exceder 20 caracteres."),
   nombre: z
     .string()
     .min(1, "El nombre es requerido.")

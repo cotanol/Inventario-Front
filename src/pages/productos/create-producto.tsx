@@ -26,7 +26,6 @@ const CreateProductoPage = () => {
     resolver: zodResolver(productoFormSchema),
     mode: "onChange",
     defaultValues: {
-      codigo: "",
       nombre: "",
       descripcion: "",
       precio: 0.1,
@@ -72,7 +71,6 @@ const CreateProductoPage = () => {
 
     const createProductoPromise = () =>
       post("/catalogo/productos", {
-        codigo: values.codigo,
         nombre: values.nombre,
         descripcion: values.descripcion || null,
         precio: values.precio,

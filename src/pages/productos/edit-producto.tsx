@@ -57,7 +57,6 @@ const EditProductoPage = () => {
 
       // Poblamos el formulario con los datos del producto
       form.reset({
-        codigo: productoResponse.codigo,
         nombre: productoResponse.nombre,
         descripcion: productoResponse.descripcion || "",
         precio: productoResponse.precio,
@@ -85,7 +84,6 @@ const EditProductoPage = () => {
 
     const updateProductoPromise = () =>
       patch(`/catalogo/productos/${id}`, {
-        codigo: values.codigo,
         nombre: values.nombre,
         descripcion: values.descripcion || null,
         precio: values.precio,
