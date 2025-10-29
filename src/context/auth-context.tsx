@@ -12,6 +12,7 @@ export interface User {
   correoElectronico: string;
   estadoRegistro: boolean;
   perfiles: string[];
+  permisos: string[]; // Array de keyPermisos (ej: ['VER_USUARIOS', 'CREAR_USUARIO'])
   nombres: string;
   apellidoPaterno: string;
   apellidoMaterno?: string | null;
