@@ -12,12 +12,21 @@ import {
 } from "@/components/clientes/cliente-schema";
 import { ClienteForm } from "@/components/clientes/cliente-form";
 
+interface Vendedor {
+  vendedorId: number;
+  nombres: string;
+  apellidoPaterno: string;
+  apellidoMaterno: string;
+  estadoRegistro: boolean;
+}
+
 const EditClientePage = () => {
   const { id } = useParams<{ id: string }>();
   const { get, patch } = useFetchApi();
   const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);
   const [isLoadingData, setIsLoadingData] = useState(true);
+  const [vendedores, setVendedores] = useState<Vendedor[]>([]);
 
   const form = useForm<UpdateClienteFormData>({
     resolver: zodResolver(updateClienteFormSchema),
@@ -30,7 +39,15 @@ const EditClientePage = () => {
     if (!id) return;
     setIsLoadingData(true);
     try {
-      const clienteData = await get<ICliente>(`/clientes/${id}`);
+      const [clienteData, vendedoresResponse] = await Promise.all([
+        get<ICliente>(`/clientes/${id}`),
+        get<Vendedor[]>("/vendedores"),
+      ]);
+
+      const vendedoresActivos = vendedoresResponse.filter(
+        (vendedor) => vendedor.estadoRegistro
+      );
+      setVendedores(vendedoresActivos);
       form.reset(clienteData);
     } catch (err) {
       setApiError("No se pudieron cargar los datos del cliente.");
@@ -91,6 +108,7 @@ const EditClientePage = () => {
             onSubmit={onSubmit}
             isSubmitting={isSubmitting}
             apiError={apiError}
+            vendedores={vendedores}
             onCancel={() => navigate("/clientes")}
             submitButtonText="Actualizar Cliente"
           />

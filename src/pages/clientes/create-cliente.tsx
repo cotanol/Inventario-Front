@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,10 +11,20 @@ import {
 } from "@/components/clientes/cliente-schema";
 import { ClienteForm } from "@/components/clientes/cliente-form";
 
+interface Vendedor {
+  vendedorId: number;
+  nombres: string;
+  apellidoPaterno: string;
+  apellidoMaterno: string;
+  estadoRegistro: boolean;
+}
+
 const CreateClientePage = () => {
-  const { post } = useFetchApi();
+  const { post, get } = useFetchApi();
   const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);
+  const [vendedores, setVendedores] = useState<Vendedor[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const form = useForm<ClienteFormData>({
     resolver: zodResolver(clienteFormSchema),
@@ -27,11 +37,30 @@ const CreateClientePage = () => {
       email: "",
       clasificacion: "",
       departamento: "",
+      provincia: "",
       distrito: "",
     },
   });
 
   const { isSubmitting } = form.formState;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const vendedoresResponse = await get<Vendedor[]>("/vendedores");
+        const vendedoresActivos = vendedoresResponse.filter(
+          (vendedor) => vendedor.estadoRegistro
+        );
+        setVendedores(vendedoresActivos);
+      } catch (err) {
+        console.error("Error al cargar vendedores:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [get]);
 
   async function onSubmit(values: ClienteFormData) {
     setApiError(null);
@@ -59,6 +88,15 @@ const CreateClientePage = () => {
     });
   }
 
+  if (loading) {
+    return (
+      <div>
+        <Header titulo="Clientes" />
+        <div className="p-6">Cargando datos necesarios...</div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Header titulo="Clientes" />
@@ -72,6 +110,7 @@ const CreateClientePage = () => {
             onSubmit={onSubmit}
             isSubmitting={isSubmitting}
             apiError={apiError}
+            vendedores={vendedores}
             onCancel={() => navigate("/clientes")}
           />
         </div>

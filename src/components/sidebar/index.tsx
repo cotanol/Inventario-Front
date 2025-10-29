@@ -21,6 +21,7 @@ const navigation = [
   { name: "Lineas", icon: RectangleStackIcon, href: "/lineas" },
   { name: "Grupos", icon: RectangleStackIcon, href: "/grupos" },
   { name: "Clientes", icon: RectangleStackIcon, href: "/clientes" },
+  { name: "Vendedores", icon: UserIcon, href: "/vendedores" },
 ];
 
 export default function Sidebar() {

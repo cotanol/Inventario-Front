@@ -24,6 +24,9 @@ import EditProducto from "./pages/productos/edit-producto";
 import CreateClientePage from "./pages/clientes/create-cliente";
 import ViewClientesPage from "./pages/clientes/view-clientes";
 import EditClientePage from "./pages/clientes/edit-cliente";
+import CreateVendedorPage from "./pages/vendedores/create-vendedor";
+import ViewVendedoresPage from "./pages/vendedores/view-vendedores";
+import EditVendedorPage from "./pages/vendedores/edit-vendedor";
 import EditPerfilPage from "./pages/perfiles/edit-perfil";
 import ViewPerfilesPage from "./pages/perfiles/view-perfiles";
 import CreatePerfilPage from "./pages/perfiles/create-perfil";
@@ -204,6 +207,36 @@ function App() {
             <Route path="/clientes" element={<ViewClientesPage />} />
           </Route>
         </Route>
+
+        {/* VENDEDORES */}
+        <Route
+          element={<PermissionRoute permisosRequeridos={["CREAR_VENDEDOR"]} />}
+        >
+          <Route element={<AppLayout />}>
+            <Route
+              path="/vendedores/registrar"
+              element={<CreateVendedorPage />}
+            />
+          </Route>
+        </Route>
+        <Route
+          element={<PermissionRoute permisosRequeridos={["EDITAR_VENDEDOR"]} />}
+        >
+          <Route element={<AppLayout />}>
+            <Route
+              path="/vendedores/editar/:id"
+              element={<EditVendedorPage />}
+            />
+          </Route>
+        </Route>
+        <Route
+          element={<PermissionRoute permisosRequeridos={["VER_VENDEDORES"]} />}
+        >
+          <Route element={<AppLayout />}>
+            <Route path="/vendedores" element={<ViewVendedoresPage />} />
+          </Route>
+        </Route>
+
         {/** Rutas generales */}
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
         <Route path="*" element={<NotFoundPage />} />

@@ -60,6 +60,14 @@ export const DialogClienteDetails = ({
           <DetailItem label="Provincia" value={cliente.provincia} />
           <DetailItem label="Distrito" value={cliente.distrito} />
           <DetailItem
+            label="Vendedor Asignado"
+            value={
+              cliente.vendedor
+                ? `${cliente.vendedor.nombres} ${cliente.vendedor.apellidoPaterno} ${cliente.vendedor.apellidoMaterno}`
+                : "Sin vendedor"
+            }
+          />
+          <DetailItem
             label="Estado"
             value={
               <span

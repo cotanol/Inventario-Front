@@ -12,6 +12,13 @@ export interface ICliente {
   departamento: string;
   provincia: string;
   distrito: string;
+  vendedorId?: number;
+  vendedor?: {
+    vendedorId: number;
+    nombres: string;
+    apellidoPaterno: string;
+    apellidoMaterno: string;
+  };
   estadoRegistro: boolean;
   fechaCreacion: string;
   fechaModificacion: string;
@@ -34,6 +41,7 @@ export const clienteFormSchema = z.object({
   departamento: z.string().min(1, "El departamento es requerido."),
   provincia: z.string().min(1, "La provincia es requerida."),
   distrito: z.string().min(1, "El distrito es requerido."),
+  vendedorId: z.number().min(1, "Debes seleccionar un vendedor."),
 });
 
 export type ClienteFormData = z.infer<typeof clienteFormSchema>;

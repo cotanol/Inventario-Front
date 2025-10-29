@@ -1,0 +1,179 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "../../components/header";
+import {
+  UserPlusIcon,
+  EyeIcon,
+  PencilSquareIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
+import { type IVendedor } from "@/components/vendedores/vendedor-schema";
+
+import { useRefresh } from "../../hooks/use-refresh";
+import { VendedorStatusToggle } from "@/components/vendedores/view-vendedores.tsx/status-toggle";
+import { DialogVendedorDetails } from "@/components/vendedores/view-vendedores.tsx/dialog-details-vendedor";
+
+const ViewVendedoresPage = () => {
+  const [selectedVendedor, setSelectedVendedor] = useState<IVendedor | null>(
+    null
+  );
+  const navigate = useNavigate();
+
+  const {
+    data: vendedores,
+    isLoading,
+    error: apiError,
+    updateItem,
+  } = useRefresh<IVendedor>("/vendedores");
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleVendedorStatusChange = (
+    vendedorId: number,
+    newStatus: boolean
+  ) => {
+    updateItem((currentVendedores) =>
+      currentVendedores.map((vendedor) =>
+        vendedor.vendedorId === vendedorId
+          ? { ...vendedor, estadoRegistro: newStatus }
+          : vendedor
+      )
+    );
+  };
+
+  const filteredVendedores = (vendedores || []).filter((vendedor) => {
+    const term = searchTerm.toLowerCase();
+    const nombreCompleto =
+      `${vendedor.nombres} ${vendedor.apellidoPaterno} ${vendedor.apellidoMaterno}`.toLowerCase();
+    const dni = vendedor.dni.toLowerCase();
+    const correo = vendedor.correo.toLowerCase();
+
+    return (
+      nombreCompleto.includes(term) ||
+      dni.includes(term) ||
+      correo.includes(term)
+    );
+  });
+
+  return (
+    <div>
+      <Header titulo="Vendedores" />
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold text-gray-700">
+            Todos los Vendedores
+          </h2>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-sm">
+          <div className="flex items-center justify-between p-4 border-b border-gray-200">
+            <div className="relative">
+              <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Buscar por Nombre, DNI o Correo..."
+                className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <Link
+              to="/vendedores/registrar"
+              className="inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+            >
+              <UserPlusIcon className="w-5 h-5" />
+              Registrar Vendedor
+            </Link>
+          </div>
+
+          {isLoading ? (
+            <div className="text-center py-10 text-gray-500">
+              Cargando vendedores...
+            </div>
+          ) : apiError ? (
+            <div className="p-4 bg-red-50 text-red-700">
+              Error al cargar los vendedores.
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full">
+                <thead className="border-b border-gray-200">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Nombre Completo
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      DNI
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Correo
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Estado
+                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredVendedores.map((vendedor) => (
+                    <tr
+                      key={vendedor.vendedorId}
+                      className="border-b border-gray-200 hover:bg-gray-50"
+                    >
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                        {vendedor.nombres} {vendedor.apellidoPaterno}{" "}
+                        {vendedor.apellidoMaterno}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {vendedor.dni}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {vendedor.correo}
+                      </td>
+                      <td className="px-6 py-4">
+                        <VendedorStatusToggle
+                          vendedorId={vendedor.vendedorId}
+                          initialStatus={vendedor.estadoRegistro}
+                          onStatusChange={handleVendedorStatusChange}
+                        />
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <button
+                            className="text-blue-500 hover:text-blue-700"
+                            onClick={() => setSelectedVendedor(vendedor)}
+                          >
+                            <EyeIcon className="w-5 h-5" />
+                          </button>
+                          <button
+                            className="text-gray-400 hover:text-gray-600"
+                            onClick={() =>
+                              navigate(
+                                `/vendedores/editar/${vendedor.vendedorId}`
+                              )
+                            }
+                          >
+                            <PencilSquareIcon className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
+      <DialogVendedorDetails
+        isOpen={!!selectedVendedor}
+        vendedor={selectedVendedor}
+        onClose={() => setSelectedVendedor(null)}
+      />
+    </div>
+  );
+};
+
+export default ViewVendedoresPage;

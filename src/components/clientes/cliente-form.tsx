@@ -29,11 +29,20 @@ interface Ubigeo {
   id_padre_ubigeo: string;
 }
 
+interface Vendedor {
+  vendedorId: number;
+  nombres: string;
+  apellidoPaterno: string;
+  apellidoMaterno: string;
+  estadoRegistro: boolean;
+}
+
 interface ClienteFormProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   onSubmit: (values: T) => void;
   isSubmitting: boolean;
   apiError: string | null;
+  vendedores: Vendedor[];
   submitButtonText?: string;
   onCancel: () => void;
 }
@@ -43,6 +52,7 @@ export const ClienteForm = <T extends FieldValues>({
   onSubmit,
   isSubmitting,
   apiError,
+  vendedores,
   submitButtonText = "Crear Cliente",
   onCancel,
 }: ClienteFormProps<T>) => {
@@ -223,6 +233,39 @@ export const ClienteForm = <T extends FieldValues>({
                   <Input placeholder="Mayorista" {...field} />
                 </FormControl>{" "}
                 <FormMessage />{" "}
+              </FormItem>
+            )}
+          />
+
+          {/* Vendedor */}
+          <FormField
+            control={form.control}
+            name={"vendedorId" as Path<T>}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Vendedor Asignado*</FormLabel>
+                <Select
+                  onValueChange={(value) => field.onChange(parseInt(value))}
+                  value={field.value?.toString()}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Selecciona un vendedor" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {vendedores.map((vendedor) => (
+                      <SelectItem
+                        key={vendedor.vendedorId}
+                        value={vendedor.vendedorId.toString()}
+                      >
+                        {vendedor.nombres} {vendedor.apellidoPaterno}{" "}
+                        {vendedor.apellidoMaterno}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
               </FormItem>
             )}
           />
