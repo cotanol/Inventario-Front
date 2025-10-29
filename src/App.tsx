@@ -30,6 +30,9 @@ import EditVendedorPage from "./pages/vendedores/edit-vendedor";
 import EditPerfilPage from "./pages/perfiles/edit-perfil";
 import ViewPerfilesPage from "./pages/perfiles/view-perfiles";
 import CreatePerfilPage from "./pages/perfiles/create-perfil";
+import ViewPedidosPage from "./pages/pedidos/view-pedidos";
+import CreatePedidoPage from "./pages/pedidos/create-pedido";
+import EditPedidoPage from "./pages/pedidos/edit-pedido";
 
 function App() {
   return (
@@ -234,6 +237,23 @@ function App() {
         >
           <Route element={<AppLayout />}>
             <Route path="/vendedores" element={<ViewVendedoresPage />} />
+          </Route>
+        </Route>
+
+        {/* PEDIDOS */}
+        <Route element={<PermissionRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/pedidos" element={<ViewPedidosPage />} />
+          </Route>
+        </Route>
+        <Route element={<PermissionRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/pedidos/registrar" element={<CreatePedidoPage />} />
+          </Route>
+        </Route>
+        <Route element={<PermissionRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/pedidos/editar/:id" element={<EditPedidoPage />} />
           </Route>
         </Route>
 
