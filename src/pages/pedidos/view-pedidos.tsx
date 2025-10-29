@@ -8,6 +8,7 @@ import {
   MagnifyingGlassIcon,
   CheckCircleIcon,
   XCircleIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/24/outline";
 import { type IPedido } from "@/components/pedidos/pedido-schema";
 
@@ -149,6 +150,9 @@ const ViewPedidosPage = () => {
                       Estado
                     </th>
                     <th className="px-6 py-4 text-center text-sm font-semibold text-gray-600">
+                      PDF
+                    </th>
+                    <th className="px-6 py-4 text-center text-sm font-semibold text-gray-600">
                       Acciones
                     </th>
                   </tr>
@@ -157,7 +161,7 @@ const ViewPedidosPage = () => {
                   {filteredPedidos.length === 0 ? (
                     <tr>
                       <td
-                        colSpan={7}
+                        colSpan={8}
                         className="px-6 py-10 text-center text-gray-500"
                       >
                         No se encontraron pedidos
@@ -201,7 +205,35 @@ const ViewPedidosPage = () => {
                         <td className="px-6 py-4 text-sm">
                           {getEstadoBadge(pedido.estadoPedido)}
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 text-center">
+                          <button
+                            onClick={() =>
+                              window.open(
+                                `http://localhost:6040${pedido.urlPdf}`,
+                                "_blank"
+                              )
+                            }
+                            disabled={
+                              pedido.estadoPedido !== "COMPLETADO" ||
+                              !pedido.urlPdf
+                            }
+                            className={`p-2 rounded-lg transition ${
+                              pedido.estadoPedido === "COMPLETADO" &&
+                              pedido.urlPdf
+                                ? "text-red-600 hover:text-red-700 hover:bg-red-50"
+                                : "text-gray-300 cursor-not-allowed"
+                            }`}
+                            title={
+                              pedido.estadoPedido === "COMPLETADO" &&
+                              pedido.urlPdf
+                                ? "Ver PDF"
+                                : "PDF disponible solo para pedidos completados"
+                            }
+                          >
+                            <DocumentTextIcon className="w-5 h-5" />
+                          </button>
+                        </td>
+                        <td className="px-6 py-4 align-middle">
                           <div className="flex items-center justify-center gap-2">
                             <button
                               onClick={() => setSelectedPedido(pedido)}
