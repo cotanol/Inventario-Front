@@ -57,6 +57,7 @@ export const DialogClienteDetails = ({
           <DetailItem label="Teléfono" value={cliente.telefono || "N/A"} />
           <DetailItem label="Clasificación" value={cliente.clasificacion} />
           <DetailItem label="Departamento" value={cliente.departamento} />
+          <DetailItem label="Provincia" value={cliente.provincia} />
           <DetailItem label="Distrito" value={cliente.distrito} />
           <DetailItem
             label="Estado"
