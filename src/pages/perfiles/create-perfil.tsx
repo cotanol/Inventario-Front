@@ -7,12 +7,12 @@ import * as z from "zod";
 import useFetchApi from "@/hooks/use-fetch";
 import Header from "@/components/header";
 import { PerfilForm } from "@/components/perfiles/perfil-form";
-import type { IOpcionMenu } from "@/components/perfiles/perfil-schema";
+import type { IPermiso } from "@/components/perfiles/perfil-schema";
 
 const formSchema = z.object({
   nombre: z.string().min(1, "El nombre es requerido."),
   descripcion: z.string().optional().nullable(),
-  opcionesMenuIds: z
+  permisosIds: z
     .array(z.number())
     .min(1, "Debes seleccionar al menos un permiso."),
 });
@@ -20,17 +20,17 @@ const formSchema = z.object({
 const CreatePerfilPage = () => {
   const { get, post } = useFetchApi();
   const navigate = useNavigate();
-  const [opcionesMenu, setOpcionesMenu] = useState<IOpcionMenu[]>([]);
+  const [permisos, setPermisos] = useState<IPermiso[]>([]);
   const [apiError, setApiError] = useState<string | null>(null);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: { nombre: "", descripcion: "", opcionesMenuIds: [] },
+    defaultValues: { nombre: "", descripcion: "", permisosIds: [] },
   });
 
   useEffect(() => {
-    get<IOpcionMenu[]>("/auth/opciones-menu")
-      .then(setOpcionesMenu)
+    get<IPermiso[]>("/auth/permisos")
+      .then(setPermisos)
       .catch(() => toast.error("No se pudieron cargar los permisos."));
   }, [get]);
 
@@ -39,8 +39,8 @@ const CreatePerfilPage = () => {
     const payload = {
       nombre: values.nombre,
       descripcion: values.descripcion,
-      opcionesMenu: values.opcionesMenuIds.map((id, index) => ({
-        opcionMenuId: id,
+      permisos: values.permisosIds.map((id, index) => ({
+        permisoId: id,
         orden: (index + 1) * 10,
       })),
     };
@@ -70,7 +70,7 @@ const CreatePerfilPage = () => {
             isSubmitting={form.formState.isSubmitting}
             apiError={apiError}
             onCancel={() => navigate("/perfiles")}
-            opcionesMenuDisponibles={opcionesMenu}
+            permisosDisponibles={permisos}
           />
         </div>
       </div>

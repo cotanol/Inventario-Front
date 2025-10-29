@@ -92,7 +92,7 @@ const ViewPerfilesPage = () => {
                         {perfil.descripcion || "-"}
                       </td>
                       <td className="px-6 py-4 text-sm text-center text-gray-500">
-                        {perfil.opcionesMenuLink?.length || 0}
+                        {perfil.permisosLink?.length || 0}
                       </td>
                       <td className="px-6 py-4">
                         <PerfilStatusToggle

@@ -13,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, AlertCircle } from "lucide-react";
 import type { UseFormReturn, FieldValues, Path } from "react-hook-form";
-import type { IOpcionMenu } from "./perfil-schema";
+import type { IPermiso } from "./perfil-schema";
 
 interface PerfilFormProps<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -22,7 +22,7 @@ interface PerfilFormProps<T extends FieldValues> {
   apiError: string | null;
   submitButtonText?: string;
   onCancel: () => void;
-  opcionesMenuDisponibles: IOpcionMenu[];
+  permisosDisponibles: IPermiso[];
 }
 
 export const PerfilForm = <T extends FieldValues>({
@@ -32,7 +32,7 @@ export const PerfilForm = <T extends FieldValues>({
   apiError,
   submitButtonText = "Crear Perfil",
   onCancel,
-  opcionesMenuDisponibles,
+  permisosDisponibles,
 }: PerfilFormProps<T>) => {
   return (
     <Form {...form}>
@@ -72,34 +72,34 @@ export const PerfilForm = <T extends FieldValues>({
 
         <FormField
           control={form.control}
-          name={"opcionesMenuIds" as Path<T>} // El campo del formulario que guarda un array de números
+          name={"permisosIds" as Path<T>} // El campo del formulario que guarda un array de números
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base font-semibold">
                 Permisos del Perfil*
               </FormLabel>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 border rounded-md max-h-72 overflow-y-auto">
-                {opcionesMenuDisponibles.map((opcion) => (
+                {permisosDisponibles.map((permiso) => (
                   <FormItem
-                    key={opcion.opcionMenuId}
+                    key={permiso.permisoId}
                     className="flex flex-row items-center space-x-3 space-y-0"
                   >
                     <FormControl>
                       <Checkbox
-                        checked={field.value?.includes(opcion.opcionMenuId)}
+                        checked={field.value?.includes(permiso.permisoId)}
                         onCheckedChange={(checked) => {
                           const currentIds = field.value || [];
                           const newIds = checked
-                            ? [...currentIds, opcion.opcionMenuId]
+                            ? [...currentIds, permiso.permisoId]
                             : currentIds.filter(
-                                (id: number) => id !== opcion.opcionMenuId
+                                (id: number) => id !== permiso.permisoId
                               );
                           field.onChange(newIds);
                         }}
                       />
                     </FormControl>
                     <FormLabel className="font-normal text-sm">
-                      {opcion.nombre}
+                      {permiso.nombre}
                     </FormLabel>
                   </FormItem>
                 ))}

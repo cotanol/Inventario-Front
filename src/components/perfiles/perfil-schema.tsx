@@ -1,8 +1,8 @@
 import * as z from "zod";
 
-// Interface para una Opcion de Menú individual
-export interface IOpcionMenu {
-  opcionMenuId: number;
+// Interface para un Permiso individual
+export interface IPermiso {
+  permisoId: number;
   nombre: string;
   descripcion: string | null;
 }
@@ -15,10 +15,10 @@ export interface IPerfil {
   estadoRegistro: boolean;
   fechaCreacion: string;
   fechaModificacion: string;
-  opcionesMenuLink: {
-    opcionMenuId: number;
+  permisosLink: {
+    permisoId: number;
     orden: number;
-    opcionMenu: IOpcionMenu;
+    permiso: IPermiso;
   }[];
 }
 
@@ -26,10 +26,10 @@ export interface IPerfil {
 export const perfilFormSchema = z.object({
   nombre: z.string().min(1, "El nombre del perfil es requerido."),
   descripcion: z.string().optional().nullable(),
-  opcionesMenu: z
+  permisos: z
     .array(
       z.object({
-        opcionMenuId: z.number(),
+        permisoId: z.number(),
         orden: z.number().min(0),
       })
     )

@@ -7,12 +7,12 @@ import * as z from "zod";
 import useFetchApi from "@/hooks/use-fetch";
 import Header from "@/components/header";
 import { PerfilForm } from "@/components/perfiles/perfil-form";
-import type { IPerfil, IOpcionMenu } from "@/components/perfiles/perfil-schema";
+import type { IPerfil, IPermiso } from "@/components/perfiles/perfil-schema";
 
 const formSchema = z.object({
   nombre: z.string().min(1, "El nombre es requerido."),
   descripcion: z.string().optional().nullable(),
-  opcionesMenuIds: z
+  permisosIds: z
     .array(z.number())
     .min(1, "Debes seleccionar al menos un permiso."),
 });
@@ -21,7 +21,7 @@ const EditPerfilPage = () => {
   const { id } = useParams<{ id: string }>();
   const { get, patch } = useFetchApi();
   const navigate = useNavigate();
-  const [opcionesMenu, setOpcionesMenu] = useState<IOpcionMenu[]>([]);
+  const [permisos, setPermisos] = useState<IPermiso[]>([]);
   const [apiError, setApiError] = useState<string | null>(null);
   const [isLoadingData, setIsLoadingData] = useState(true);
 
@@ -30,18 +30,16 @@ const EditPerfilPage = () => {
   const loadInitialData = useCallback(async () => {
     if (!id) return;
     try {
-      const [perfilData, opcionesData] = await Promise.all([
+      const [perfilData, permisosData] = await Promise.all([
         get<IPerfil>(`/auth/perfiles/${id}`),
-        get<IOpcionMenu[]>("/auth/opciones-menu"),
+        get<IPermiso[]>("/auth/permisos"),
       ]);
       form.reset({
         nombre: perfilData.nombre,
         descripcion: perfilData.descripcion,
-        opcionesMenuIds: perfilData.opcionesMenuLink.map(
-          (link) => link.opcionMenuId
-        ),
+        permisosIds: perfilData.permisosLink.map((link) => link.permisoId),
       });
-      setOpcionesMenu(opcionesData);
+      setPermisos(permisosData);
     } catch (err) {
       setApiError("No se pudieron cargar los datos para editar.");
     } finally {
@@ -58,8 +56,8 @@ const EditPerfilPage = () => {
     const payload = {
       nombre: values.nombre,
       descripcion: values.descripcion,
-      opcionesMenu: values.opcionesMenuIds.map((id, index) => ({
-        opcionMenuId: id,
+      permisos: values.permisosIds.map((id, index) => ({
+        permisoId: id,
         orden: (index + 1) * 10,
       })),
     };
@@ -98,7 +96,7 @@ const EditPerfilPage = () => {
             apiError={apiError}
             onCancel={() => navigate("/perfiles")}
             submitButtonText="Actualizar Perfil"
-            opcionesMenuDisponibles={opcionesMenu}
+            permisosDisponibles={permisos}
           />
         </div>
       </div>

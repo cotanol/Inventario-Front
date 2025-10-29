@@ -67,10 +67,10 @@ export const DialogPerfilDetails = ({
             <DetailItem
               label="Permisos Asignados"
               value={
-                perfil.opcionesMenuLink.length > 0 ? (
+                perfil.permisosLink.length > 0 ? (
                   <ul className="list-disc list-inside bg-gray-50 p-3 rounded-md max-h-48 overflow-y-auto border">
-                    {perfil.opcionesMenuLink
-                      .map((link) => link.opcionMenu.nombre)
+                    {perfil.permisosLink
+                      .map((link) => link.permiso.nombre)
                       .sort() // Ordenar alfabéticamente
                       .map((nombre) => (
                         <li key={nombre} className="text-sm">
