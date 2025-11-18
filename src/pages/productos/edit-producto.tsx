@@ -59,7 +59,8 @@ const EditProductoPage = () => {
       form.reset({
         nombre: productoResponse.nombre,
         descripcion: productoResponse.descripcion || "",
-        precio: productoResponse.precio,
+        precioVenta: productoResponse.precioVenta,
+        costoReferencial: productoResponse.costoReferencial || 0,
         grupoId: productoResponse.grupo.grupoId,
         marcaId: productoResponse.marca.marcaId,
         cantidadActual: productoResponse.inventario.cantidadActual,
@@ -86,7 +87,8 @@ const EditProductoPage = () => {
       patch(`/catalogo/productos/${id}`, {
         nombre: values.nombre,
         descripcion: values.descripcion || null,
-        precio: values.precio,
+        precioVenta: values.precioVenta,
+        costoReferencial: values.costoReferencial || 0,
         grupoId: values.grupoId,
         marcaId: values.marcaId,
         cantidadActual: values.cantidadActual,

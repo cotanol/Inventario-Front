@@ -28,7 +28,8 @@ const CreateProductoPage = () => {
     defaultValues: {
       nombre: "",
       descripcion: "",
-      precio: 0.1,
+      precioVenta: 0.1,
+      costoReferencial: 0,
       grupoId: undefined,
       marcaId: undefined,
       cantidadActual: 0,
@@ -73,7 +74,8 @@ const CreateProductoPage = () => {
       post("/catalogo/productos", {
         nombre: values.nombre,
         descripcion: values.descripcion || null,
-        precio: values.precio,
+        precioVenta: values.precioVenta,
+        costoReferencial: values.costoReferencial || 0,
         grupoId: values.grupoId,
         marcaId: values.marcaId,
         cantidadActual: values.cantidadActual,

@@ -156,7 +156,7 @@ const ViewProductosPage = () => {
                         {producto.marca.nombre}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-900">
-                        S/ {producto.precio.toFixed(2)}
+                        S/ {producto.precioVenta.toFixed(2)}
                       </td>
                       <td className="px-6 py-4 text-sm font-medium">
                         <span

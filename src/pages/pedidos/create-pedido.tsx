@@ -29,7 +29,7 @@ interface Producto {
   productoId: number;
   codigo: string;
   nombre: string;
-  precio: number;
+  precioVenta: number;
   estadoRegistro: boolean;
   inventario?: {
     cantidadActual: number;

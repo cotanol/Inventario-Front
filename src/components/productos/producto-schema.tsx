@@ -15,10 +15,16 @@ export const productoFormSchema = z.object({
     .max(500, "La descripción no puede exceder 500 caracteres.")
     .optional()
     .or(z.literal("")),
-  precio: z
+  precioVenta: z
     .number()
-    .min(0.01, "El precio debe ser mayor a 0.")
+    .min(0.01, "El precio de venta debe ser mayor a 0.")
     .max(99999999.99, "El precio es demasiado alto."),
+  costoReferencial: z
+    .number()
+    .min(0, "El costo no puede ser negativo.")
+    .max(99999999.99, "El costo es demasiado alto.")
+    .optional()
+    .or(z.literal(0)),
   grupoId: z.number().min(1, "Debe seleccionar un grupo."),
   marcaId: z.number().min(1, "Debe seleccionar una marca."),
 

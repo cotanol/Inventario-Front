@@ -62,8 +62,16 @@ export const DialogProductoDetails = ({
           <DetailItem label="Código" value={producto.codigo} />
           <DetailItem label="Nombre" value={producto.nombre} />
           <DetailItem
-            label="Precio"
-            value={`S/ ${producto.precio.toFixed(2)}`}
+            label="Precio de Venta"
+            value={`S/ ${producto.precioVenta.toFixed(2)}`}
+          />
+          <DetailItem
+            label="Costo Referencial"
+            value={
+              producto.costoReferencial
+                ? `S/ ${producto.costoReferencial.toFixed(2)}`
+                : "No definido"
+            }
           />
           <DetailItem label="Grupo" value={producto.grupo.nombre} />
           <DetailItem label="Línea" value={producto.grupo.linea.nombre} />

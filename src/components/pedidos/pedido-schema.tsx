@@ -8,7 +8,7 @@ export interface IDetallePedido {
     productoId: number;
     codigo: string;
     nombre: string;
-    precio: number;
+    precioVenta: number;
   };
   cantidad: number;
   precioUnitario: number;

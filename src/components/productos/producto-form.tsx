@@ -85,10 +85,35 @@ export const ProductoForm = <T extends FieldValues>({
 
           <FormField
             control={form.control}
-            name={"precio" as Path<T>}
+            name={"precioVenta" as Path<T>}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Precio (S/) *</FormLabel>
+                <FormLabel>Precio de Venta (S/) *</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    placeholder="0.00"
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(parseFloat(e.target.value) || 0)
+                    }
+                    value={field.value?.toString() || ""}
+                    disabled={isSubmitting}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name={"costoReferencial" as Path<T>}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Costo Referencial (S/)</FormLabel>
                 <FormControl>
                   <Input
                     type="number"

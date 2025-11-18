@@ -38,7 +38,7 @@ interface Producto {
   productoId: number;
   codigo: string;
   nombre: string;
-  precio: number;
+  precioVenta: number;
   estadoRegistro: boolean;
   inventario?: {
     cantidadActual: number;
@@ -90,7 +90,7 @@ export const PedidoForm = <T extends FieldValues>({
   const calculateSubtotal = (productoId: number, cantidad: number): number => {
     const producto = productos.find((p) => p.productoId === productoId);
     if (producto && cantidad > 0) {
-      return producto.precio * cantidad;
+      return producto.precioVenta * cantidad;
     }
     return 0;
   };
@@ -361,7 +361,9 @@ export const PedidoForm = <T extends FieldValues>({
                     <div className="space-y-2">
                       <FormLabel>Precio Unitario</FormLabel>
                       <div className="h-10 px-3 py-2 bg-gray-100 border rounded-md flex items-center">
-                        {producto ? formatCurrency(producto.precio) : "S/ 0.00"}
+                        {producto
+                          ? formatCurrency(producto.precioVenta)
+                          : "S/ 0.00"}
                       </div>
                       <FormLabel className="text-sm font-semibold">
                         Subtotal: {formatCurrency(subtotal)}

@@ -55,7 +55,8 @@ export interface Producto {
   codigo: string;
   nombre: string;
   descripcion?: string;
-  precio: number;
+  precioVenta: number;
+  costoReferencial?: number;
   estadoRegistro: boolean;
   fechaCreacion: string;
   fechaModificacion: string;
