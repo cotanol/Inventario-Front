@@ -225,8 +225,8 @@ const EditCompraPage = () => {
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
             <p className="text-yellow-800">
               ⚠️ Solo se pueden editar compras en estado{" "}
-              <strong>BORRADOR</strong> u <strong>ORDENADO</strong>. Esta
-              compra está en estado <strong>{compra.estadoCompra}</strong>.
+              <strong>BORRADOR</strong> u <strong>ORDENADO</strong>. Esta compra
+              está en estado <strong>{compra.estadoCompra}</strong>.
             </p>
             <p className="text-sm text-yellow-700 mt-2">
               Para modificar esta compra, primero cancélala y crea una nueva.
