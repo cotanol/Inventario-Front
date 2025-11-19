@@ -8,7 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+// import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, AlertCircle } from "lucide-react";
 import type { UseFormReturn, FieldValues, Path } from "react-hook-form";
@@ -135,28 +135,27 @@ export const ProveedorForm = <T extends FieldValues>({
               </FormItem>
             )}
           />
+          {/* Dirección */}
+          <FormField
+            control={form.control}
+            name={"direccion" as Path<T>}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Dirección</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Ej: 123 Main St, Guangzhou, China"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
-        {/* Dirección */}
-        <FormField
-          control={form.control}
-          name={"direccion" as Path<T>}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Dirección</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Ej: 123 Main St, Guangzhou, China"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         {/* Botones de Acción */}
-        <div className="flex gap-4 justify-end">
+        <div className="flex justify-center gap-6 pt-4">
           <Button
             type="button"
             variant="outline"
@@ -165,7 +164,11 @@ export const ProveedorForm = <T extends FieldValues>({
           >
             Cancelar
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+          >
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

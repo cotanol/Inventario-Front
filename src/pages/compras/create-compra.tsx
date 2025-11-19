@@ -116,9 +116,12 @@ const CreateCompraPage = () => {
 
   return (
     <div>
-      <Header titulo="Registrar Compra" />
+      <Header titulo="Compras" />
       <div className="p-6">
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+          Crear Nueva Compra
+        </h2>
+        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
           <CompraForm
             form={form}
             onSubmit={onSubmit}

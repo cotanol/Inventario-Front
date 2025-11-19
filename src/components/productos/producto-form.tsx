@@ -196,6 +196,7 @@ export const ProductoForm = <T extends FieldValues>({
             )}
           />
           {/* --- NUEVOS CAMPOS DE INVENTARIO --- */}
+
           <FormField
             control={form.control}
             name={"cantidadActual" as Path<T>}
@@ -213,7 +214,9 @@ export const ProductoForm = <T extends FieldValues>({
                       field.onChange(parseInt(e.target.value, 10) || 0)
                     }
                     value={field.value?.toString() || ""}
-                    disabled={isSubmitting}
+                    disabled={
+                      isSubmitting || submitButtonText === "Actualizar Producto"
+                    }
                   />
                 </FormControl>
                 <FormMessage />

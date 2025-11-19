@@ -59,9 +59,12 @@ const CreateProveedorPage = () => {
 
   return (
     <div>
-      <Header titulo="Registrar Proveedor" />
+      <Header titulo="Proveedores" />
       <div className="p-6">
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+          Crear Nuevo Proveedor
+        </h2>
+        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
           <ProveedorForm
             form={form}
             onSubmit={onSubmit}

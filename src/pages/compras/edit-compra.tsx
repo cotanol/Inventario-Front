@@ -242,8 +242,12 @@ const EditCompraPage = () => {
 
   return (
     <div>
-      <Header titulo={esOrdenado ? "Editar Fecha Estimada" : "Editar Compra"} />
+      <Header titulo="Compras" />
+
       <div className="p-6">
+        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+          Editar Compra #{compra?.compraId.toString().padStart(4, "0")}
+        </h2>
         {esOrdenado && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <p className="text-blue-800">
@@ -252,7 +256,7 @@ const EditCompraPage = () => {
             </p>
           </div>
         )}
-        <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
           <CompraForm
             form={form}
             onSubmit={onSubmit}

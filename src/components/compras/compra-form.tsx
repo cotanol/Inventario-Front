@@ -144,7 +144,7 @@ export const CompraForm = <T extends FieldValues>({
                   disabled={disableAllExceptFecha}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Seleccionar proveedor" />
                     </SelectTrigger>
                   </FormControl>
@@ -375,7 +375,7 @@ export const CompraForm = <T extends FieldValues>({
         </div>
 
         {/* Botones de Acción */}
-        <div className="flex gap-4 justify-end">
+        <div className="flex justify-center gap-6 pt-4">
           <Button
             type="button"
             variant="outline"
@@ -384,7 +384,11 @@ export const CompraForm = <T extends FieldValues>({
           >
             Cancelar
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+          >
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -398,7 +398,7 @@ export const PedidoForm = <T extends FieldValues>({
         )}
 
         {/* Botones */}
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-center gap-6 pt-4">
           <Button
             type="button"
             variant="outline"
@@ -407,7 +407,11 @@ export const PedidoForm = <T extends FieldValues>({
           >
             Cancelar
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+          >
             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {submitButtonText}
           </Button>

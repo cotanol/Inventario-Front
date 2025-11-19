@@ -128,12 +128,12 @@ const RecibirCompraPage = () => {
     <div>
       <Header titulo="Recibir Mercadería" />
       <div className="p-6">
-        <div className="bg-white rounded-lg shadow-sm p-6 max-w-5xl mx-auto">
+        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+          Compra #{compra.compraId.toString().padStart(4, "0")}
+        </h2>
+        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
           {/* Información de la Compra */}
           <div className="mb-6 pb-6 border-b">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Compra #{compra.compraId.toString().padStart(4, "0")}
-            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="text-sm text-gray-500">Proveedor</p>
