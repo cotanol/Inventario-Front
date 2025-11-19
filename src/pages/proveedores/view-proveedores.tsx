@@ -154,7 +154,8 @@ const ViewProveedoresPage = () => {
                         <div className="flex gap-2">
                           <button
                             onClick={() => setSelectedProveedor(proveedor)}
-                            className="text-blue-600 hover:text-blue-900"
+                            className="p-2 rounded-lg transition text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                            title="Ver detalles del proveedor"
                           >
                             <EyeIcon className="w-5 h-5" />
                           </button>
@@ -164,7 +165,8 @@ const ViewProveedoresPage = () => {
                                 `/proveedores/editar/${proveedor.proveedorId}`
                               )
                             }
-                            className="text-yellow-600 hover:text-yellow-900"
+                            className="p-2 rounded-lg transition text-yellow-600 hover:text-yellow-700 hover:bg-yellow-50"
+                            title="Editar proveedor"
                           >
                             <PencilSquareIcon className="w-5 h-5" />
                           </button>

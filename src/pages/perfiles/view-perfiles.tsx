@@ -102,18 +102,20 @@ const ViewPerfilesPage = () => {
                         />
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
                           <button
-                            className="text-blue-500 hover:text-blue-700"
+                            className="p-2 rounded-lg transition text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                             onClick={() => setSelectedPerfil(perfil)}
+                            title="Ver detalles del perfil"
                           >
                             <EyeIcon className="w-5 h-5" />
                           </button>
                           <button
-                            className="text-gray-400 hover:text-gray-600"
+                            className="p-2 rounded-lg transition text-yellow-600 hover:text-yellow-700 hover:bg-yellow-50"
                             onClick={() =>
                               navigate(`/perfiles/editar/${perfil.perfilId}`)
                             }
+                            title="Editar perfil"
                           >
                             <PencilSquareIcon className="w-5 h-5" />
                           </button>
