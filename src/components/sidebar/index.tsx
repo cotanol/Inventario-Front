@@ -8,6 +8,8 @@ import {
   UserIcon,
   RectangleStackIcon,
   ShoppingCartIcon,
+  TruckIcon,
+  BuildingOfficeIcon,
 } from "@heroicons/react/24/outline";
 
 import { NavLink } from "react-router-dom";
@@ -23,7 +25,9 @@ const navigation = [
   { name: "Grupos", icon: RectangleStackIcon, href: "/grupos" },
   { name: "Clientes", icon: RectangleStackIcon, href: "/clientes" },
   { name: "Vendedores", icon: UserIcon, href: "/vendedores" },
+  { name: "Proveedores", icon: BuildingOfficeIcon, href: "/proveedores" },
   { name: "Pedidos", icon: ShoppingCartIcon, href: "/pedidos" },
+  { name: "Compras", icon: TruckIcon, href: "/compras" },
 ];
 
 export default function Sidebar() {

@@ -33,6 +33,12 @@ import CreatePerfilPage from "./pages/perfiles/create-perfil";
 import ViewPedidosPage from "./pages/pedidos/view-pedidos";
 import CreatePedidoPage from "./pages/pedidos/create-pedido";
 import EditPedidoPage from "./pages/pedidos/edit-pedido";
+import CreateProveedorPage from "./pages/proveedores/create-proveedor";
+import ViewProveedoresPage from "./pages/proveedores/view-proveedores";
+import EditProveedorPage from "./pages/proveedores/edit-proveedor";
+import CreateCompraPage from "./pages/compras/create-compra";
+import ViewComprasPage from "./pages/compras/view-compras";
+import EditCompraPage from "./pages/compras/edit-compra";
 
 function App() {
   return (
@@ -254,6 +260,46 @@ function App() {
         <Route element={<PermissionRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/pedidos/editar/:id" element={<EditPedidoPage />} />
+          </Route>
+        </Route>
+
+        {/* PROVEEDORES */}
+        <Route element={<PermissionRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/proveedores" element={<ViewProveedoresPage />} />
+          </Route>
+        </Route>
+        <Route element={<PermissionRoute />}>
+          <Route element={<AppLayout />}>
+            <Route
+              path="/proveedores/registrar"
+              element={<CreateProveedorPage />}
+            />
+          </Route>
+        </Route>
+        <Route element={<PermissionRoute />}>
+          <Route element={<AppLayout />}>
+            <Route
+              path="/proveedores/editar/:id"
+              element={<EditProveedorPage />}
+            />
+          </Route>
+        </Route>
+
+        {/* COMPRAS */}
+        <Route element={<PermissionRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/compras" element={<ViewComprasPage />} />
+          </Route>
+        </Route>
+        <Route element={<PermissionRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/compras/registrar" element={<CreateCompraPage />} />
+          </Route>
+        </Route>
+        <Route element={<PermissionRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/compras/editar/:id" element={<EditCompraPage />} />
           </Route>
         </Route>
 
