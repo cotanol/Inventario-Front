@@ -39,6 +39,7 @@ import EditProveedorPage from "./pages/proveedores/edit-proveedor";
 import CreateCompraPage from "./pages/compras/create-compra";
 import ViewComprasPage from "./pages/compras/view-compras";
 import EditCompraPage from "./pages/compras/edit-compra";
+import RecibirCompraPage from "./pages/compras/recibir-compra";
 
 function App() {
   return (
@@ -300,6 +301,14 @@ function App() {
         <Route element={<PermissionRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/compras/editar/:id" element={<EditCompraPage />} />
+          </Route>
+        </Route>
+        <Route element={<PermissionRoute />}>
+          <Route element={<AppLayout />}>
+            <Route
+              path="/compras/recibir/:id"
+              element={<RecibirCompraPage />}
+            />
           </Route>
         </Route>
 

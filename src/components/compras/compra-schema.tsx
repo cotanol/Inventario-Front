@@ -9,6 +9,7 @@ export interface IDetalleCompra {
     codigo: string;
     nombre: string;
     precioVenta: number;
+    costoReferencial: number;
   };
   cantidadSolicitada: number;
   cantidadRecibida: number;
@@ -24,6 +25,11 @@ export interface ICompra {
     proveedorId: number;
     nombreEmpresa: string;
     numeroIdentificacionFiscal: string;
+    contactoNombre: string;
+    telefono: string;
+    email: string;
+    direccion: string;
+    pais: string;
   };
   fechaOrden: string;
   fechaLlegadaEstimada: string | null;

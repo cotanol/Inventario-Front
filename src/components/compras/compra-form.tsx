@@ -44,6 +44,7 @@ interface CompraFormProps<T extends FieldValues> {
   productos: Producto[];
   submitButtonText?: string;
   onCancel: () => void;
+  estadoCompra?: string; // Para deshabilitar campos en estado ORDENADO
 }
 
 export const CompraForm = <T extends FieldValues>({
@@ -55,12 +56,17 @@ export const CompraForm = <T extends FieldValues>({
   productos,
   submitButtonText = "Crear Compra",
   onCancel,
+  estadoCompra,
 }: CompraFormProps<T>) => {
   const detalles = form.watch("detalles" as Path<T>) as Array<{
     productoId: number;
     cantidadSolicitada: number;
     costoUnitario: number;
   }>;
+
+  // Solo fecha estimada es editable en estado ORDENADO
+  const isOrdenado = estadoCompra === "ORDENADO";
+  const disableAllExceptFecha = isOrdenado;
 
   const addDetalle = () => {
     const currentDetalles = form.getValues("detalles" as Path<T>) as any[];
@@ -135,6 +141,7 @@ export const CompraForm = <T extends FieldValues>({
                 <Select
                   onValueChange={(value) => field.onChange(Number(value))}
                   value={field.value?.toString()}
+                  disabled={disableAllExceptFecha}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -166,7 +173,7 @@ export const CompraForm = <T extends FieldValues>({
               <FormItem>
                 <FormLabel>Fecha de Orden *</FormLabel>
                 <FormControl>
-                  <Input type="datetime-local" {...field} />
+                  <Input type="datetime-local" {...field} disabled={disableAllExceptFecha} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -198,6 +205,7 @@ export const CompraForm = <T extends FieldValues>({
               variant="outline"
               size="sm"
               onClick={addDetalle}
+              disabled={disableAllExceptFecha}
             >
               <PlusCircle className="w-4 h-4 mr-2" />
               Agregar Producto
@@ -240,6 +248,7 @@ export const CompraForm = <T extends FieldValues>({
                                 }
                               }}
                               value={field.value?.toString()}
+                              disabled={disableAllExceptFecha}
                             >
                               <FormControl>
                                 <SelectTrigger>
@@ -277,6 +286,7 @@ export const CompraForm = <T extends FieldValues>({
                                 onChange={(e) =>
                                   field.onChange(Number(e.target.value))
                                 }
+                                disabled={disableAllExceptFecha}
                               />
                             </FormControl>
                             <FormMessage />
@@ -300,6 +310,7 @@ export const CompraForm = <T extends FieldValues>({
                                 onChange={(e) =>
                                   field.onChange(Number(e.target.value))
                                 }
+                                disabled={disableAllExceptFecha}
                               />
                             </FormControl>
                             <FormMessage />
@@ -324,6 +335,7 @@ export const CompraForm = <T extends FieldValues>({
                             variant="destructive"
                             size="sm"
                             onClick={() => removeDetalle(index)}
+                            disabled={disableAllExceptFecha}
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>

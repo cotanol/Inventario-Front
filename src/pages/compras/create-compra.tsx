@@ -79,7 +79,8 @@ const CreateCompraPage = () => {
     const createCompraPromise = () =>
       post("/compras", {
         ...values,
-        estadoCompra: "ORDENADO",
+        // Estado inicial siempre es BORRADOR
+        estadoCompra: "BORRADOR",
       });
 
     toast.promise(createCompraPromise(), {
