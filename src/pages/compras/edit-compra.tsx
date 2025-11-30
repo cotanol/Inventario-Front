@@ -70,11 +70,11 @@ const EditCompraPage = () => {
           proveedorId: compraData.proveedorId,
           fechaOrden: new Date(compraData.fechaOrden)
             .toISOString()
-            .slice(0, 16),
+            .slice(0, 10),
           fechaLlegadaEstimada: compraData.fechaLlegadaEstimada
             ? new Date(compraData.fechaLlegadaEstimada)
                 .toISOString()
-                .slice(0, 16)
+                .slice(0, 10)
             : "",
           detalles: compraData.detalles.map((detalle) => ({
             productoId: detalle.productoId,

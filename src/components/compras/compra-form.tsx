@@ -174,7 +174,7 @@ export const CompraForm = <T extends FieldValues>({
                 <FormLabel>Fecha de Orden *</FormLabel>
                 <FormControl>
                   <Input
-                    type="datetime-local"
+                    type="date"
                     {...field}
                     disabled={disableAllExceptFecha}
                   />
@@ -192,7 +192,7 @@ export const CompraForm = <T extends FieldValues>({
               <FormItem>
                 <FormLabel>Fecha Estimada de Llegada</FormLabel>
                 <FormControl>
-                  <Input type="datetime-local" {...field} />
+                  <Input type="date" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
