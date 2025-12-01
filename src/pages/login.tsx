@@ -53,14 +53,10 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
       {/* --- Parte Izquierda: Imagen y Logo con Degradado --- */}
-      <div className="hidden md:flex flex-col items-center justify-center bg-gradient-to-b from-[#9747ff] to-[#584bdd] p-12 text-white relative overflow-hidden">
-        <div className="relative z-10 flex flex-col items-center">
-          <img src={imageLogo} alt="Logo de la Empresa" className="w-48 mb-8" />
-          <img
-            src={imageLogin}
-            alt="Mueble decorativo"
-            className="max-w-md w-full"
-          />
+      <div className="hidden md:flex flex-col items-center justify-center bg-gradient-to-b from-[#9747ff] to-[#584bdd] p-12 text-white relative overflow-hidden ">
+        <div className="relative z-10 flex flex-col items-center gap-8">
+          <img src={imageLogo} alt="Logo de la Empresa" className="w-30 mb-8" />
+          <img src={imageLogin} alt="Mueble decorativo" className=" w-full" />
         </div>
       </div>
 

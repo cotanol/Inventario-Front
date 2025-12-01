@@ -44,7 +44,7 @@ export default function Sidebar() {
   return (
     <aside className="h-screen w-80 bg-sidebar-background border-r border-gray-200 flex flex-col justify-between relative">
       <div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center pt-8 pb-4">
           <img src={logoImage} alt="Logo-Pagina" className="w-30" />
         </div>
 
