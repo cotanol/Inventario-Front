@@ -6,7 +6,12 @@ export const userFormSchema = z.object({
   apellidoPaterno: z.string().min(1, "El apellido paterno es requerido."),
   apellidoMaterno: z.string().optional().nullable(),
   dni: z.string().regex(/^[0-9]{8}$/, "El DNI debe tener 8 dígitos numéricos."),
-  correoElectronico: z.string().email("Correo electrónico no válido."),
+  correoElectronico: z
+    .string()
+    .email("Correo electrónico no válido.")
+    .refine((email) => email.endsWith("@dym.com"), {
+      message: "El correo debe terminar con @dym.com",
+    }),
   clave: z.string().min(6, "La contraseña debe tener al menos 6 caracteres."),
   celular: z.string().optional().nullable(),
   perfilesIds: z.number().int().positive("Debes seleccionar un perfil válido."),

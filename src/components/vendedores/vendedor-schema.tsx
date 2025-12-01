@@ -22,7 +22,12 @@ export const vendedorFormSchema = z.object({
     .string()
     .length(8, "El DNI debe tener exactamente 8 dígitos.")
     .regex(/^[0-9]{8}$/, "El DNI solo debe contener números."),
-  correo: z.string().email("El formato del correo no es válido."),
+  correo: z
+    .string()
+    .email("El formato del correo no es válido.")
+    .refine((email) => email.endsWith("@dym.com"), {
+      message: "El correo debe terminar con @dym.com",
+    }),
 });
 
 export type VendedorFormData = z.infer<typeof vendedorFormSchema>;
