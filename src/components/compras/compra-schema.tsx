@@ -55,16 +55,64 @@ const detalleCompraSchema = z.object({
 });
 
 // Schema para el formulario de CREACIÓN de compra
-export const compraFormSchema = z.object({
-  proveedorId: z.number().min(1, "Debes seleccionar un proveedor."),
-  fechaOrden: z.string().min(1, "La fecha de orden es requerida."),
-  fechaLlegadaEstimada: z.string().optional(),
-  estadoCompra: z
-    .enum(["BORRADOR", "ORDENADO", "EN_TRANSITO", "COMPLETADO", "CANCELADO"])
-    .optional(),
-  detalles: z
-    .array(detalleCompraSchema)
-    .min(1, "Debes agregar al menos un producto."),
-});
+export const compraFormSchema = z
+  .object({
+    proveedorId: z.number().min(1, "Debes seleccionar un proveedor."),
+    fechaOrden: z
+      .string()
+      .min(1, "La fecha de orden es requerida.")
+      .refine(
+        (fecha) => {
+          const fechaSeleccionada = new Date(fecha);
+          const hoy = new Date();
+          hoy.setHours(0, 0, 0, 0);
+          fechaSeleccionada.setHours(0, 0, 0, 0);
+          return fechaSeleccionada < hoy;
+        },
+        {
+          message: "La fecha de orden solo puede ser hoy o anterior.",
+        }
+      ),
+    fechaLlegadaEstimada: z
+      .string()
+      .optional()
+      .refine(
+        (fecha) => {
+          if (!fecha || fecha === "") return true;
+          const fechaSeleccionada = new Date(fecha);
+          const hoy = new Date();
+          hoy.setHours(0, 0, 0, 0);
+          fechaSeleccionada.setHours(0, 0, 0, 0);
+          return fechaSeleccionada >= hoy;
+        },
+        {
+          message: "La fecha estimada de llegada debe ser hoy o posterior.",
+        }
+      ),
+    estadoCompra: z
+      .enum(["BORRADOR", "ORDENADO", "EN_TRANSITO", "COMPLETADO", "CANCELADO"])
+      .optional(),
+    detalles: z
+      .array(detalleCompraSchema)
+      .min(1, "Debes agregar al menos un producto."),
+  })
+  .refine(
+    (data) => {
+      // Validación cruzada: si hay fecha estimada, debe ser posterior a fecha de orden
+      if (data.fechaLlegadaEstimada && data.fechaLlegadaEstimada !== "") {
+        const fechaOrden = new Date(data.fechaOrden);
+        const fechaEstimada = new Date(data.fechaLlegadaEstimada);
+        fechaOrden.setHours(0, 0, 0, 0);
+        fechaEstimada.setHours(0, 0, 0, 0);
+        return fechaEstimada >= fechaOrden;
+      }
+      return true;
+    },
+    {
+      message:
+        "La fecha estimada de llegada debe ser igual o posterior a la fecha de orden.",
+      path: ["fechaLlegadaEstimada"],
+    }
+  );
 
 export type CompraFormValues = z.infer<typeof compraFormSchema>;
