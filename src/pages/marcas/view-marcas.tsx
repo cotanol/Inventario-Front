@@ -17,7 +17,6 @@ const ViewMarcasPage = () => {
   const [selectedMarca, setSelectedMarca] = useState<Marca | null>(null);
   const navigate = useNavigate();
 
-  // Usar el hook useRefresh para manejar las marcas
   const {
     data: marcas,
     isLoading,

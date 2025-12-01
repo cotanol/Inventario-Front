@@ -1,38 +1,48 @@
-// src/components/Sidebar.tsx
 import {
   HomeIcon,
-  // ClipboardDocumentIcon,
-  // TagIcon,
-  // ArrowDownTrayIcon,
-  // ArrowUpTrayIcon,
-  UserIcon,
-  RectangleStackIcon,
-  ShoppingCartIcon,
-  TruckIcon,
-  BuildingOfficeIcon,
+  UsersIcon, // Usuarios (Plural)
+  ShieldCheckIcon, // Perfiles/Roles (Seguridad)
+  CubeIcon, // Productos (Objeto físico)
+  TagIcon, // Marcas (Etiquetas)
+  QueueListIcon, // Líneas (Listas/Categorías)
+  SwatchIcon, // Grupos (Variantes/Colores/Grupos)
+  UserGroupIcon, // Clientes (Grupo de personas externo)
+  IdentificationIcon, // Vendedores (Carnet/Staff)
+  BuildingStorefrontIcon, // Proveedores (Negocio/Edificio)
+  ClipboardDocumentListIcon, // Pedidos (Lista de documentos)
+  ArchiveBoxArrowDownIcon, // Compras (Entrada de mercancía)
 } from "@heroicons/react/24/outline";
 
 import { NavLink } from "react-router-dom";
 import logoImage from "../../assets/logo-image.png";
 
 const navigation = [
-  { name: "Home", icon: HomeIcon, href: "/" },
-  { name: "Usuarios", icon: UserIcon, href: "/usuarios" },
-  { name: "Perfiles", icon: UserIcon, href: "/perfiles" },
-  { name: "Productos", icon: RectangleStackIcon, href: "/productos" },
-  { name: "Marcas", icon: RectangleStackIcon, href: "/marcas" },
-  { name: "Lineas", icon: RectangleStackIcon, href: "/lineas" },
-  { name: "Grupos", icon: RectangleStackIcon, href: "/grupos" },
-  { name: "Clientes", icon: RectangleStackIcon, href: "/clientes" },
-  { name: "Vendedores", icon: UserIcon, href: "/vendedores" },
-  { name: "Proveedores", icon: BuildingOfficeIcon, href: "/proveedores" },
-  { name: "Pedidos", icon: ShoppingCartIcon, href: "/pedidos" },
-  { name: "Compras", icon: TruckIcon, href: "/compras" },
+  // --- Dashboard ---
+  { name: "Dashboard", icon: HomeIcon, href: "/" },
+
+  // --- Seguridad / Acceso ---
+  { name: "Usuarios", icon: UsersIcon, href: "/usuarios" },
+  { name: "Perfiles", icon: ShieldCheckIcon, href: "/perfiles" },
+
+  // --- Inventario / Catálogo ---
+  { name: "Productos", icon: CubeIcon, href: "/productos" },
+  { name: "Marcas", icon: TagIcon, href: "/marcas" },
+  { name: "Líneas", icon: QueueListIcon, href: "/lineas" },
+  { name: "Grupos", icon: SwatchIcon, href: "/grupos" },
+
+  // --- Terceros ---
+  { name: "Clientes", icon: UserGroupIcon, href: "/clientes" },
+  { name: "Vendedores", icon: IdentificationIcon, href: "/vendedores" },
+  { name: "Proveedores", icon: BuildingStorefrontIcon, href: "/proveedores" },
+
+  // --- Movimientos ---
+  { name: "Pedidos", icon: ClipboardDocumentListIcon, href: "/pedidos" },
+  { name: "Compras", icon: ArchiveBoxArrowDownIcon, href: "/compras" },
 ];
 
 export default function Sidebar() {
   return (
-    <aside className="h-screen w-64 bg-sidebar-background border-r border-gray-200 flex flex-col justify-between relative">
+    <aside className="h-screen w-80 bg-sidebar-background border-r border-gray-200 flex flex-col justify-between relative">
       <div>
         <div className="flex items-center justify-center">
           <img src={logoImage} alt="Logo-Pagina" className="w-30" />
@@ -47,8 +57,8 @@ export default function Sidebar() {
               className={({ isActive }) =>
                 `w-full flex items-center gap-3 px-6 py-2 text-sm font-medium rounded-md transition cursor-pointer ${
                   isActive
-                    ? "bg-secondary text-white" // 👈 Clases cuando el enlace está ACTIVO
-                    : "text-gray-300 hover:bg-secondary hover:text-white" // Clases cuando está INACTIVO
+                    ? "bg-secondary text-white"
+                    : "text-gray-300 hover:bg-secondary hover:text-white"
                 }`
               }
             >
