@@ -229,13 +229,13 @@ export const CompraForm = <T extends FieldValues>({
                     key={index}
                     className="p-4 border border-gray-200 rounded-lg space-y-4"
                   >
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                       {/* Producto */}
                       <FormField
                         control={form.control}
                         name={`detalles.${index}.productoId` as Path<T>}
                         render={({ field }) => (
-                          <FormItem>
+                          <FormItem className="md:col-span-2">
                             <FormLabel>Producto</FormLabel>
                             <Select
                               onValueChange={(value) => {
@@ -255,7 +255,7 @@ export const CompraForm = <T extends FieldValues>({
                               disabled={disableAllExceptFecha}
                             >
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="w-full">
                                   <SelectValue placeholder="Seleccionar" />
                                 </SelectTrigger>
                               </FormControl>
