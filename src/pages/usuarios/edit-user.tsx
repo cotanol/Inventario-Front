@@ -3,16 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
 import {
-  type IPerfil,
+  type IRol,
   updateUserFormSchema,
   type UpdateUserFormData,
 } from "@/components/usuarios/user-schema";
 import { UserForm } from "@/components/usuarios/user-form";
 import type { User } from "@/context/auth-context";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 // Interfaz para la respuesta de la API al buscar un usuario
 
@@ -22,7 +22,7 @@ const EditUserPage = () => {
   const { get, patch } = useFetchApi();
   const navigate = useNavigate();
 
-  const [perfiles, setPerfiles] = useState<IPerfil[]>([]);
+  const [roles, setRoles] = useState<IRol[]>([]);
   const [apiError, setApiError] = useState<string | null>(null);
   const [isLoadingData, setIsLoadingData] = useState(true);
 
@@ -40,23 +40,22 @@ const EditUserPage = () => {
     setIsLoadingData(true);
     try {
       // Hacemos las dos peticiones en paralelo para más eficiencia
-      const [userResponse, perfilesResponse] = await Promise.all([
+      const [userResponse, rolesResponse] = await Promise.all([
         get<User>(`/auth/user/${id}`), // Asumiendo un endpoint GET /usuarios/:id
-        get<IPerfil[]>("/auth/perfiles"),
+        get<IRol[]>("/auth/roles"),
       ]);
 
-      const perfilNombre = userResponse.perfiles[0]; // Tomamos el primer perfil
-      const perfilEncontrado = perfilesResponse.find(
-        (p) => p.nombre === perfilNombre
-      );
+      const rolEncontrado = rolesResponse.find((rol) => rol.nombre === userResponse.rol);
 
-      const perfilesActivos = perfilesResponse.filter((p) => p.estadoRegistro);
+      const rolesActivos = rolesResponse.filter((rol) => rol.estadoRegistro);
 
       form.reset({
-        ...userResponse,
-        perfilesIds: perfilEncontrado?.perfilId,
+        nombre: userResponse.nombre,
+        apellido: userResponse.apellido,
+        correoElectronico: userResponse.correoElectronico,
+        rolId: rolEncontrado?.rolId,
       });
-      setPerfiles(perfilesActivos);
+      setRoles(rolesActivos);
     } catch (err) {
       console.error("Error al cargar datos para editar", err);
       setApiError("No se pudieron cargar los datos del usuario.");
@@ -74,16 +73,7 @@ const EditUserPage = () => {
     if (!id) return;
     setApiError(null);
 
-    const payload: any = { ...values };
-    if (payload.apellidoMaterno === "") payload.apellidoMaterno = null;
-    if (payload.celular === "") payload.celular = null;
-
-    // Convertir perfilesIds (número) a array para el backend
-    if (payload.perfilesIds !== undefined) {
-      payload.perfilesIds = [payload.perfilesIds];
-    }
-
-    const updateUserPromise = () => patch(`/auth/update-user/${id}`, payload);
+    const updateUserPromise = () => patch(`/auth/update-user/${id}`, values);
 
     toast.promise(updateUserPromise(), {
       loading: "Actualizando usuario...",
@@ -93,11 +83,7 @@ const EditUserPage = () => {
         return "¡Usuario actualizado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al actualizar el usuario";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al actualizar el usuario");
         setApiError(message);
         return `Error: ${message}`;
       },
@@ -129,7 +115,7 @@ const EditUserPage = () => {
             onSubmit={onSubmit}
             isSubmitting={isSubmitting}
             apiError={apiError}
-            perfiles={perfiles}
+            roles={roles}
             onCancel={() => navigate("/usuarios")}
             submitButtonText="Actualizar Usuario"
             isEditing={true}

@@ -6,13 +6,13 @@ import {
   EyeIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
-import { type IPerfil } from "@/components/perfiles/perfil-schema";
+import { type IRol } from "@/components/roles/role-schema";
 import { useRefresh } from "../../hooks/use-refresh";
-import { PerfilStatusToggle } from "@/components/perfiles/view-perfiles.tsx/status-toggle";
-import { DialogPerfilDetails } from "@/components/perfiles/view-perfiles.tsx/dialog-details-perfil";
+import { CommonStatusToggle } from "@/components/common/status-toggle";
+import { DialogRoleDetails } from "@/components/roles/view-roles/dialog-details-role";
 
-const ViewPerfilesPage = () => {
-  const [selectedPerfil, setSelectedPerfil] = useState<IPerfil | null>(null);
+const ViewRolesPage = () => {
+  const [selectedPerfil, setSelectedPerfil] = useState<IRol | null>(null);
   const navigate = useNavigate();
 
   const {
@@ -20,12 +20,12 @@ const ViewPerfilesPage = () => {
     isLoading,
     error: apiError,
     updateItem,
-  } = useRefresh<IPerfil>("/auth/perfiles");
+  } = useRefresh<IRol>("/auth/roles");
 
-  const handleStatusChange = (perfilId: number, newStatus: boolean) => {
+  const handleStatusChange = (rolId: number, newStatus: boolean) => {
     updateItem((currentData) =>
       currentData.map((perfil) =>
-        perfil.perfilId === perfilId
+        perfil.rolId === rolId
           ? { ...perfil, estadoRegistro: newStatus }
           : perfil
       )
@@ -34,28 +34,28 @@ const ViewPerfilesPage = () => {
 
   return (
     <div>
-      <Header titulo="Perfiles" />
+      <Header titulo="Roles" />
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-700">
-            Todos los Perfiles
+            Todos los Roles
           </h2>
         </div>
         <div className="bg-white rounded-lg shadow-sm">
           <div className="flex items-center justify-end p-4 border-b">
             <Link
-              to="/perfiles/registrar"
+              to="/roles/registrar"
               className="inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700"
             >
-              <UserPlusIcon className="w-5 h-5" /> Registrar Perfil
+              <UserPlusIcon className="w-5 h-5" /> Registrar Rol
             </Link>
           </div>
 
           {isLoading ? (
-            <div className="text-center py-10">Cargando perfiles...</div>
+            <div className="text-center py-10">Cargando roles...</div>
           ) : apiError ? (
             <div className="p-4 bg-red-50 text-red-700">
-              Error al cargar los perfiles.
+              Error al cargar los roles.
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -82,7 +82,7 @@ const ViewPerfilesPage = () => {
                 <tbody>
                   {perfiles.map((perfil) => (
                     <tr
-                      key={perfil.perfilId}
+                      key={perfil.rolId}
                       className="border-b hover:bg-gray-50"
                     >
                       <td className="px-6 py-4 font-medium text-gray-900">
@@ -92,13 +92,15 @@ const ViewPerfilesPage = () => {
                         {perfil.descripcion || "-"}
                       </td>
                       <td className="px-6 py-4 text-sm text-center text-gray-500">
-                        {perfil.permisosLink?.length || 0}
+                        {perfil.permisos?.length || 0}
                       </td>
                       <td className="px-6 py-4">
-                        <PerfilStatusToggle
-                          perfilId={perfil.perfilId}
+                        <CommonStatusToggle
+                          entityId={perfil.rolId}
+                          endpoint={`/auth/roles/${perfil.rolId}/change-status`}
                           initialStatus={perfil.estadoRegistro}
                           onStatusChange={handleStatusChange}
+                          ariaLabel="Cambiar estado del rol"
                         />
                       </td>
                       <td className="px-6 py-4">
@@ -113,9 +115,9 @@ const ViewPerfilesPage = () => {
                           <button
                             className="p-2 rounded-lg transition text-yellow-600 hover:text-yellow-700 hover:bg-yellow-50"
                             onClick={() =>
-                              navigate(`/perfiles/editar/${perfil.perfilId}`)
+                              navigate(`/roles/editar/${perfil.rolId}`)
                             }
-                            title="Editar perfil"
+                            title="Editar rol"
                           >
                             <PencilSquareIcon className="w-5 h-5" />
                           </button>
@@ -129,7 +131,7 @@ const ViewPerfilesPage = () => {
           )}
         </div>
       </div>
-      <DialogPerfilDetails
+      <DialogRoleDetails
         isOpen={!!selectedPerfil}
         perfil={selectedPerfil}
         onClose={() => setSelectedPerfil(null)}
@@ -137,4 +139,4 @@ const ViewPerfilesPage = () => {
     </div>
   );
 };
-export default ViewPerfilesPage;
+export default ViewRolesPage;

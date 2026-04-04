@@ -1,29 +1,35 @@
 import { useState } from "react";
-import { Switch } from "../../ui/switch";
-import useFetchApi from "../../../hooks/use-fetch";
 import { toast } from "sonner";
 
+import useFetchApi from "@/hooks/use-fetch";
+import { getApiErrorMessage } from "@/lib/api-error";
+import { Switch } from "@/components/ui/switch";
+
 interface StatusToggleProps {
-  marcaId: number;
+  entityId: number;
+  endpoint: string;
   initialStatus: boolean;
-  onStatusChange: (marcaId: number, newStatus: boolean) => void;
+  onStatusChange: (entityId: number, newStatus: boolean) => void;
+  ariaLabel: string;
 }
 
-export function StatusToggle({
-  marcaId,
+export function CommonStatusToggle({
+  entityId,
+  endpoint,
   initialStatus,
   onStatusChange,
+  ariaLabel,
 }: StatusToggleProps) {
   const [status, setStatus] = useState(initialStatus);
   const [isLoading, setIsLoading] = useState(false);
-  const { patch } = useFetchApi(); // <-- 2. Obtener el método 'patch' del hook
+  const { patch } = useFetchApi();
 
   const handleToggle = async (newStatus: boolean) => {
     setIsLoading(true);
-    setStatus(newStatus); // UI optimista
+    setStatus(newStatus);
 
     const updateStatusPromise = () =>
-      patch(`/catalogo/marcas/${marcaId}/change-status`, {
+      patch(endpoint, {
         estadoRegistro: newStatus,
       });
 
@@ -34,19 +40,13 @@ export function StatusToggle({
           newStatus ? "activado" : "desactivado"
         } correctamente 🎉`,
         error: (err) => {
-          const errorMessage =
-            err.response?.data?.message || "Error al actualizar el estado";
-          const message = Array.isArray(errorMessage)
-            ? errorMessage.join(", ")
-            : errorMessage;
+          const message = getApiErrorMessage(err, "Error al actualizar el estado");
           return `Error: ${message}`;
         },
       });
 
-      // La API respondió con éxito, notificamos al padre
-      onStatusChange(marcaId, newStatus);
-    } catch (error) {
-      // Si hay un error, revertimos el estado visual
+      onStatusChange(entityId, newStatus);
+    } catch {
       setStatus(!newStatus);
     } finally {
       setIsLoading(false);
@@ -58,7 +58,7 @@ export function StatusToggle({
       checked={status}
       onCheckedChange={handleToggle}
       disabled={isLoading}
-      aria-label="Cambiar estado de la marca"
+      aria-label={ariaLabel}
     />
   );
 }

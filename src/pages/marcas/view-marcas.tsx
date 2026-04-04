@@ -8,9 +8,9 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 
-import type { Marca } from "@/context/auth-context";
+import type { Marca } from "@/components/catalogo/catalogo-types";
 import { DialogMarcaDetails } from "@/components/marcas/view-marcas/dialog-details-marca";
-import { StatusToggle } from "@/components/marcas/view-marcas/status-toggle";
+import { CommonStatusToggle } from "@/components/common/status-toggle";
 import { useRefresh } from "../../hooks/use-refresh";
 
 const ViewMarcasPage = () => {
@@ -112,10 +112,12 @@ const ViewMarcasPage = () => {
                       </td>
                       <td className="px-6 py-4">
                         {/* Aquí se renderiza el componente del toggle */}
-                        <StatusToggle
-                          marcaId={marca.marcaId}
+                        <CommonStatusToggle
+                          entityId={marca.marcaId}
+                          endpoint={`/catalogo/marcas/${marca.marcaId}/change-status`}
                           initialStatus={marca.estadoRegistro}
                           onStatusChange={handleMarcaStatusChange}
+                          ariaLabel="Cambiar estado de la marca"
                         />
                       </td>
                       <td className="px-6 py-4">

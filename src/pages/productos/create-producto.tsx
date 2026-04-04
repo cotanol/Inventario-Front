@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
 import { ProductoForm } from "@/components/productos/producto-form";
@@ -13,6 +12,7 @@ import {
   type IGrupo,
   type IMarca,
 } from "@/components/productos/producto-schema";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const CreateProductoPage = () => {
   const { post, get } = useFetchApi();
@@ -92,11 +92,7 @@ const CreateProductoPage = () => {
         return "¡Producto creado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al crear el producto";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al crear el producto");
         setApiError(message);
         return `Error: ${message}`;
       },

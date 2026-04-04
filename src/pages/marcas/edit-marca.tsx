@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
 import { MarcaForm } from "@/components/marcas/marca-form";
@@ -11,7 +10,8 @@ import {
   updateMarcaFormSchema,
   type UpdateMarcaFormData,
 } from "@/components/marcas/marca-schema";
-import type { Marca } from "@/context/auth-context";
+import type { Marca } from "@/components/catalogo/catalogo-types";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const EditMarcaPage = () => {
   const { id } = useParams<{ id: string }>(); // Obtenemos el ID de la marca de la URL
@@ -68,11 +68,7 @@ const EditMarcaPage = () => {
         return "¡Marca actualizada exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al actualizar la marca";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al actualizar la marca");
         setApiError(message);
         return `Error: ${message}`;
       },

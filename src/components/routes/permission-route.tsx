@@ -1,14 +1,15 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
+import { hasRequiredPermissions } from "@/lib/permissions";
 
 interface PermissionRouteProps {
-  permisosRequeridos?: string[]; // Array de keyPermisos (ej: ['CREAR_USUARIO'])
+  permisosRequeridos?: string[];
   requiereTodos?: boolean; // Si true, necesita TODOS los permisos, si false solo uno
 }
 
 /**
  * Componente para proteger rutas basándose en permisos específicos
- * Ejemplo: <Route element={<PermissionRoute permisosRequeridos={['CREAR_USUARIO']} />}>
+ * Ejemplo: <Route element={<PermissionRoute permisosRequeridos={['USUARIOS']} />}>
  */
 const PermissionRoute = ({
   permisosRequeridos,
@@ -29,10 +30,11 @@ const PermissionRoute = ({
     return <Outlet />;
   }
 
-  // Verificar permisos
-  const tienePermisos = requiereTodos
-    ? permisosRequeridos.every((permiso) => user.permisos?.includes(permiso))
-    : permisosRequeridos.some((permiso) => user.permisos?.includes(permiso));
+  const tienePermisos = hasRequiredPermissions(
+    user.permisos,
+    permisosRequeridos,
+    requiereTodos,
+  );
 
   if (!tienePermisos) {
     return <Navigate to="/unauthorized" replace />;

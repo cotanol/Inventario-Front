@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { type IProveedor } from "@/components/proveedores/proveedor-schema";
 import { useRefresh } from "../../hooks/use-refresh";
-import { ProveedorStatusToggle } from "@/components/proveedores/view-proveedores.tsx/status-toggle";
+import { CommonStatusToggle } from "@/components/common/status-toggle";
 import { DialogProveedorDetails } from "@/components/proveedores/view-proveedores.tsx/dialog-details-proveedor";
 
 const ViewProveedoresPage = () => {
@@ -144,10 +144,12 @@ const ViewProveedoresPage = () => {
                         {proveedor.contactoNombre || "N/A"}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <ProveedorStatusToggle
-                          proveedorId={proveedor.proveedorId}
+                        <CommonStatusToggle
+                          entityId={proveedor.proveedorId}
+                          endpoint={`/proveedores/${proveedor.proveedorId}/change-status`}
                           initialStatus={proveedor.estadoRegistro}
                           onStatusChange={handleProveedorStatusChange}
+                          ariaLabel="Cambiar estado del proveedor"
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

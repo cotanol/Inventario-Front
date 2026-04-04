@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
 import { ProductoForm } from "@/components/productos/producto-form";
@@ -13,7 +12,8 @@ import {
   type IGrupo,
   type IMarca,
 } from "@/components/productos/producto-schema";
-import type { Producto } from "@/context/auth-context";
+import type { Producto } from "@/components/productos/producto-types";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const EditProductoPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -103,11 +103,7 @@ const EditProductoPage = () => {
         return "¡Producto actualizado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al actualizar el producto";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al actualizar el producto");
         setApiError(message);
         return `Error: ${message}`;
       },

@@ -3,67 +3,57 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
 import {
   userFormSchema,
-  type IPerfil,
+  type IRol,
   type UserFormData,
 } from "@/components/usuarios/user-schema";
 import { UserForm } from "@/components/usuarios/user-form";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const CreateUserPage = () => {
   const { get, post } = useFetchApi();
   const navigate = useNavigate();
-  const [perfiles, setPerfiles] = useState<IPerfil[]>([]);
+  const [roles, setRoles] = useState<IRol[]>([]);
   const [apiError, setApiError] = useState<string | null>(null);
 
   const form = useForm<UserFormData>({
     resolver: zodResolver(userFormSchema),
     mode: "onChange",
     defaultValues: {
-      nombres: "",
-      apellidoPaterno: "",
-      apellidoMaterno: null,
-      dni: "",
+      nombre: "",
+      apellido: "",
       correoElectronico: "",
       clave: "",
-      celular: null,
-      perfilesIds: undefined,
+      rolId: undefined,
     },
   });
 
   const { isSubmitting } = form.formState;
 
   useEffect(() => {
-    const fetchPerfiles = async () => {
+    const fetchRoles = async () => {
       try {
-        const response = await get<IPerfil[]>("/auth/perfiles");
+        const response = await get<IRol[]>("/auth/roles");
 
-        const perfilesActivos = response.filter(
-          (perfil) => perfil.estadoRegistro
+        const rolesActivos = response.filter(
+          (rol) => rol.estadoRegistro
         );
-        setPerfiles(perfilesActivos);
+        setRoles(rolesActivos);
       } catch (err) {
-        console.error("Error al cargar los perfiles", err);
-        setApiError("No se pudieron cargar los perfiles para seleccionar.");
+        console.error("Error al cargar los roles", err);
+        setApiError("No se pudieron cargar los roles para seleccionar.");
       }
     };
-    fetchPerfiles();
+    fetchRoles();
   }, [get]);
 
   async function onSubmit(values: UserFormData) {
     setApiError(null);
 
-    const payload: any = { ...values };
-    if (payload.apellidoMaterno === "") payload.apellidoMaterno = null;
-    if (payload.celular === "") payload.celular = null;
-
-    // Convertir perfilesIds (número) a array para el backend
-    payload.perfilesIds = [payload.perfilesIds];
-
-    const createUserPromise = () => post("/auth/register", payload);
+    const createUserPromise = () => post("/auth/register", values);
 
     toast.promise(createUserPromise(), {
       loading: "Creando usuario...",
@@ -75,11 +65,7 @@ const CreateUserPage = () => {
         return "¡Usuario creado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al crear el usuario";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al crear el usuario");
         setApiError(message);
         return `Error: ${message}`;
       },
@@ -99,7 +85,7 @@ const CreateUserPage = () => {
             onSubmit={onSubmit}
             isSubmitting={isSubmitting}
             apiError={apiError}
-            perfiles={perfiles}
+            roles={roles}
             onCancel={() => navigate("/usuarios")}
           />
         </div>

@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-// Se asume que la interfaz Producto se exportará desde el AuthContext
-import type { Producto } from "@/context/auth-context";
+import type { Producto } from "@/components/productos/producto-types";
 
 interface DialogProductoDetailsProps {
   producto: Producto | null; // El producto a mostrar, o null si no hay ninguno seleccionado

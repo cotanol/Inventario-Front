@@ -19,16 +19,15 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { Loader2, AlertCircle } from "lucide-react";
-import type { IPerfil } from "./user-schema";
-import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
-import type { FieldValues, Path } from "react-hook-form";
+import type { IRol } from "./user-schema";
+import type { UseFormReturn, FieldValues, Path } from "react-hook-form";
 
 interface UserFormProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   onSubmit: (values: T) => void;
   isSubmitting: boolean;
   apiError: string | null;
-  perfiles: IPerfil[];
+  roles: IRol[];
   submitButtonText?: string;
   cancelButtonText?: string;
   onCancel: () => void;
@@ -40,7 +39,7 @@ export const UserForm = <T extends FieldValues>({
   onSubmit,
   isSubmitting,
   apiError,
-  perfiles,
+  roles,
   submitButtonText = "Crear Usuario",
   cancelButtonText = "Cancelar",
   onCancel,
@@ -52,12 +51,12 @@ export const UserForm = <T extends FieldValues>({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
-            name={"nombres" as Path<T>}
+            name={"nombre" as Path<T>}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nombres*</FormLabel>
+                <FormLabel>Nombre*</FormLabel>
                 <FormControl>
-                  <Input placeholder="John" {...field} />
+                  <Input placeholder="Juan" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -65,42 +64,12 @@ export const UserForm = <T extends FieldValues>({
           />
           <FormField
             control={form.control}
-            name={"apellidoPaterno" as Path<T>}
+            name={"apellido" as Path<T>}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Apellido Paterno*</FormLabel>
+                <FormLabel>Apellido*</FormLabel>
                 <FormControl>
-                  <Input placeholder="Doe" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name={"apellidoMaterno" as Path<T>}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Apellido Materno</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Smith"
-                    {...field}
-                    value={field.value ?? ""}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name={"dni" as Path<T>}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>DNI*</FormLabel>
-                <FormControl>
-                  <Input placeholder="12345678" {...field} />
+                  <Input placeholder="Perez Gomez" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -141,47 +110,28 @@ export const UserForm = <T extends FieldValues>({
 
           <FormField
             control={form.control}
-            name={"celular" as Path<T>}
+            name={"rolId" as Path<T>}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Celular</FormLabel>
-                <FormControl>
-                  <Input
-                    type="tel"
-                    placeholder="987654321"
-                    {...field}
-                    value={field.value ?? ""}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name={"perfilesIds" as Path<T>}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Perfil*</FormLabel>
+                <FormLabel>Rol*</FormLabel>
                 <Select
                   onValueChange={(value) => field.onChange(parseInt(value))}
                   value={field.value?.toString()}
                 >
                   <FormControl>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Selecciona un perfil" />
+                      <SelectValue placeholder="Selecciona un rol" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {perfiles
-                      .filter((perfil) => perfil.estadoRegistro)
-                      .map((perfil) => (
+                    {roles
+                      .filter((rol) => rol.estadoRegistro)
+                      .map((rol) => (
                         <SelectItem
-                          key={perfil.perfilId}
-                          value={perfil.perfilId.toString()}
+                          key={rol.rolId}
+                          value={rol.rolId.toString()}
                         >
-                          {perfil.nombre}
+                          {rol.nombre}
                         </SelectItem>
                       ))}
                   </SelectContent>

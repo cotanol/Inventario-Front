@@ -8,9 +8,9 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 
-import type { Linea } from "@/context/auth-context";
+import type { Linea } from "@/components/catalogo/catalogo-types";
 import { DialogLineaDetails } from "@/components/lineas/view-lineas/dialog-details-linea";
-import { StatusToggle } from "@/components/lineas/view-lineas/status-toggle";
+import { CommonStatusToggle } from "@/components/common/status-toggle";
 import { useRefresh } from "../../hooks/use-refresh";
 
 const ViewLineasPage = () => {
@@ -113,10 +113,12 @@ const ViewLineasPage = () => {
                       </td>
                       <td className="px-6 py-4">
                         {/* Aquí se renderiza el componente del toggle */}
-                        <StatusToggle
-                          lineaId={linea.lineaId}
+                        <CommonStatusToggle
+                          entityId={linea.lineaId}
+                          endpoint={`/catalogo/lineas/${linea.lineaId}/change-status`}
                           initialStatus={linea.estadoRegistro}
                           onStatusChange={handleLineaStatusChange}
+                          ariaLabel="Cambiar estado de la linea"
                         />
                       </td>
                       <td className="px-6 py-4">

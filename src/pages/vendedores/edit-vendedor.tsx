@@ -5,12 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import {
-  updateVendedorFormSchema,
+import {  updateVendedorFormSchema,
   type UpdateVendedorFormData,
   type IVendedor,
 } from "@/components/vendedores/vendedor-schema";
 import { VendedorForm } from "@/components/vendedores/vendedor-form";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const EditVendedorPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -56,11 +56,7 @@ const EditVendedorPage = () => {
         return "¡Vendedor actualizado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al actualizar el vendedor";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al actualizar el vendedor");
         setApiError(message);
         return `Error: ${message}`;
       },

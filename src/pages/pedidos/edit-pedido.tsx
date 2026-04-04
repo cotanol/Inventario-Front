@@ -5,8 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import {
-  updatePedidoFormSchema,
+import {  updatePedidoFormSchema,
   type UpdatePedidoFormData,
   type IPedido,
 } from "@/components/pedidos/pedido-schema";
@@ -14,6 +13,7 @@ import { PedidoForm } from "@/components/pedidos/pedido-form";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 interface Cliente {
   clienteId: number;
@@ -129,11 +129,7 @@ const EditPedidoPage = () => {
         return "¡Pedido actualizado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al actualizar el pedido";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al actualizar el pedido");
         setApiError(message);
         return `Error: ${message}`;
       },

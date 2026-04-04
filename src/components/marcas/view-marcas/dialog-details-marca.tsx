@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-// Se asume que la interfaz Marca se exportará desde el AuthContext
-import type { Marca } from "../../../context/auth-context";
+import type { Marca } from "@/components/catalogo/catalogo-types";
 
 interface DialogMarcaDetailsProps {
   marca: Marca | null; // La marca a mostrar, o null si no hay ninguna seleccionada

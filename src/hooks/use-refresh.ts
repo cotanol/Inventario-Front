@@ -22,9 +22,26 @@ export function useRefresh<T>(
     try {
       const response = await get<T[]>(endpoint);
       setData(response);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const maybeError = err as {
+        response?: {
+          data?: {
+            error?: {
+              message?: string;
+              details?: string[];
+            };
+            message?: string;
+          };
+        };
+      };
+
+      const detailedMessage =
+        maybeError.response?.data?.error?.message ??
+        maybeError.response?.data?.message ??
+        "Error al cargar los datos";
+
       console.error(`Error fetching data from ${endpoint}:`, err);
-      setError(err?.response?.data?.message || "Error al cargar los datos");
+      setError(detailedMessage);
       setData([]);
     } finally {
       setIsLoading(false);

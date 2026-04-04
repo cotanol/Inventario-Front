@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
 import { LineaForm } from "@/components/lineas/linea-form";
@@ -11,6 +10,7 @@ import {
   lineaFormSchema,
   type LineaFormData,
 } from "@/components/lineas/linea-schema";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const CreateLineaPage = () => {
   const { post } = useFetchApi();
@@ -40,11 +40,7 @@ const CreateLineaPage = () => {
         return "¡Línea creada exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al crear la línea";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al crear la línea");
         setApiError(message);
         return `Error: ${message}`;
       },

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import {
-  PencilSquareIcon,
+import {  PencilSquareIcon,
   CheckCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 import { toast } from "sonner";
 import useFetchApi from "@/hooks/use-fetch";
 import type { IPedido } from "@/components/pedidos/pedido-schema";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 interface PedidoActionsProps {
   pedido: IPedido;
@@ -25,10 +25,11 @@ export const PedidoActions = ({
   const handleChangeEstado = async (nuevoEstado: string) => {
     setIsChanging(true);
 
+    const actionPath =
+      nuevoEstado === "COMPLETADO" ? "completar" : "cancelar";
+
     const changeEstadoPromise = async () => {
-      await patch(`/pedidos/${pedido.pedidoId}/change-estado`, {
-        estadoPedido: nuevoEstado,
-      });
+      await patch(`/pedidos/${pedido.pedidoId}/${actionPath}`, {});
       onStatusChange(pedido.pedidoId, nuevoEstado);
     };
 
@@ -36,11 +37,7 @@ export const PedidoActions = ({
       loading: `Cambiando estado a ${nuevoEstado}...`,
       success: `¡Pedido ${nuevoEstado.toLowerCase()} exitosamente! 🎉`,
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al cambiar el estado";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al cambiar el estado");
         return `Error: ${message}`;
       },
       finally: () => {
@@ -50,8 +47,6 @@ export const PedidoActions = ({
   };
 
   const isPendiente = pedido.estadoPedido === "PENDIENTE";
-  const isCompletado = pedido.estadoPedido === "COMPLETADO";
-  const isCancelado = pedido.estadoPedido === "CANCELADO";
 
   return (
     <>

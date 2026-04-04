@@ -10,7 +10,7 @@ import {
 import { type ICliente } from "@/components/clientes/cliente-schema";
 
 import { useRefresh } from "../../hooks/use-refresh";
-import { ClienteStatusToggle } from "@/components/clientes/view-clientes.tsx/status-toggle";
+import { CommonStatusToggle } from "@/components/common/status-toggle";
 import { DialogClienteDetails } from "@/components/clientes/view-clientes.tsx/dialog-details-cliente";
 
 const ViewClientesPage = () => {
@@ -134,10 +134,12 @@ const ViewClientesPage = () => {
                         {cliente.clasificacion}
                       </td>
                       <td className="px-6 py-4">
-                        <ClienteStatusToggle
-                          clienteId={cliente.clienteId}
+                        <CommonStatusToggle
+                          entityId={cliente.clienteId}
+                          endpoint={`/clientes/${cliente.clienteId}/change-status`}
                           initialStatus={cliente.estadoRegistro}
                           onStatusChange={handleClienteStatusChange}
+                          ariaLabel="Cambiar estado del cliente"
                         />
                       </td>
                       <td className="px-6 py-4">

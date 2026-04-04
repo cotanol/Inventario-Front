@@ -5,12 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import {
-  proveedorFormSchema,
+import {  proveedorFormSchema,
   type ProveedorFormValues,
   type IProveedor,
 } from "@/components/proveedores/proveedor-schema";
 import { ProveedorForm } from "@/components/proveedores/proveedor-form";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const EditProveedorPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -64,14 +64,9 @@ const EditProveedorPage = () => {
         return "¡Proveedor actualizado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al actualizar el proveedor";
-        setApiError(
-          Array.isArray(errorMessage) ? errorMessage.join(", ") : errorMessage
-        );
-        return `Error: ${
-          Array.isArray(errorMessage) ? errorMessage.join(", ") : errorMessage
-        }`;
+        const message = getApiErrorMessage(err, "Error al actualizar el proveedor");
+        setApiError(message);
+        return `Error: ${message}`;
       },
     });
   }

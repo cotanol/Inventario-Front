@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
 import { GrupoForm } from "@/components/grupos/grupo-form";
@@ -12,7 +11,8 @@ import {
   type UpdateGrupoFormData,
   type ILinea,
 } from "@/components/grupos/grupo-schema";
-import type { Grupo } from "@/context/auth-context";
+import type { Grupo } from "@/components/catalogo/catalogo-types";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const EditGrupoPage = () => {
   const { id } = useParams<{ id: string }>(); // Obtenemos el ID del grupo de la URL
@@ -107,11 +107,7 @@ const EditGrupoPage = () => {
         return "¡Grupo actualizado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al actualizar el grupo";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al actualizar el grupo");
         setApiError(message);
         return `Error: ${message}`;
       },

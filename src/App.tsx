@@ -27,9 +27,9 @@ import EditClientePage from "./pages/clientes/edit-cliente";
 import CreateVendedorPage from "./pages/vendedores/create-vendedor";
 import ViewVendedoresPage from "./pages/vendedores/view-vendedores";
 import EditVendedorPage from "./pages/vendedores/edit-vendedor";
-import EditPerfilPage from "./pages/perfiles/edit-perfil";
-import ViewPerfilesPage from "./pages/perfiles/view-perfiles";
-import CreatePerfilPage from "./pages/perfiles/create-perfil";
+import EditRolePage from "./pages/roles/edit-role";
+import ViewRolesPage from "./pages/roles/view-roles";
+import CreateRolePage from "./pages/roles/create-role";
 import ViewPedidosPage from "./pages/pedidos/view-pedidos";
 import CreatePedidoPage from "./pages/pedidos/create-pedido";
 import EditPedidoPage from "./pages/pedidos/edit-pedido";
@@ -59,67 +59,67 @@ function App() {
 
         {/* USUARIOS */}
         <Route
-          element={<PermissionRoute permisosRequeridos={["CREAR_USUARIO"]} />}
+          element={<PermissionRoute permisosRequeridos={["USUARIOS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/usuarios/registrar" element={<CreateUserPage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["EDITAR_USUARIO"]} />}
+          element={<PermissionRoute permisosRequeridos={["USUARIOS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/usuarios/editar/:id" element={<EditUserPage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["VER_USUARIOS"]} />}
+          element={<PermissionRoute permisosRequeridos={["USUARIOS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/usuarios" element={<ViewUsersPage />} />
           </Route>
         </Route>
 
-        {/* PERFILES */}
+        {/* ROLES */}
         <Route
-          element={<PermissionRoute permisosRequeridos={["CREAR_PERFIL"]} />}
+          element={<PermissionRoute permisosRequeridos={["ROLES"]} />}
         >
           <Route element={<AppLayout />}>
-            <Route path="/perfiles/registrar" element={<CreatePerfilPage />} />
+            <Route path="/roles/registrar" element={<CreateRolePage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["EDITAR_PERFIL"]} />}
+          element={<PermissionRoute permisosRequeridos={["ROLES"]} />}
         >
           <Route element={<AppLayout />}>
-            <Route path="/perfiles/editar/:id" element={<EditPerfilPage />} />
+            <Route path="/roles/editar/:id" element={<EditRolePage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["VER_PERFILES"]} />}
+          element={<PermissionRoute permisosRequeridos={["ROLES"]} />}
         >
           <Route element={<AppLayout />}>
-            <Route path="/perfiles" element={<ViewPerfilesPage />} />
+            <Route path="/roles" element={<ViewRolesPage />} />
           </Route>
         </Route>
 
         {/* MARCAS */}
         <Route
-          element={<PermissionRoute permisosRequeridos={["CREAR_MARCA"]} />}
+          element={<PermissionRoute permisosRequeridos={["MARCAS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/marcas/registrar" element={<CreateMarcaPage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["EDITAR_MARCA"]} />}
+          element={<PermissionRoute permisosRequeridos={["MARCAS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/marcas/editar/:id" element={<EditMarcaPage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["VER_MARCAS"]} />}
+          element={<PermissionRoute permisosRequeridos={["MARCAS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/marcas" element={<ViewMarcasPage />} />
@@ -128,21 +128,21 @@ function App() {
 
         {/* LINEAS */}
         <Route
-          element={<PermissionRoute permisosRequeridos={["CREAR_LINEA"]} />}
+          element={<PermissionRoute permisosRequeridos={["LINEAS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/lineas/registrar" element={<CreateLineaPage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["EDITAR_LINEA"]} />}
+          element={<PermissionRoute permisosRequeridos={["LINEAS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/lineas/editar/:id" element={<EditLineaPage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["VER_LINEAS"]} />}
+          element={<PermissionRoute permisosRequeridos={["LINEAS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/lineas" element={<ViewLineasPage />} />
@@ -151,21 +151,21 @@ function App() {
 
         {/* GRUPOS */}
         <Route
-          element={<PermissionRoute permisosRequeridos={["CREAR_GRUPO"]} />}
+          element={<PermissionRoute permisosRequeridos={["GRUPOS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/grupos/registrar" element={<CreateGrupoPage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["EDITAR_GRUPO"]} />}
+          element={<PermissionRoute permisosRequeridos={["GRUPOS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/grupos/editar/:id" element={<EditGrupoPage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["VER_GRUPOS"]} />}
+          element={<PermissionRoute permisosRequeridos={["GRUPOS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/grupos" element={<ViewGruposPage />} />
@@ -174,21 +174,21 @@ function App() {
 
         {/* PRODUCTOS */}
         <Route
-          element={<PermissionRoute permisosRequeridos={["CREAR_PRODUCTO"]} />}
+          element={<PermissionRoute permisosRequeridos={["PRODUCTOS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/productos/registrar" element={<CreateProducto />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["EDITAR_PRODUCTO"]} />}
+          element={<PermissionRoute permisosRequeridos={["PRODUCTOS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/productos/editar/:id" element={<EditProducto />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["VER_PRODUCTOS"]} />}
+          element={<PermissionRoute permisosRequeridos={["PRODUCTOS"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/productos" element={<ProductosIndex />} />
@@ -197,21 +197,21 @@ function App() {
 
         {/* CLIENTES */}
         <Route
-          element={<PermissionRoute permisosRequeridos={["CREAR_CLIENTE"]} />}
+          element={<PermissionRoute permisosRequeridos={["CLIENTES"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/clientes/registrar" element={<CreateClientePage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["EDITAR_CLIENTE"]} />}
+          element={<PermissionRoute permisosRequeridos={["CLIENTES"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/clientes/editar/:id" element={<EditClientePage />} />
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["VER_CLIENTES"]} />}
+          element={<PermissionRoute permisosRequeridos={["CLIENTES"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/clientes" element={<ViewClientesPage />} />
@@ -220,7 +220,7 @@ function App() {
 
         {/* VENDEDORES */}
         <Route
-          element={<PermissionRoute permisosRequeridos={["CREAR_VENDEDOR"]} />}
+          element={<PermissionRoute permisosRequeridos={["VENDEDORES"]} />}
         >
           <Route element={<AppLayout />}>
             <Route
@@ -230,7 +230,7 @@ function App() {
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["EDITAR_VENDEDOR"]} />}
+          element={<PermissionRoute permisosRequeridos={["VENDEDORES"]} />}
         >
           <Route element={<AppLayout />}>
             <Route
@@ -240,7 +240,7 @@ function App() {
           </Route>
         </Route>
         <Route
-          element={<PermissionRoute permisosRequeridos={["VER_VENDEDORES"]} />}
+          element={<PermissionRoute permisosRequeridos={["VENDEDORES"]} />}
         >
           <Route element={<AppLayout />}>
             <Route path="/vendedores" element={<ViewVendedoresPage />} />
@@ -248,29 +248,33 @@ function App() {
         </Route>
 
         {/* PEDIDOS */}
-        <Route element={<PermissionRoute />}>
+        <Route element={<PermissionRoute permisosRequeridos={["PEDIDOS"]} />}>
           <Route element={<AppLayout />}>
             <Route path="/pedidos" element={<ViewPedidosPage />} />
           </Route>
         </Route>
-        <Route element={<PermissionRoute />}>
+        <Route element={<PermissionRoute permisosRequeridos={["PEDIDOS"]} />}>
           <Route element={<AppLayout />}>
             <Route path="/pedidos/registrar" element={<CreatePedidoPage />} />
           </Route>
         </Route>
-        <Route element={<PermissionRoute />}>
+        <Route element={<PermissionRoute permisosRequeridos={["PEDIDOS"]} />}>
           <Route element={<AppLayout />}>
             <Route path="/pedidos/editar/:id" element={<EditPedidoPage />} />
           </Route>
         </Route>
 
         {/* PROVEEDORES */}
-        <Route element={<PermissionRoute />}>
+        <Route
+          element={<PermissionRoute permisosRequeridos={["PROVEEDORES"]} />}
+        >
           <Route element={<AppLayout />}>
             <Route path="/proveedores" element={<ViewProveedoresPage />} />
           </Route>
         </Route>
-        <Route element={<PermissionRoute />}>
+        <Route
+          element={<PermissionRoute permisosRequeridos={["PROVEEDORES"]} />}
+        >
           <Route element={<AppLayout />}>
             <Route
               path="/proveedores/registrar"
@@ -278,7 +282,9 @@ function App() {
             />
           </Route>
         </Route>
-        <Route element={<PermissionRoute />}>
+        <Route
+          element={<PermissionRoute permisosRequeridos={["PROVEEDORES"]} />}
+        >
           <Route element={<AppLayout />}>
             <Route
               path="/proveedores/editar/:id"
@@ -288,22 +294,22 @@ function App() {
         </Route>
 
         {/* COMPRAS */}
-        <Route element={<PermissionRoute />}>
+        <Route element={<PermissionRoute permisosRequeridos={["COMPRAS"]} />}>
           <Route element={<AppLayout />}>
             <Route path="/compras" element={<ViewComprasPage />} />
           </Route>
         </Route>
-        <Route element={<PermissionRoute />}>
+        <Route element={<PermissionRoute permisosRequeridos={["COMPRAS"]} />}>
           <Route element={<AppLayout />}>
             <Route path="/compras/registrar" element={<CreateCompraPage />} />
           </Route>
         </Route>
-        <Route element={<PermissionRoute />}>
+        <Route element={<PermissionRoute permisosRequeridos={["COMPRAS"]} />}>
           <Route element={<AppLayout />}>
             <Route path="/compras/editar/:id" element={<EditCompraPage />} />
           </Route>
         </Route>
-        <Route element={<PermissionRoute />}>
+        <Route element={<PermissionRoute permisosRequeridos={["COMPRAS"]} />}>
           <Route element={<AppLayout />}>
             <Route
               path="/compras/recibir/:id"

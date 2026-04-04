@@ -10,7 +10,7 @@ import {
 
 import type { User } from "@/context/auth-context";
 import { DialogUserDetails } from "@/components/usuarios/view-users/dialog-details-user";
-import { StatusToggle } from "@/components/usuarios/view-users/status-toggle";
+import { CommonStatusToggle } from "@/components/common/status-toggle";
 import { useRefresh } from "../../hooks/use-refresh";
 
 const ViewUsersPage = () => {
@@ -90,19 +90,13 @@ const ViewUsersPage = () => {
                       <input type="checkbox" className="rounded" />
                     </th> */}
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                      Nombres Completos
+                      Nombre Completo
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                      DNI
-                    </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                      Perfiles
+                      Rol
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
                       Correo
-                    </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
-                      Celular
                     </th>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
                       Estado
@@ -122,25 +116,21 @@ const ViewUsersPage = () => {
                       {/* <td className="px-6 py-4">
                         <input type="checkbox" className="rounded" />
                       </td> */}
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900">{`${user.nombres} ${user.apellidoPaterno}`}</td>
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">{`${user.nombre} ${user.apellido}`}</td>
                       <td className="px-6 py-4 text-sm text-gray-500">
-                        {user.dni}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-500">
-                        {user.perfiles.join(", ")}
+                        {user.rol}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
                         {user.correoElectronico}
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-500">
-                        {user.celular || "-"}
-                      </td>
                       <td className="px-6 py-4">
                         {/* Aquí se renderiza el componente del toggle */}
-                        <StatusToggle
-                          userId={user.usuarioId}
+                        <CommonStatusToggle
+                          entityId={user.usuarioId}
+                          endpoint={`/auth/change-status/${user.usuarioId}`}
                           initialStatus={user.estadoRegistro}
                           onStatusChange={handleUserStatusChange}
+                          ariaLabel="Cambiar estado del usuario"
                         />
                       </td>
                       <td className="px-6 py-4">

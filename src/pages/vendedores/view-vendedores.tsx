@@ -10,7 +10,7 @@ import {
 import { type IVendedor } from "@/components/vendedores/vendedor-schema";
 
 import { useRefresh } from "../../hooks/use-refresh";
-import { VendedorStatusToggle } from "@/components/vendedores/view-vendedores.tsx/status-toggle";
+import { CommonStatusToggle } from "@/components/common/status-toggle";
 import { DialogVendedorDetails } from "@/components/vendedores/view-vendedores.tsx/dialog-details-vendedor";
 
 const ViewVendedoresPage = () => {
@@ -133,10 +133,12 @@ const ViewVendedoresPage = () => {
                         {vendedor.correo}
                       </td>
                       <td className="px-6 py-4">
-                        <VendedorStatusToggle
-                          vendedorId={vendedor.vendedorId}
+                        <CommonStatusToggle
+                          entityId={vendedor.vendedorId}
+                          endpoint={`/vendedores/${vendedor.vendedorId}/change-status`}
                           initialStatus={vendedor.estadoRegistro}
                           onStatusChange={handleVendedorStatusChange}
+                          ariaLabel="Cambiar estado del vendedor"
                         />
                       </td>
                       <td className="px-6 py-4">

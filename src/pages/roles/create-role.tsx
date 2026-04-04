@@ -6,70 +6,67 @@ import { toast } from "sonner";
 import * as z from "zod";
 import useFetchApi from "@/hooks/use-fetch";
 import Header from "@/components/header";
-import { PerfilForm } from "@/components/perfiles/perfil-form";
-import type { IPermiso } from "@/components/perfiles/perfil-schema";
+import { RoleForm } from "@/components/roles/role-form";
+import type { IRolePermission } from "@/components/roles/role-schema";
+import { MODULE_PERMISSIONS } from "@/lib/permissions";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const formSchema = z.object({
   nombre: z.string().min(1, "El nombre es requerido."),
   descripcion: z.string().optional().nullable(),
-  permisosIds: z
-    .array(z.number())
+  permisos: z
+    .array(z.string())
     .min(1, "Debes seleccionar al menos un permiso."),
 });
 
-const CreatePerfilPage = () => {
-  const { get, post } = useFetchApi();
+const CreateRolePage = () => {
+  const { post } = useFetchApi();
   const navigate = useNavigate();
-  const [permisos, setPermisos] = useState<IPermiso[]>([]);
+  const [permisos, setPermisos] = useState<IRolePermission[]>([]);
   const [apiError, setApiError] = useState<string | null>(null);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: { nombre: "", descripcion: "", permisosIds: [] },
+    defaultValues: { nombre: "", descripcion: "", permisos: [] },
   });
 
   useEffect(() => {
-    get<IPermiso[]>("/auth/permisos")
-      .then(setPermisos)
-      .catch(() => toast.error("No se pudieron cargar los permisos."));
-  }, [get]);
+    setPermisos(MODULE_PERMISSIONS.map((nombre) => ({ nombre })));
+  }, []);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setApiError(null);
     const payload = {
       nombre: values.nombre,
       descripcion: values.descripcion,
-      permisos: values.permisosIds.map((id, index) => ({
-        permisoId: id,
-        orden: (index + 1) * 10,
-      })),
+      permisos: values.permisos,
     };
-    toast.promise(post("/auth/perfiles", payload), {
-      loading: "Creando perfil...",
+    toast.promise(post("/auth/roles", payload), {
+      loading: "Creando rol...",
       success: () => {
-        setTimeout(() => navigate("/perfiles"), 1000);
-        return "¡Perfil creado exitosamente!";
+        setTimeout(() => navigate("/roles"), 1000);
+        return "¡Rol creado exitosamente!";
       },
       error: (err) => {
-        const msg = err.response?.data?.message || "Error al crear";
-        setApiError(Array.isArray(msg) ? msg.join(", ") : msg);
-        return `Error: ${msg}`;
+        const message = getApiErrorMessage(err, "Error al crear");
+        setApiError(message);
+        return `Error: ${message}`;
       },
     });
   }
 
   return (
     <div>
-      <Header titulo="Perfiles" />
+      <Header titulo="Roles" />
       <div className="p-6">
-        <h2 className="text-xl font-semibold mb-6">Crear Nuevo Perfil</h2>
+        <h2 className="text-xl font-semibold mb-6">Crear Nuevo Rol</h2>
         <div className="bg-white py-12 px-20 rounded-lg shadow-md">
-          <PerfilForm
+          <RoleForm
             form={form}
             onSubmit={onSubmit}
             isSubmitting={form.formState.isSubmitting}
             apiError={apiError}
-            onCancel={() => navigate("/perfiles")}
+            onCancel={() => navigate("/roles")}
             permisosDisponibles={permisos}
           />
         </div>
@@ -77,4 +74,4 @@ const CreatePerfilPage = () => {
     </div>
   );
 };
-export default CreatePerfilPage;
+export default CreateRolePage;

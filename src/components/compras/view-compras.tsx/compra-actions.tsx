@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  PencilSquareIcon,
+import {  PencilSquareIcon,
   CheckCircleIcon,
   XCircleIcon,
   TruckIcon,
@@ -10,6 +9,7 @@ import {
 import { toast } from "sonner";
 import useFetchApi from "@/hooks/use-fetch";
 import type { ICompra } from "@/components/compras/compra-schema";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 interface CompraActionsProps {
   compra: ICompra;
@@ -40,11 +40,7 @@ export const CompraActions = ({
       loading: "Confirmando orden de compra...",
       success: "¡Orden confirmada exitosamente! 🎉",
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al confirmar la orden";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al confirmar la orden");
         return `Error: ${message}`;
       },
       finally: () => {
@@ -67,11 +63,7 @@ export const CompraActions = ({
       loading: "Marcando mercadería en tránsito...",
       success: "¡Mercadería en tránsito! 🚚",
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al marcar en tránsito";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al marcar en tránsito");
         return `Error: ${message}`;
       },
       finally: () => {
@@ -97,11 +89,7 @@ export const CompraActions = ({
       loading: "Cancelando compra...",
       success: "Compra cancelada exitosamente",
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al cancelar la compra";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al cancelar la compra");
         return `Error: ${message}`;
       },
       finally: () => {

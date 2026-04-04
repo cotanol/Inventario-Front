@@ -13,27 +13,27 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, AlertCircle } from "lucide-react";
 import type { UseFormReturn, FieldValues, Path } from "react-hook-form";
-import type { IPermiso } from "./perfil-schema";
+import type { IRolePermission } from "./role-schema";
 
-interface PerfilFormProps<T extends FieldValues> {
+interface RoleFormProps<T extends FieldValues> {
   form: UseFormReturn<T>;
   onSubmit: (values: T) => void;
   isSubmitting: boolean;
   apiError: string | null;
   submitButtonText?: string;
   onCancel: () => void;
-  permisosDisponibles: IPermiso[];
+  permisosDisponibles: IRolePermission[];
 }
 
-export const PerfilForm = <T extends FieldValues>({
+export const RoleForm = <T extends FieldValues>({
   form,
   onSubmit,
   isSubmitting,
   apiError,
-  submitButtonText = "Crear Perfil",
+  submitButtonText = "Crear Rol",
   onCancel,
   permisosDisponibles,
-}: PerfilFormProps<T>) => {
+}: RoleFormProps<T>) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -43,7 +43,7 @@ export const PerfilForm = <T extends FieldValues>({
             name={"nombre" as Path<T>}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nombre del Perfil*</FormLabel>
+                <FormLabel>Nombre del Rol*</FormLabel>
                 <FormControl>
                   <Input placeholder="Ej: Supervisor" {...field} />
                 </FormControl>
@@ -59,7 +59,7 @@ export const PerfilForm = <T extends FieldValues>({
                 <FormLabel>Descripción</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Describe el propósito de este perfil"
+                    placeholder="Describe el propósito de este rol"
                     {...field}
                     value={field.value ?? ""}
                   />
@@ -72,29 +72,30 @@ export const PerfilForm = <T extends FieldValues>({
 
         <FormField
           control={form.control}
-          name={"permisosIds" as Path<T>} // El campo del formulario que guarda un array de números
+          name={"permisos" as Path<T>}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base font-semibold">
-                Permisos del Perfil*
+                Permisos del Rol*
               </FormLabel>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 border rounded-md max-h-72 overflow-y-auto">
                 {permisosDisponibles.map((permiso) => (
                   <FormItem
-                    key={permiso.permisoId}
+                    key={permiso.nombre}
                     className="flex flex-row items-center space-x-3 space-y-0"
                   >
                     <FormControl>
                       <Checkbox
-                        checked={field.value?.includes(permiso.permisoId)}
+                        checked={field.value?.includes(permiso.nombre)}
                         onCheckedChange={(checked) => {
-                          const currentIds = field.value || [];
-                          const newIds = checked
-                            ? [...currentIds, permiso.permisoId]
-                            : currentIds.filter(
-                                (id: number) => id !== permiso.permisoId
+                          const currentPermissions = field.value || [];
+                          const newPermissions = checked
+                            ? [...currentPermissions, permiso.nombre]
+                            : currentPermissions.filter(
+                                (permission: string) =>
+                                  permission !== permiso.nombre,
                               );
-                          field.onChange(newIds);
+                          field.onChange(newPermissions);
                         }}
                       />
                     </FormControl>

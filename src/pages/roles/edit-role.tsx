@@ -6,22 +6,24 @@ import { toast } from "sonner";
 import * as z from "zod";
 import useFetchApi from "@/hooks/use-fetch";
 import Header from "@/components/header";
-import { PerfilForm } from "@/components/perfiles/perfil-form";
-import type { IPerfil, IPermiso } from "@/components/perfiles/perfil-schema";
+import { RoleForm } from "@/components/roles/role-form";
+import type { IRol, IRolePermission } from "@/components/roles/role-schema";
+import { MODULE_PERMISSIONS } from "@/lib/permissions";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const formSchema = z.object({
   nombre: z.string().min(1, "El nombre es requerido."),
   descripcion: z.string().optional().nullable(),
-  permisosIds: z
-    .array(z.number())
+  permisos: z
+    .array(z.string())
     .min(1, "Debes seleccionar al menos un permiso."),
 });
 
-const EditPerfilPage = () => {
+const EditRolePage = () => {
   const { id } = useParams<{ id: string }>();
   const { get, patch } = useFetchApi();
   const navigate = useNavigate();
-  const [permisos, setPermisos] = useState<IPermiso[]>([]);
+  const [permisos, setPermisos] = useState<IRolePermission[]>([]);
   const [apiError, setApiError] = useState<string | null>(null);
   const [isLoadingData, setIsLoadingData] = useState(true);
 
@@ -30,17 +32,14 @@ const EditPerfilPage = () => {
   const loadInitialData = useCallback(async () => {
     if (!id) return;
     try {
-      const [perfilData, permisosData] = await Promise.all([
-        get<IPerfil>(`/auth/perfiles/${id}`),
-        get<IPermiso[]>("/auth/permisos"),
-      ]);
+      const rolData = await get<IRol>(`/auth/roles/${id}`);
       form.reset({
-        nombre: perfilData.nombre,
-        descripcion: perfilData.descripcion,
-        permisosIds: perfilData.permisosLink.map((link) => link.permisoId),
+        nombre: rolData.nombre,
+        descripcion: rolData.descripcion,
+        permisos: rolData.permisos,
       });
-      setPermisos(permisosData);
-    } catch (err) {
+      setPermisos(MODULE_PERMISSIONS.map((nombre) => ({ nombre })));
+    } catch {
       setApiError("No se pudieron cargar los datos para editar.");
     } finally {
       setIsLoadingData(false);
@@ -56,21 +55,18 @@ const EditPerfilPage = () => {
     const payload = {
       nombre: values.nombre,
       descripcion: values.descripcion,
-      permisos: values.permisosIds.map((id, index) => ({
-        permisoId: id,
-        orden: (index + 1) * 10,
-      })),
+      permisos: values.permisos,
     };
-    toast.promise(patch(`/auth/perfiles/${id}`, payload), {
+    toast.promise(patch(`/auth/roles/${id}`, payload), {
       loading: "Actualizando...",
       success: () => {
-        setTimeout(() => navigate("/perfiles"), 1000);
-        return "¡Perfil actualizado!";
+        setTimeout(() => navigate("/roles"), 1000);
+        return "¡Rol actualizado!";
       },
       error: (err) => {
-        const msg = err.response?.data?.message || "Error al actualizar";
-        setApiError(Array.isArray(msg) ? msg.join(", ") : msg);
-        return `Error: ${msg}`;
+        const message = getApiErrorMessage(err, "Error al actualizar");
+        setApiError(message);
+        return `Error: ${message}`;
       },
     });
   }
@@ -78,24 +74,24 @@ const EditPerfilPage = () => {
   if (isLoadingData)
     return (
       <div>
-        <Header titulo="Perfiles" />
+        <Header titulo="Roles" />
         <div className="p-6">Cargando...</div>
       </div>
     );
 
   return (
     <div>
-      <Header titulo="Perfiles" />
+      <Header titulo="Roles" />
       <div className="p-6">
-        <h2 className="text-xl font-semibold mb-6">Editando Perfil</h2>
+        <h2 className="text-xl font-semibold mb-6">Editando Rol</h2>
         <div className="bg-white py-12 px-20 rounded-lg shadow-md">
-          <PerfilForm
+          <RoleForm
             form={form}
             onSubmit={onSubmit}
             isSubmitting={form.formState.isSubmitting}
             apiError={apiError}
-            onCancel={() => navigate("/perfiles")}
-            submitButtonText="Actualizar Perfil"
+            onCancel={() => navigate("/roles")}
+            submitButtonText="Actualizar Rol"
             permisosDisponibles={permisos}
           />
         </div>
@@ -103,4 +99,4 @@ const EditPerfilPage = () => {
     </div>
   );
 };
-export default EditPerfilPage;
+export default EditRolePage;

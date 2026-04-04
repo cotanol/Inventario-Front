@@ -6,12 +6,12 @@ import { toast } from "sonner";
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
 import { Button } from "@/components/ui/button";
-import {
-  compraFormSchema,
+import {  compraFormSchema,
   type CompraFormValues,
   type ICompra,
 } from "@/components/compras/compra-schema";
 import { CompraForm } from "@/components/compras/compra-form";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 interface Proveedor {
   proveedorId: number;
@@ -125,14 +125,9 @@ const EditCompraPage = () => {
         return "¡Compra actualizada exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al actualizar la compra";
-        setApiError(
-          Array.isArray(errorMessage) ? errorMessage.join(", ") : errorMessage
-        );
-        return `Error: ${
-          Array.isArray(errorMessage) ? errorMessage.join(", ") : errorMessage
-        }`;
+        const message = getApiErrorMessage(err, "Error al actualizar la compra");
+        setApiError(message);
+        return `Error: ${message}`;
       },
     });
   }

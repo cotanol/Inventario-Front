@@ -6,6 +6,7 @@ import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import useFetchApi from "@/hooks/use-fetch";
 import type { ICompra } from "@/components/compras/compra-schema";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 interface CantidadRecibida {
   detalleCompraId: number;
@@ -70,11 +71,7 @@ const RecibirCompraPage = () => {
       loading: "Recibiendo mercadería y actualizando inventario...",
       success: "¡Mercadería recibida exitosamente! Inventario actualizado 📦",
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al recibir mercadería";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al recibir mercadería");
         return `Error: ${message}`;
       },
       finally: () => {

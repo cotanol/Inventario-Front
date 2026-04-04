@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-// Se asume que la interfaz Grupo se exportará desde el AuthContext
-import type { Grupo } from "../../../context/auth-context";
+import type { Grupo } from "@/components/catalogo/catalogo-types";
 
 interface DialogGrupoDetailsProps {
   grupo: Grupo | null; // El grupo a mostrar, o null si no hay ninguno seleccionado

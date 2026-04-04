@@ -3,15 +3,14 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import type { IPerfil } from "../perfil-schema";
+import type { IRol } from "../role-schema";
 
 interface DialogPerfilDetailsProps {
-  perfil: IPerfil | null;
+  perfil: IRol | null;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -29,7 +28,7 @@ const DetailItem = ({
   </div>
 );
 
-export const DialogPerfilDetails = ({
+export const DialogRoleDetails = ({
   perfil,
   isOpen,
   onClose,
@@ -47,8 +46,8 @@ export const DialogPerfilDetails = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 py-4">
           <div>
-            <DetailItem label="ID Perfil" value={perfil.perfilId} />
-            <DetailItem label="Nombre del Perfil" value={perfil.nombre} />
+            <DetailItem label="ID Rol" value={perfil.rolId} />
+            <DetailItem label="Nombre del Rol" value={perfil.nombre} />
             <DetailItem label="Descripción" value={perfil.descripcion} />
             <DetailItem
               label="Estado"
@@ -67,10 +66,9 @@ export const DialogPerfilDetails = ({
             <DetailItem
               label="Permisos Asignados"
               value={
-                perfil.permisosLink.length > 0 ? (
+                perfil.permisos.length > 0 ? (
                   <ul className="list-disc list-inside bg-gray-50 p-3 rounded-md max-h-48 overflow-y-auto border">
-                    {perfil.permisosLink
-                      .map((link) => link.permiso.nombre)
+                    {perfil.permisos
                       .sort() // Ordenar alfabéticamente
                       .map((nombre) => (
                         <li key={nombre} className="text-sm">

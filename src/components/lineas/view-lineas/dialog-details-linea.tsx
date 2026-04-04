@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-// Se asume que la interfaz Linea se exportará desde el AuthContext
-import type { Linea } from "../../../context/auth-context";
+import type { Linea } from "@/components/catalogo/catalogo-types";
 
 interface DialogLineaDetailsProps {
   linea: Linea | null; // La línea a mostrar, o null si no hay ninguna seleccionada

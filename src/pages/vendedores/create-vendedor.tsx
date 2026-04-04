@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import {
-  vendedorFormSchema,
+import {  vendedorFormSchema,
   type VendedorFormData,
 } from "@/components/vendedores/vendedor-schema";
 import { VendedorForm } from "@/components/vendedores/vendedor-form";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const CreateVendedorPage = () => {
   const { post } = useFetchApi();
@@ -43,11 +43,7 @@ const CreateVendedorPage = () => {
         return "¡Vendedor creado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al crear el vendedor";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al crear el vendedor");
         setApiError(message);
         return `Error: ${message}`;
       },

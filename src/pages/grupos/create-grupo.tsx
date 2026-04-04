@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
 import { GrupoForm } from "@/components/grupos/grupo-form";
@@ -12,6 +11,7 @@ import {
   type GrupoFormData,
   type ILinea,
 } from "@/components/grupos/grupo-schema";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const CreateGrupoPage = () => {
   const { get, post } = useFetchApi();
@@ -65,11 +65,7 @@ const CreateGrupoPage = () => {
         return "¡Grupo creado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al crear el grupo";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al crear el grupo");
         setApiError(message);
         return `Error: ${message}`;
       },

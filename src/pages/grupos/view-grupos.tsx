@@ -8,9 +8,9 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 
-import type { Grupo } from "@/context/auth-context";
+import type { Grupo } from "@/components/catalogo/catalogo-types";
 import { DialogGrupoDetails } from "@/components/grupos/view-grupos/dialog-details-grupo";
-import { StatusToggle } from "@/components/grupos/view-grupos/status-toggle";
+import { CommonStatusToggle } from "@/components/common/status-toggle";
 import { useRefresh } from "../../hooks/use-refresh";
 
 const ViewGruposPage = () => {
@@ -119,10 +119,12 @@ const ViewGruposPage = () => {
                       </td>
                       <td className="px-6 py-4">
                         {/* Aquí se renderiza el componente del toggle */}
-                        <StatusToggle
-                          grupoId={grupo.grupoId}
+                        <CommonStatusToggle
+                          entityId={grupo.grupoId}
+                          endpoint={`/catalogo/grupos/${grupo.grupoId}/change-status`}
                           initialStatus={grupo.estadoRegistro}
                           onStatusChange={handleGrupoStatusChange}
+                          ariaLabel="Cambiar estado del grupo"
                         />
                       </td>
                       <td className="px-6 py-4">

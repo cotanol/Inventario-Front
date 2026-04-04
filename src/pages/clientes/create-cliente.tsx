@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import {
-  clienteFormSchema,
+import {  clienteFormSchema,
   type ClienteFormData,
 } from "@/components/clientes/cliente-schema";
 import { ClienteForm } from "@/components/clientes/cliente-form";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 interface Vendedor {
   vendedorId: number;
@@ -77,11 +77,7 @@ const CreateClientePage = () => {
         return "¡Cliente creado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al crear el cliente";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al crear el cliente");
         setApiError(message);
         return `Error: ${message}`;
       },

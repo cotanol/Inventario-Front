@@ -57,18 +57,13 @@ export const DialogUserDetails = ({
         {/* Cuerpo del Dialog con layout de 2 columnas */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
           <DetailItem label="ID de Usuario" value={user.usuarioId} />
-          <DetailItem label="Nombres" value={user.nombres} />
-          <DetailItem label="Apellido Paterno" value={user.apellidoPaterno} />
-          <DetailItem
-            label="Apellido Materno"
-            value={user.apellidoMaterno || "N/A"}
-          />
-          <DetailItem label="DNI" value={user.dni} />
+          <DetailItem label="Nombre" value={user.nombre} />
+          <DetailItem label="Apellido" value={user.apellido} />
           <DetailItem
             label="Correo Electrónico"
             value={user.correoElectronico}
           />
-          <DetailItem label="Celular" value={user.celular || "N/A"} />
+          <DetailItem label="Rol" value={user.rol} />
           <DetailItem
             label="Estado"
             value={
@@ -82,16 +77,16 @@ export const DialogUserDetails = ({
             }
           />
           <DetailItem
-            label="Perfiles Asignados"
-            value={user.perfiles.join(", ")}
-          />
-          <DetailItem
             label="Fecha de Creación"
             value={new Date(user.fechaCreacion).toLocaleString()}
           />
           <DetailItem
             label="Fecha de Modificación"
-            value={new Date(user.fechaModificacion).toLocaleString()}
+            value={
+              user.fechaModificacion
+                ? new Date(user.fechaModificacion).toLocaleString()
+                : "N/A"
+            }
           />
         </div>
 

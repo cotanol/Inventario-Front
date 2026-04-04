@@ -2,11 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../context/auth-context";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import {
   ArrowRightOnRectangleIcon, // Icono más apropiado para logout
-  UserCircleIcon, // Icono para ver perfil
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import profileImage from "../../assets/profile.webp";
@@ -82,9 +81,9 @@ const Header = ({ titulo }: HeaderProps) => {
             />
             <div className="text-left hidden sm:block">
               <p className="text-sm font-semibold text-gray-800">
-                {user?.nombres}
+                {user?.nombre}
               </p>
-              <p className="text-xs text-gray-500">{user?.perfiles[0]}</p>
+              <p className="text-xs text-gray-500">{user?.rol}</p>
             </div>
             <ChevronDownIcon className="w-5 h-5 text-gray-400" />
           </button>

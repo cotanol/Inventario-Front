@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
 import { MarcaForm } from "@/components/marcas/marca-form";
@@ -11,6 +10,7 @@ import {
   marcaFormSchema,
   type MarcaFormData,
 } from "@/components/marcas/marca-schema";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 const CreateMarcaPage = () => {
   const { post } = useFetchApi();
@@ -42,11 +42,7 @@ const CreateMarcaPage = () => {
         return "¡Marca creada exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al crear la marca";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al crear la marca");
         setApiError(message);
         return `Error: ${message}`;
       },

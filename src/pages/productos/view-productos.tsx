@@ -8,9 +8,9 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 
-import type { Producto } from "@/context/auth-context";
+import type { Producto } from "@/components/productos/producto-types";
 import { useRefresh } from "../../hooks/use-refresh";
-import { StatusToggle } from "@/components/productos/view-productos/status-toggle";
+import { CommonStatusToggle } from "@/components/common/status-toggle";
 import { DialogProductoDetails } from "@/components/productos/view-productos/dialog-details-producto";
 
 const ViewProductosPage = () => {
@@ -172,10 +172,12 @@ const ViewProductosPage = () => {
                       </td>
                       <td className="px-6 py-4">
                         {/* Aquí se renderiza el componente del toggle */}
-                        <StatusToggle
-                          productoId={producto.productoId}
+                        <CommonStatusToggle
+                          entityId={producto.productoId}
+                          endpoint={`/catalogo/productos/${producto.productoId}/change-status`}
                           initialStatus={producto.estadoRegistro}
                           onStatusChange={handleProductoStatusChange}
+                          ariaLabel="Cambiar estado del producto"
                         />
                       </td>
                       <td className="px-6 py-4">

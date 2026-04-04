@@ -1,4 +1,5 @@
 import { useAuth } from "@/context/auth-context";
+import { hasRequiredPermissions } from "@/lib/permissions";
 
 /**
  * Hook para verificar si el usuario tiene uno o más permisos
@@ -14,8 +15,7 @@ export const usePermission = (permisos: string | string[]): boolean => {
 
   const permisosArray = Array.isArray(permisos) ? permisos : [permisos];
 
-  // Retorna true si el usuario tiene al menos uno de los permisos requeridos
-  return permisosArray.some((permiso) => user.permisos.includes(permiso));
+  return hasRequiredPermissions(user.permisos, permisosArray, false);
 };
 
 /**
@@ -30,8 +30,7 @@ export const usePermissionAll = (permisos: string[]): boolean => {
     return false;
   }
 
-  // Retorna true si el usuario tiene todos los permisos requeridos
-  return permisos.every((permiso) => user.permisos.includes(permiso));
+  return hasRequiredPermissions(user.permisos, permisos, true);
 };
 
 /**

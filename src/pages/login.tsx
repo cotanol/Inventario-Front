@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { useAuth, type Credentials } from "../context/auth-context";
 import imageLogo from "../assets/logo-image.png";
 import imageLogin from "../assets/login-image.png";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -35,9 +36,10 @@ export default function LoginPage() {
         loading: "Iniciando sesión...",
         success: "¡Bienvenido! Sesión iniciada correctamente 🎉",
         error: (err) => {
-          const errorMessage =
-            err?.response?.data?.message ||
-            "Credenciales inválidas o error de red.";
+          const errorMessage = getApiErrorMessage(
+            err,
+            "Credenciales inválidas o error de red.",
+          );
           setError(errorMessage);
           return errorMessage;
         },

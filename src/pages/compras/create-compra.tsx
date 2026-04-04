@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import {
-  compraFormSchema,
+import {  compraFormSchema,
   type CompraFormValues,
 } from "@/components/compras/compra-schema";
 import { CompraForm } from "@/components/compras/compra-form";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 interface Proveedor {
   proveedorId: number;
@@ -91,14 +91,9 @@ const CreateCompraPage = () => {
         return "¡Compra creada exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al crear la compra";
-        setApiError(
-          Array.isArray(errorMessage) ? errorMessage.join(", ") : errorMessage
-        );
-        return `Error: ${
-          Array.isArray(errorMessage) ? errorMessage.join(", ") : errorMessage
-        }`;
+        const message = getApiErrorMessage(err, "Error al crear la compra");
+        setApiError(message);
+        return `Error: ${message}`;
       },
     });
   }

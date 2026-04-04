@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import useFetchApi from "../../hooks/use-fetch";
 import Header from "../../components/header";
-import {
-  pedidoFormSchema,
+import {  pedidoFormSchema,
   type PedidoFormData,
 } from "@/components/pedidos/pedido-schema";
 import { PedidoForm } from "@/components/pedidos/pedido-form";
+import { getApiErrorMessage } from "@/lib/api-error";
 
 interface Cliente {
   clienteId: number;
@@ -113,11 +113,7 @@ const CreatePedidoPage = () => {
         return "¡Pedido creado exitosamente! 🎉";
       },
       error: (err) => {
-        const errorMessage =
-          err.response?.data?.message || "Error al crear el pedido";
-        const message = Array.isArray(errorMessage)
-          ? errorMessage.join(", ")
-          : errorMessage;
+        const message = getApiErrorMessage(err, "Error al crear el pedido");
         setApiError(message);
         return `Error: ${message}`;
       },
