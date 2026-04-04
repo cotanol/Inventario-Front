@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:6040/inventario-reportes",
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:6040/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -24,12 +24,12 @@ axiosInstance.interceptors.response.use(
   (error) => {
     const payload = error.response?.data as
       | {
-          error?: {
-            message?: string;
-            details?: unknown;
-          };
-          message?: unknown;
-        }
+        error?: {
+          message?: string;
+          details?: unknown;
+        };
+        message?: unknown;
+      }
       | undefined;
 
     if (payload?.error) {
