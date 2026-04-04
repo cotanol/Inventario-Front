@@ -101,10 +101,10 @@ const CreateProductoPage = () => {
 
   if (loading) {
     return (
-      <div>
-        <Header titulo="Productos" />
-        <div className="p-6">
-          <div className="bg-white p-6 rounded-lg shadow-md">
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Productos" />
+        <div className="content-wrap">
+          <div className="form-shell">
             <div className="flex items-center justify-center min-h-[400px]">
               <div className="text-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
@@ -118,13 +118,13 @@ const CreateProductoPage = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Productos" />
-      <div className="p-6">
-        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+      <div className="content-wrap">
+        <h2 className="mb-6 text-xl font-semibold text-slate-800">
           Crear Nuevo Producto
         </h2>
-        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
+        <div className="form-shell">
           <ProductoForm
             form={form}
             onSubmit={onSubmit}
@@ -141,3 +141,4 @@ const CreateProductoPage = () => {
 };
 
 export default CreateProductoPage;
+

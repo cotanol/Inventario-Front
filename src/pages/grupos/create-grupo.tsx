@@ -77,13 +77,13 @@ const CreateGrupoPage = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Registrar Grupo" />
-      <div className="p-6">
-        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+      <div className="content-wrap">
+        <h2 className="mb-6 text-xl font-semibold text-slate-800">
           Nuevo Grupo
         </h2>
-        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
+        <div className="form-shell">
           <GrupoForm
             form={form}
             onSubmit={onSubmit}
@@ -100,3 +100,4 @@ const CreateGrupoPage = () => {
 };
 
 export default CreateGrupoPage;
+

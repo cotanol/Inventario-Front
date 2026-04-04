@@ -100,8 +100,8 @@ const CreateCompraPage = () => {
 
   if (loading) {
     return (
-      <div>
-        <Header titulo="Registrar Compra" />
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Registrar Compra" />
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-secondary"></div>
         </div>
@@ -110,13 +110,13 @@ const CreateCompraPage = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Compras" />
-      <div className="p-6">
-        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+      <div className="content-wrap">
+        <h2 className="mb-6 text-xl font-semibold text-slate-800">
           Crear Nueva Compra
         </h2>
-        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
+        <div className="form-shell">
           <CompraForm
             form={form}
             onSubmit={onSubmit}
@@ -134,3 +134,4 @@ const CreateCompraPage = () => {
 };
 
 export default CreateCompraPage;
+

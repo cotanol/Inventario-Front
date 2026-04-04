@@ -388,7 +388,7 @@ export const PedidoForm = <T extends FieldValues>({
                 </div>
                 <div className="flex justify-between text-base font-bold border-t pt-2">
                   <span>Total:</span>
-                  <span className="text-indigo-600">
+                  <span className="text-[color:var(--accent-strong)]">
                     {formatCurrency(calculateTotal())}
                   </span>
                 </div>
@@ -410,7 +410,7 @@ export const PedidoForm = <T extends FieldValues>({
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="bg-[color:var(--accent-strong)] text-white hover:brightness-110"
           >
             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {submitButtonText}
@@ -420,3 +420,6 @@ export const PedidoForm = <T extends FieldValues>({
     </Form>
   );
 };
+
+
+

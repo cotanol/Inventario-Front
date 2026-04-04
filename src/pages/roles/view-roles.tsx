@@ -5,6 +5,7 @@ import {
   UserPlusIcon,
   EyeIcon,
   PencilSquareIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { type IRol } from "@/components/roles/role-schema";
 import { useRefresh } from "../../hooks/use-refresh";
@@ -13,6 +14,7 @@ import { DialogRoleDetails } from "@/components/roles/view-roles/dialog-details-
 
 const ViewRolesPage = () => {
   const [selectedPerfil, setSelectedPerfil] = useState<IRol | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   const {
@@ -32,20 +34,43 @@ const ViewRolesPage = () => {
     );
   };
 
+  const filteredPerfiles = perfiles.filter((perfil) => {
+    const term = searchTerm.toLowerCase().trim();
+    if (!term) {
+      return true;
+    }
+
+    return (
+      perfil.nombre.toLowerCase().includes(term) ||
+      (perfil.descripcion ?? "").toLowerCase().includes(term)
+    );
+  });
+
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Roles" />
-      <div className="p-6">
+      <div className="content-wrap">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-700">
             Todos los Roles
           </h2>
         </div>
-        <div className="bg-white rounded-lg shadow-sm">
-          <div className="flex items-center justify-end p-4 border-b">
+        <div className="panel-card content-main-card">
+          <div className="table-toolbar border-b border-slate-200/70 p-4">
+            <div className="table-toolbar-search">
+              <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Buscar por nombre o descripcion"
+                className="table-search-input"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+              />
+            </div>
+
             <Link
               to="/roles/registrar"
-              className="inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700"
+              className="table-toolbar-button inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg bg-[color:var(--accent-strong)] px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110"
             >
               <UserPlusIcon className="w-5 h-5" /> Registrar Rol
             </Link>
@@ -58,9 +83,9 @@ const ViewRolesPage = () => {
               Error al cargar los roles.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full">
-                <thead className="border-b">
+            <div className="table-shell table-scroll">
+              <table className="data-grid data-grid-responsive min-w-full">
+                <thead>
                   <tr>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
                       Nombre
@@ -80,10 +105,10 @@ const ViewRolesPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {perfiles.map((perfil) => (
+                  {filteredPerfiles.map((perfil) => (
                     <tr
                       key={perfil.rolId}
-                      className="border-b hover:bg-gray-50"
+                      className="hover:bg-[color:var(--table-hover)]"
                     >
                       <td className="px-6 py-4 font-medium text-gray-900">
                         {perfil.nombre}
@@ -104,7 +129,7 @@ const ViewRolesPage = () => {
                         />
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
+                        <div className="table-toolbar-action">
                           <button
                             className="p-2 rounded-lg transition text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                             onClick={() => setSelectedPerfil(perfil)}
@@ -140,3 +165,9 @@ const ViewRolesPage = () => {
   );
 };
 export default ViewRolesPage;
+
+
+
+
+
+

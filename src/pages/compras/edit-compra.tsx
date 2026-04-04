@@ -134,10 +134,10 @@ const EditCompraPage = () => {
 
   if (loading) {
     return (
-      <div>
-        <Header titulo="Editar Compra" />
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Editar Compra" />
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+          <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-[color:var(--accent-strong)]"></div>
         </div>
       </div>
     );
@@ -145,11 +145,11 @@ const EditCompraPage = () => {
 
   if (!compra) {
     return (
-      <div>
-        <Header titulo="Editar Compra" />
-        <div className="p-6">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <p className="text-red-800">No se pudo cargar la compra</p>
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Editar Compra" />
+        <div className="content-wrap">
+          <div className="rounded-lg border border-red-300/40 bg-red-100/70 p-4">
+            <p className="text-red-900">No se pudo cargar la compra</p>
             <Button
               onClick={() => navigate("/compras")}
               className="mt-4"
@@ -175,29 +175,29 @@ const EditCompraPage = () => {
 
   if (soloLectura) {
     return (
-      <div>
-        <Header titulo="Ver Compra" />
-        <div className="p-6">
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-            <p className="text-yellow-800">
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Ver Compra" />
+        <div className="content-wrap">
+          <div className="mb-6 rounded-lg border border-amber-300/40 bg-amber-100/65 p-4">
+            <p className="text-amber-900">
               Esta compra está en estado <strong>{compra.estadoCompra}</strong>{" "}
               y no se puede editar.
             </p>
           </div>
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="form-shell">
             <div className="space-y-4">
               <div>
-                <p className="text-sm text-gray-500">Proveedor</p>
+                <p className="text-sm text-slate-500">Proveedor</p>
                 <p className="text-base font-semibold">
                   {compra.proveedor.nombreEmpresa}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Estado</p>
+                <p className="text-sm text-slate-500">Estado</p>
                 <p className="text-base font-semibold">{compra.estadoCompra}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Total</p>
+                <p className="text-sm text-slate-500">Total</p>
                 <p className="text-base font-semibold">
                   S/ {compra.totalCompra.toFixed(2)}
                 </p>
@@ -214,16 +214,16 @@ const EditCompraPage = () => {
 
   if (!esBorrador && !esOrdenado) {
     return (
-      <div>
-        <Header titulo="Editar Compra" />
-        <div className="p-6">
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-            <p className="text-yellow-800">
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Editar Compra" />
+        <div className="content-wrap">
+          <div className="mb-6 rounded-lg border border-amber-300/40 bg-amber-100/65 p-4">
+            <p className="text-amber-900">
               ⚠️ Solo se pueden editar compras en estado{" "}
               <strong>BORRADOR</strong> u <strong>ORDENADO</strong>. Esta compra
               está en estado <strong>{compra.estadoCompra}</strong>.
             </p>
-            <p className="text-sm text-yellow-700 mt-2">
+            <p className="mt-2 text-sm text-amber-800">
               Para modificar esta compra, primero cancélala y crea una nueva.
             </p>
           </div>
@@ -236,22 +236,22 @@ const EditCompraPage = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Compras" />
 
-      <div className="p-6">
-        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+      <div className="content-wrap">
+        <h2 className="mb-6 text-xl font-semibold text-slate-800">
           Editar Compra #{compra?.compraId.toString().padStart(4, "0")}
         </h2>
         {esOrdenado && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-            <p className="text-blue-800">
+          <div className="mb-6 rounded-lg border border-sky-300/40 bg-sky-100/70 p-4">
+            <p className="text-sky-900">
               ℹ️ Esta compra está en estado <strong>ORDENADO</strong>. Solo
               puedes modificar la <strong>Fecha Estimada de Llegada</strong>.
             </p>
           </div>
         )}
-        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
+        <div className="form-shell">
           <CompraForm
             form={form}
             onSubmit={onSubmit}
@@ -270,3 +270,4 @@ const EditCompraPage = () => {
 };
 
 export default EditCompraPage;
+

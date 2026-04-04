@@ -87,30 +87,30 @@ const ViewPedidosPage = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Pedidos" />
-      <div className="p-6">
+      <div className="content-wrap">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-700">
             Todos los Pedidos
           </h2>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm">
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            <div className="relative">
-              <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <div className="panel-card content-main-card">
+          <div className="table-toolbar border-b border-slate-200/70 p-4">
+            <div className="table-toolbar-search">
+              <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
                 placeholder="Buscar por Cliente, RUC o N° Pedido..."
-                className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                className="table-search-input"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <Link
               to="/pedidos/registrar"
-              className="inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+              className="table-toolbar-button inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg bg-[color:var(--accent-strong)] px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110"
             >
               <PlusIcon className="w-5 h-5" />
               Registrar Pedido
@@ -126,9 +126,9 @@ const ViewPedidosPage = () => {
               Error al cargar los pedidos.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full">
-                <thead className="border-b border-gray-200">
+            <div className="table-shell table-scroll">
+              <table className="data-grid data-grid-responsive min-w-full">
+                <thead>
                   <tr>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
                       N° Pedido
@@ -156,7 +156,7 @@ const ViewPedidosPage = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody>
                   {filteredPedidos.length === 0 ? (
                     <tr>
                       <td
@@ -168,10 +168,7 @@ const ViewPedidosPage = () => {
                     </tr>
                   ) : (
                     filteredPedidos.map((pedido) => (
-                      <tr
-                        key={pedido.pedidoId}
-                        className="hover:bg-gray-50 transition"
-                      >
+                        <tr key={pedido.pedidoId} className="hover:bg-[color:var(--table-hover)]">
                         <td className="px-6 py-4 text-sm font-medium text-gray-900">
                           #{pedido.pedidoId.toString().padStart(4, "0")}
                         </td>
@@ -271,3 +268,8 @@ const ViewPedidosPage = () => {
 };
 
 export default ViewPedidosPage;
+
+
+
+
+

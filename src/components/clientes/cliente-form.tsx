@@ -389,7 +389,7 @@ export const ClienteForm = <T extends FieldValues>({
         <div className="flex justify-center gap-6 pt-4">
           <Button
             type="button"
-            className="hover:cursor-pointer"
+            className="text-slate-700 hover:bg-slate-100"
             variant="outline"
             onClick={onCancel}
             disabled={isSubmitting}
@@ -399,7 +399,7 @@ export const ClienteForm = <T extends FieldValues>({
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white hover:cursor-pointer"
+            className="bg-[color:var(--accent-strong)] text-white hover:brightness-110"
           >
             {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {isSubmitting ? "Guardando..." : submitButtonText}
@@ -409,3 +409,6 @@ export const ClienteForm = <T extends FieldValues>({
     </Form>
   );
 };
+
+
+

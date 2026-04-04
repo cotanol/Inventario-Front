@@ -167,7 +167,7 @@ export const ProveedorForm = <T extends FieldValues>({
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="bg-[color:var(--accent-strong)] text-white hover:brightness-110"
           >
             {isSubmitting ? (
               <>
@@ -183,3 +183,6 @@ export const ProveedorForm = <T extends FieldValues>({
     </Form>
   );
 };
+
+
+

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../../components/header";
 import {
   PlusIcon,
-  // MagnifyingGlassIcon,
+  MagnifyingGlassIcon,
   EyeIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
@@ -15,6 +15,7 @@ import { useRefresh } from "../../hooks/use-refresh";
 
 const ViewGruposPage = () => {
   const [selectedGrupo, setSelectedGrupo] = useState<Grupo | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   // Usar el hook useRefresh para manejar los grupos
@@ -35,11 +36,23 @@ const ViewGruposPage = () => {
     );
   };
 
+  const filteredGrupos = grupos.filter((grupo) => {
+    const term = searchTerm.toLowerCase().trim();
+    if (!term) {
+      return true;
+    }
+
+    return (
+      grupo.nombre.toLowerCase().includes(term) ||
+      grupo.linea.nombre.toLowerCase().includes(term)
+    );
+  });
+
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Grupos" />
 
-      <div className="p-6">
+      <div className="content-wrap">
         {/* Sub-encabezado y Breadcrumbs */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-700">
@@ -48,22 +61,24 @@ const ViewGruposPage = () => {
         </div>
 
         {/* Contenedor principal blanco */}
-        <div className="bg-white rounded-lg shadow-sm">
+        <div className="panel-card content-main-card">
           {/* Barra de controles: Búsqueda y Botones */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            <div className="relative">
-              {/* <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <div className="table-toolbar border-b border-slate-200/70 p-4">
+            <div className="table-toolbar-search">
+              <MagnifyingGlassIcon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search"
-                className="pl-10 pr-4 py-2 w-64 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-              /> */}
+                placeholder="Buscar por grupo o linea"
+                className="table-search-input"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+              />
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="table-toolbar-action">
               <Link
                 to="/grupos/registrar"
-                className="inline-flex items-center gap-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+                className="table-toolbar-button inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg bg-[color:var(--accent-strong)] px-4 py-2 font-semibold text-white shadow-sm transition hover:brightness-110"
               >
                 <PlusIcon className="w-5 h-5" />
                 Registrar Grupo
@@ -81,9 +96,9 @@ const ViewGruposPage = () => {
               Error al cargar los grupos.
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full">
-                <thead className="border-b border-gray-200">
+            <div className="table-shell table-scroll">
+              <table className="data-grid data-grid-responsive min-w-full">
+                <thead>
                   <tr>
                     <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
                       Nombre
@@ -103,10 +118,10 @@ const ViewGruposPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {grupos.map((grupo) => (
+                  {filteredGrupos.map((grupo) => (
                     <tr
                       key={grupo.grupoId}
-                      className="border-b border-gray-200 hover:bg-gray-50"
+                      className="hover:bg-[color:var(--table-hover)]"
                     >
                       <td className="px-6 py-4 text-sm font-medium text-gray-900">
                         {grupo.nombre}
@@ -128,7 +143,7 @@ const ViewGruposPage = () => {
                         />
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
+                        <div className="table-toolbar-action">
                           <button
                             className="p-2 rounded-lg transition text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                             onClick={() => setSelectedGrupo(grupo)}
@@ -166,3 +181,9 @@ const ViewGruposPage = () => {
 };
 
 export default ViewGruposPage;
+
+
+
+
+
+

@@ -73,18 +73,18 @@ const EditRolePage = () => {
 
   if (isLoadingData)
     return (
-      <div>
-        <Header titulo="Roles" />
-        <div className="p-6">Cargando...</div>
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Roles" />
+        <div className="content-wrap">Cargando...</div>
       </div>
     );
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Roles" />
-      <div className="p-6">
-        <h2 className="text-xl font-semibold mb-6">Editando Rol</h2>
-        <div className="bg-white py-12 px-20 rounded-lg shadow-md">
+      <div className="content-wrap">
+        <h2 className="mb-6 text-xl font-semibold text-slate-800">Editando Rol</h2>
+        <div className="form-shell">
           <RoleForm
             form={form}
             onSubmit={onSubmit}
@@ -100,3 +100,4 @@ const EditRolePage = () => {
   );
 };
 export default EditRolePage;
+

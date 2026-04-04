@@ -85,16 +85,16 @@ const EditLineaPage = () => {
   // Si estamos cargando los datos, mostramos un indicador
   if (isLoadingData) {
     return (
-      <div>
-        <Header titulo="Editar Línea" />
-        <div className="p-6">
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Editar Línea" />
+        <div className="content-wrap">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-700">
+            <h2 className="text-xl font-semibold text-slate-800">
               Cargando datos...
             </h2>
           </div>
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <div className="text-center py-10 text-gray-500">
+          <div className="form-shell">
+            <div className="py-10 text-center text-slate-500">
               Cargando información de la línea...
             </div>
           </div>
@@ -104,14 +104,14 @@ const EditLineaPage = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Editar Línea" />
-      <div className="p-6">
-        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+      <div className="content-wrap">
+        <h2 className="mb-6 text-xl font-semibold text-slate-800">
           Editando Línea
         </h2>
 
-        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
+        <div className="form-shell">
           <LineaForm
             form={form}
             onSubmit={onSubmit}
@@ -127,3 +127,4 @@ const EditLineaPage = () => {
 };
 
 export default EditLineaPage;
+

@@ -142,9 +142,9 @@ const EditPedidoPage = () => {
 
   if (isLoadingData) {
     return (
-      <div>
-        <Header titulo="Pedidos" />
-        <div className="p-6">Cargando datos del pedido...</div>
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Pedidos" />
+        <div className="content-wrap">Cargando datos del pedido...</div>
       </div>
     );
   }
@@ -152,9 +152,9 @@ const EditPedidoPage = () => {
   // Si el pedido no está en estado PENDIENTE, no permitir edición
   if (pedido && pedido.estadoPedido !== "PENDIENTE") {
     return (
-      <div>
-        <Header titulo="Pedidos" />
-        <div className="max-w-5xl mx-auto p-6">
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Pedidos" />
+        <div className="content-wrap max-w-5xl">
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>No se puede editar</AlertTitle>
@@ -174,13 +174,13 @@ const EditPedidoPage = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Pedidos" />
-      <div className="p-6">
-        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+      <div className="content-wrap">
+        <h2 className="mb-6 text-xl font-semibold text-slate-800">
           Editar Pedido #{pedido?.pedidoId.toString().padStart(4, "0")}
         </h2>
-        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
+        <div className="form-shell">
           <Alert className="mb-6">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>
@@ -205,3 +205,4 @@ const EditPedidoPage = () => {
 };
 
 export default EditPedidoPage;
+

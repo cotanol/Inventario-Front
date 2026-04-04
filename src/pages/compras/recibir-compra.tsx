@@ -89,10 +89,10 @@ const RecibirCompraPage = () => {
 
   if (isLoading) {
     return (
-      <div>
-        <Header titulo="Recibir Mercadería" />
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Recibir Mercadería" />
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+          <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-[color:var(--accent-strong)]"></div>
         </div>
       </div>
     );
@@ -100,11 +100,11 @@ const RecibirCompraPage = () => {
 
   if (!compra || compra.estadoCompra !== "EN_TRANSITO") {
     return (
-      <div>
-        <Header titulo="Recibir Mercadería" />
-        <div className="p-6">
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <p className="text-yellow-800">
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Recibir Mercadería" />
+        <div className="content-wrap">
+          <div className="rounded-lg border border-amber-300/40 bg-amber-100/65 p-4">
+            <p className="text-amber-900">
               Esta compra no está en estado EN_TRANSITO. Solo se puede recibir
               mercadería de compras que están en tránsito.
             </p>
@@ -122,25 +122,25 @@ const RecibirCompraPage = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Recibir Mercadería" />
-      <div className="p-6">
-        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+      <div className="content-wrap">
+        <h2 className="mb-6 text-xl font-semibold text-slate-800">
           Compra #{compra.compraId.toString().padStart(4, "0")}
         </h2>
-        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
+        <div className="form-shell">
           {/* Información de la Compra */}
           <div className="mb-6 pb-6 border-b">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm text-gray-500">Proveedor</p>
+                <p className="text-sm text-slate-500">Proveedor</p>
                 <p className="text-base font-semibold">
                   {compra.proveedor.nombreEmpresa}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Total Compra</p>
-                <p className="text-base font-semibold text-indigo-600">
+                <p className="text-sm text-slate-500">Total Compra</p>
+                <p className="text-base font-semibold text-[color:var(--accent-strong)]">
                   {formatCurrency(compra.totalCompra)}
                 </p>
               </div>
@@ -148,11 +148,11 @@ const RecibirCompraPage = () => {
           </div>
 
           {/* Instrucciones */}
-          <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="font-semibold text-blue-900 mb-2">
+          <div className="mb-6 rounded-lg border border-sky-300/40 bg-sky-100/70 p-4">
+            <h3 className="mb-2 font-semibold text-sky-900">
               📦 Instrucciones
             </h3>
-            <ul className="text-sm text-blue-800 space-y-1">
+            <ul className="space-y-1 text-sm text-sky-900">
               <li>• Ingrese la cantidad real recibida de cada producto</li>
               <li>
                 • La cantidad recibida no puede ser mayor a la cantidad
@@ -167,37 +167,37 @@ const RecibirCompraPage = () => {
 
           {/* Formulario */}
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="border rounded-lg overflow-hidden mb-6">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+            <div className="table-shell mb-6 table-scroll">
+              <table className="data-grid data-grid-responsive min-w-full">
+                <thead>
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-[0.06em]">
                       Código
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-[0.06em]">
                       Producto
                     </th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-[0.06em]">
                       Solicitado
                     </th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-4 py-3 text-center text-xs font-medium uppercase tracking-[0.06em]">
                       Cantidad Recibida
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                    <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-[0.06em]">
                       Costo Unit.
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody>
                   {compra.detalles.map((detalle, index) => (
-                    <tr key={detalle.detalleCompraId}>
-                      <td className="px-4 py-3 text-sm text-gray-900">
+                    <tr key={detalle.detalleCompraId} className="hover:bg-[color:var(--table-hover)]">
+                      <td className="px-4 py-3 text-sm text-slate-900">
                         {detalle.producto.codigo}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-900">
+                      <td className="px-4 py-3 text-sm text-slate-900">
                         {detalle.producto.nombre}
                       </td>
-                      <td className="px-4 py-3 text-sm text-center text-gray-700">
+                      <td className="px-4 py-3 text-center text-sm text-slate-700">
                         {detalle.cantidadSolicitada}
                       </td>
                       <td className="px-4 py-3 text-center">
@@ -212,7 +212,7 @@ const RecibirCompraPage = () => {
                               valueAsNumber: true,
                             }
                           )}
-                          className="w-24 px-3 py-2 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                          className="w-24 rounded-lg border border-slate-300 px-3 py-2 text-center focus:border-[color:var(--accent-strong)] focus:outline-none focus:ring-2 focus:ring-orange-100"
                           defaultValue={detalle.cantidadSolicitada}
                         />
                         <input
@@ -223,7 +223,7 @@ const RecibirCompraPage = () => {
                           )}
                         />
                       </td>
-                      <td className="px-4 py-3 text-sm text-right text-gray-900">
+                      <td className="px-4 py-3 text-right text-sm text-slate-900">
                         {formatCurrency(detalle.costoUnitario)}
                       </td>
                     </tr>
@@ -245,7 +245,7 @@ const RecibirCompraPage = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-green-600 hover:bg-green-700"
+                className="bg-[color:var(--accent-strong)] text-white hover:brightness-110"
               >
                 {isSubmitting ? "Procesando..." : "Confirmar Recepción"}
               </Button>
@@ -258,3 +258,4 @@ const RecibirCompraPage = () => {
 };
 
 export default RecibirCompraPage;
+

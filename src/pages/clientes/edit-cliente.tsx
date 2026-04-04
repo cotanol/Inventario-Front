@@ -84,21 +84,21 @@ const EditClientePage = () => {
 
   if (isLoadingData) {
     return (
-      <div>
-        <Header titulo="Clientes" />
-        <div className="p-6">Cargando datos del cliente...</div>
+    <div className="flex flex-1 flex-col min-h-full">
+      <Header titulo="Clientes" />
+        <div className="content-wrap">Cargando datos del cliente...</div>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Clientes" />
-      <div className="p-6">
-        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+      <div className="content-wrap">
+        <h2 className="mb-6 text-xl font-semibold text-slate-800">
           Editando Cliente
         </h2>
-        <div className="bg-white py-12 px-40 rounded-lg shadow-md">
+        <div className="form-shell">
           <ClienteForm
             form={form}
             onSubmit={onSubmit}
@@ -115,3 +115,4 @@ const EditClientePage = () => {
 };
 
 export default EditClientePage;
+

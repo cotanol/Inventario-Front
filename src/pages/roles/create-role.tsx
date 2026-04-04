@@ -56,11 +56,11 @@ const CreateRolePage = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-1 flex-col min-h-full">
       <Header titulo="Roles" />
-      <div className="p-6">
-        <h2 className="text-xl font-semibold mb-6">Crear Nuevo Rol</h2>
-        <div className="bg-white py-12 px-20 rounded-lg shadow-md">
+      <div className="content-wrap">
+        <h2 className="mb-6 text-xl font-semibold text-slate-800">Crear Nuevo Rol</h2>
+        <div className="form-shell">
           <RoleForm
             form={form}
             onSubmit={onSubmit}
@@ -75,3 +75,4 @@ const CreateRolePage = () => {
   );
 };
 export default CreateRolePage;
+
