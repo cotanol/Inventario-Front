@@ -11,6 +11,7 @@ import { type ICompra } from "@/components/compras/compra-schema";
 import { useRefresh } from "../../hooks/use-refresh";
 import { CompraActions } from "@/components/compras/view-compras.tsx/compra-actions";
 import { DialogCompraDetails } from "@/components/compras/view-compras.tsx/dialog-details-compra";
+import { buildPdfUrl } from "@/lib/pdf-url";
 
 const ViewComprasPage = () => {
   const [selectedCompra, setSelectedCompra] = useState<ICompra | null>(null);
@@ -208,7 +209,7 @@ const ViewComprasPage = () => {
                           <button
                             onClick={() =>
                               window.open(
-                                `http://localhost:6040${compra.urlPdf}`,
+                                buildPdfUrl(compra.urlPdf ?? ""),
                                 "_blank"
                               )
                             }

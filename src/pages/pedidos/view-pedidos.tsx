@@ -14,6 +14,7 @@ import { type IPedido } from "@/components/pedidos/pedido-schema";
 import { useRefresh } from "../../hooks/use-refresh";
 import { PedidoActions } from "@/components/pedidos/view-pedidos.tsx/pedido-actions";
 import { DialogPedidoDetails } from "@/components/pedidos/view-pedidos.tsx/dialog-details-pedido";
+import { buildPdfUrl } from "@/lib/pdf-url";
 
 const ViewPedidosPage = () => {
   const [selectedPedido, setSelectedPedido] = useState<IPedido | null>(null);
@@ -205,7 +206,7 @@ const ViewPedidosPage = () => {
                           <button
                             onClick={() =>
                               window.open(
-                                `http://localhost:6040${pedido.urlPdf}`,
+                                buildPdfUrl(pedido.urlPdf ?? ""),
                                 "_blank"
                               )
                             }
